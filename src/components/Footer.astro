@@ -7,9 +7,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const year = new Date().getFullYear();
-const privacyHref = `/${lang}/polityka-prywatnosci/`;
-const privacyHrefEn = `/${lang}/privacy-policy/`;
-const finalPrivacyHref = lang === 'pl' ? privacyHref : privacyHrefEn;
+const finalPrivacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-policy/';
 ---
 
 <footer id="contact" class="border-t border-forest-100 bg-forest-900 text-sand-100">

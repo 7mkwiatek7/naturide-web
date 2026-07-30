@@ -7,8 +7,13 @@ interface Props {
 
 const { lang } = Astro.props;
 const otherLang = lang === 'pl' ? 'en' : 'pl';
-const switchHref = Astro.url.pathname.replace(/^\/(pl|en)/, `/${otherLang}`);
-const homeHref = `/${lang}/`;
+const homeHref = lang === 'pl' ? '/' : '/en/';
+const switchHref =
+  lang === 'pl'
+    ? (Astro.url.pathname === '/' || Astro.url.pathname === '/polityka-prywatnosci/'
+        ? (Astro.url.pathname === '/polityka-prywatnosci/' ? '/en/privacy-policy/' : '/en/')
+        : '/en/')
+    : '/';
 ---
 
 <header class="sticky top-0 z-40 border-b border-forest-100 bg-sand-50/80 backdrop-blur">

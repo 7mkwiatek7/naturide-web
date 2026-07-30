@@ -5,6 +5,11 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# Edge Function: wykrywa język przeglądarki i serwuje PL albo EN.
+[[edge_functions]]
+  function = "language-redirect"
+  path = "/*"
+
 [[headers]]
   for = "/*"
   [headers.values]

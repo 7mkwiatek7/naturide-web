@@ -1,18 +1,4 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/Hero.astro';
-import ComingSoon from '../../components/ComingSoon.astro';
-// Tymczasowo wyłączone sekcje - przywróć gdy dopracujesz treść.
-// import Features from '../../components/Features.astro';
-// import Screens from '../../components/Screens.astro';
-// import FAQ from '../../components/FAQ.astro';
+// Polskie URL bez prefiksu /pl/ - ten URL przekierowuje na stronę główną.
+return Astro.redirect('/', 301);
 ---
-
-<BaseLayout lang="pl">
-  <Hero lang="pl" />
-  <ComingSoon lang="pl" />
-  <!-- Aby przywrócić wszystkie sekcje, odkomentuj powyższe importy oraz poniższe linie: -->
-  <!-- <Features lang="pl" /> -->
-  <!-- <Screens lang="pl" /> -->
-  <!-- <FAQ lang="pl" /> -->
-</BaseLayout>

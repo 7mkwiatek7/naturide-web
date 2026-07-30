@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout lang="pl" title="Polityka prywatności - Naturide" pageType="privacy">
+  <section class="bg-sand-50 py-16 sm:py-20">
+    <div class="container-narrow">
+      <h1 class="text-3xl font-bold tracking-tight text-forest-900 sm:text-4xl">Polityka prywatności</h1>
+      <p class="mt-2 text-sm text-forest-800/70">Ostatnia aktualizacja: {new Date().toLocaleDateString('pl-PL')}</p>
+
+      <div class="prose prose-forest mt-8 max-w-none space-y-6 text-forest-800/90">
+        <section>
+          <h2 class="text-xl font-semibold text-forest-900">1. Administrator danych</h2>
+          <p>
+            Administratorem danych osobowych jest właściciel projektu Naturide, kontakt:
+            <a href="mailto:mkwiatek.dev@gmail.com" class="text-forest-700 underline">mkwiatek.dev@gmail.com</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-forest-900">2. Jakie dane zbieramy</h2>
+          <p>W ramach strony Naturide.app możemy zbierać:</p>
+          <ul class="list-disc pl-6 space-y-1">
+            <li>Adres email - jeśli zapiszesz się na powiadomienie o premierze aplikacji.</li>
+            <li>Dane techniczne (adres IP, typ przeglądarki, system operacyjny) - w celach statystycznych i bezpieczeństwa.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-forest-900">3. Cel przetwarzania</h2>
+          <p>Dane przetwarzamy wyłącznie w celu:</p>
+          <ul class="list-disc pl-6 space-y-1">
+            <li>Wysłania powiadomienia o premierze aplikacji Naturide.</li>
+            <li>Odpowiadania na pytania przesłane przez email.</li>
+            <li>Analizy ruchu na stronie (dane zanonimizowane).</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-forest-900">4. Podstawa prawna</h2>
+          <p>Podstawą prawną przetwarzania danych jest art. 6 ust. 1 lit. a) RODO (zgoda) - w przypadku zapisu na listę powiadomień, oraz art. 6 ust. 1 lit. f) RODO (prawnie uzasadniony interes) - w przypadku danych technicznych niezbędnych do działania strony.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-forest-900">5. Okres przechowywania</h2>
+          <p>Adres email przechowujemy do momentu premiery aplikacji lub do momentu wycofania zgody. Dane techniczne przechowujemy przez okres niezbędny do celów bezpieczeństwa.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-forest-900">6. Twoje prawa</h2>
+          <p>Masz prawo do:</p>
+          <ul class="list-disc pl-6 space-y-1">
+            <li>dostępu do swoich danych,</li>
+            <li>sprostowania danych,</li>
+            <li>usunięcia danych (prawo do bycia zapomnianym),</li>
+            <li>ograniczenia przetwarzania,</li>
+            <li>przenoszenia danych,</li>
+            <li>wniesienia sprzeciwu,</li>
+            <li>wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych.</li>
+          </ul>
+          <p>W celu realizacji praw skontaktuj się z nami: <a href="mailto:mkwiatek.dev@gmail.com" class="text-forest-700 underline">mkwiatek.dev@gmail.com</a>.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-forest-900">7. Pliki cookies</h2>
+          <p>Strona może używać plików cookies w celach analitycznych (np. anonimowe statystyki odwiedzin). Możesz wyłączyć cookies w ustawieniach przeglądarki.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-forest-900">8. Zmiany w polityce prywatności</h2>
+          <p>Zastrzegamy sobie prawo do wprowadzania zmian w niniejszej polityce. O istotnych zmianach poinformujemy na stronie.</p>
+        </section>
+      </div>
+    </div>
+  </section>
+  <Footer lang="pl" />
+</BaseLayout>

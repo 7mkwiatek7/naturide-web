@@ -16,9 +16,26 @@ const { lang, title, description, ogImage = '/images/og-cover.png', pageType = '
 
 const fullTitle = title ?? t(lang, 'meta.title');
 const fullDescription = description ?? t(lang, 'meta.description');
+
+// Mapowanie URL-i (PL jest domyślny, bez prefiksu; EN pod /en/)
+// Każdy URL ma swoje ekwiwalenty w innych językach (PL, EN, x-default).
+const altMap: Record<string, { pl: string; en: string; xDefault: string }> = {
+  '/':                       { pl: '/',                       en: '/en/',                       xDefault: '/' },
+  '/polityka-prywatnosci/':  { pl: '/polityka-prywatnosci/',  en: '/en/privacy-policy/',        xDefault: '/polityka-prywatnosci/' },
+  '/en/':                    { pl: '/',                       en: '/en/',                       xDefault: '/' },
+  '/en/privacy-policy/':     { pl: '/polityka-prywatnosci/',  en: '/en/privacy-policy/',        xDefault: '/polityka-prywatnosci/' },
+};
+
+// Normalizujemy ścieżkę (dodajemy końcowy /) żeby pasowała do mapy.
+const normalizedPath = Astro.url.pathname.endsWith('/') || Astro.url.pathname === ''
+  ? Astro.url.pathname
+  : Astro.url.pathname + '/';
+const alts = altMap[normalizedPath] ?? { pl: '/', en: '/en/', xDefault: '/' };
+
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
-const otherLang = lang === 'pl' ? 'en' : 'pl';
-const otherPath = Astro.url.pathname.replace(/^\/(pl|en)/, `/${otherLang}`);
+const plHref = new URL(alts.pl, Astro.site).toString();
+const enHref = new URL(alts.en, Astro.site).toString();
+const xDefaultHref = new URL(alts.xDefault, Astro.site).toString();
 
 const baseSchema = {
   '@context': 'https://schema.org',
@@ -54,9 +71,9 @@ const baseSchema = {
     <link rel="canonical" href={canonicalURL} />
 
     <!-- hreflang -->
-    <link rel="alternate" hreflang="pl" href={new URL(Astro.url.pathname.replace(/^\/(pl|en)/, '/pl'), Astro.site).toString()} />
-    <link rel="alternate" hreflang="en" href={new URL(Astro.url.pathname.replace(/^\/(pl|en)/, '/en'), Astro.site).toString()} />
-    <link rel="alternate" hreflang="x-default" href={new URL(Astro.url.pathname.replace(/^\/(pl|en)/, '/pl'), Astro.site).toString()} />
+    <link rel="alternate" hreflang="pl" href={plHref} />
+    <link rel="alternate" hreflang="en" href={enHref} />
+    <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
 
     <!-- OpenGraph -->
     <meta property="og:type" content="website" />
