@@ -1,0 +1,93 @@
+---
+import { languages, type Lang, defaultLang, t } from '../i18n/ui';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  pageType?: 'home' | 'privacy';
+}
+
+const { lang, title, description, ogImage = '/images/og-cover.png', pageType = 'home' } = Astro.props;
+
+const fullTitle = title ?? t(lang, 'meta.title');
+const fullDescription = description ?? t(lang, 'meta.description');
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const otherLang = lang === 'pl' ? 'en' : 'pl';
+const otherPath = Astro.url.pathname.replace(/^\/(pl|en)/, `/${otherLang}`);
+
+const baseSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Naturide',
+  applicationCategory: 'MapsAndNavigationApplication',
+  operatingSystem: 'iOS, Android',
+  description: fullDescription,
+  url: 'https://naturide.app',
+  author: {
+    '@type': 'Organization',
+    name: 'Naturide',
+    url: 'https://naturide.app',
+  },
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  inLanguage: [lang === 'pl' ? 'pl-PL' : 'en-US'],
+};
+---
+
+<!doctype html>
+<html lang={lang === 'pl' ? 'pl-PL' : 'en-US'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={fullDescription} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="pl" href={new URL(Astro.url.pathname.replace(/^\/(pl|en)/, '/pl'), Astro.site).toString()} />
+    <link rel="alternate" hreflang="en" href={new URL(Astro.url.pathname.replace(/^\/(pl|en)/, '/en'), Astro.site).toString()} />
+    <link rel="alternate" hreflang="x-default" href={new URL(Astro.url.pathname.replace(/^\/(pl|en)/, '/pl'), Astro.site).toString()} />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={fullDescription} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+    <meta property="og:locale" content={lang === 'pl' ? 'pl_PL' : 'en_US'} />
+    <meta property="og:site_name" content="Naturide" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={fullDescription} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#3c6c33" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <link rel="apple-touch-icon" href="/images/logo.png" />
+
+    <!-- Schema.org -->
+    <script type="application/ld+json" set:html={JSON.stringify(baseSchema)} />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <Header lang={lang} />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

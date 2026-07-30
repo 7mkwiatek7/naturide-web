@@ -1,0 +1,57 @@
+---
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<section id="notify" class="bg-forest-700 py-16 sm:py-20 lg:py-24">
+  <div class="container-narrow text-center">
+    <h2 class="text-3xl font-bold tracking-tight text-sand-50 sm:text-4xl">
+      {t(lang, 'comingsoon.title')}
+    </h2>
+    <p class="mx-auto mt-3 max-w-xl text-lg text-sand-100/90">
+      {t(lang, 'comingsoon.desc')}
+    </p>
+
+    <form
+      name="notify"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action={`/${lang}/?subscribed=true#notify`}
+      class="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
+    >
+      <input type="hidden" name="form-name" value="notify" />
+      <p class="hidden">
+        <label>Nie wypełniaj: <input name="bot-field" /></label>
+      </p>
+      <label class="sr-only" for="notify-email">{t(lang, 'comingsoon.placeholder')}</label>
+      <input
+        id="notify-email"
+        type="email"
+        name="email"
+        required
+        placeholder={t(lang, 'comingsoon.placeholder')}
+        class="flex-1 rounded-full border-2 border-transparent bg-white px-5 py-3 text-base text-forest-900 placeholder:text-forest-400 focus:border-sand-300 focus:outline-none focus:ring-2 focus:ring-sand-300"
+      />
+      <button
+        type="submit"
+        class="rounded-full bg-sand-200 px-6 py-3 text-base font-semibold text-forest-900 transition hover:bg-sand-300"
+      >
+        {t(lang, 'comingsoon.submit')}
+      </button>
+    </form>
+
+    {Astro.url.searchParams.get('subscribed') === 'true' && (
+      <div role="status" class="mx-auto mt-6 max-w-md rounded-2xl border border-sand-200/30 bg-forest-600/50 p-4 text-sand-50">
+        {t(lang, 'comingsoon.success')}
+      </div>
+    )}
+
+    <p class="mt-4 text-sm text-sand-200/80">{t(lang, 'comingsoon.privacy')}</p>
+  </div>
+</section>
