@@ -21,8 +21,8 @@ export const ui = {
       'Naturide to inteligentna nawigacja rowerowa stworzona przez rowerzystów dla rowerzystów. Wyróżnia się płynnością i szybkością działania oraz przemyślanym interfejsem',
     'hero.cta.notify': 'Powiadom mnie o premierze',
     'hero.cta.features': 'Zobacz funkcje',
-    'hero.stats.offline': 'Offline',
-    'hero.stats.offlineDesc': 'Mapy bez zasięgu',
+    'hero.stats.offline': 'Mapy',
+    'hero.stats.offlineDesc': 'Aktualne mapy wektorowe',
     'hero.stats.gpx': 'GPX',
     'hero.stats.gpxDesc': 'Import i eksport',
     'hero.stats.osm': 'OSM',
@@ -36,7 +36,7 @@ export const ui = {
     'features.offline.desc':
       'Precyzyjne mapy wektorowe w trybie dziennym i nocnym dostępne jednym kliknięciem.',
     'features.planner.title': 'Planner tras',
-    'features.offline.routeDesc':
+    'features.planner.desc':
       'Wyznaczaj trasy z punktami pośrednimi, eksportuj do GPX, udostępniaj znajomym.',
     'features.tracking.title': 'Nagrywanie trasy',
     'features.tracking.desc':
@@ -99,16 +99,16 @@ export const ui = {
     'features.subtitle': 'Things you will use on every ride',
     'features.navigation.title': 'Bike navigation',
     'features.navigation.desc':
-      'Turn-by-turn guidance with distance and elevation. OpenStreetMap data rendered in MapLibre GL.',
-    'features.offline.title': 'Offline maps',
+      'Turn-by-turn guidance along planned routes and imported GPX files.',
+    'features.offline.title': 'Maps powered by OpenStreetMap',
     'features.offline.desc':
-      'Download a region before you leave and navigate without signal. Your routes work where your phone says "no service".',
+      'Precise vector maps in day and night mode, just one tap away.',
     'features.planner.title': 'Route planner',
-    'features.offline.routeDesc':
+    'features.planner.desc':
       'Plan routes with waypoints, export to GPX, share with friends.',
     'features.tracking.title': 'Ride tracking',
     'features.tracking.desc':
-      'Record your ride with GPS accuracy up to 2 m. Elevation profile, distance, time - all automatic.',
+      'Record your ride with adaptive GPS accuracy up to 1 m on tight turns. Elevation profile, distance, time - all automatic.',
     'screens.title': 'See the app',
     'screens.subtitle': 'Day or night, friendly interface - everything you need on the road and while planning one',
     'screens.alt1': 'Map view with a recorded bike route across northern Poland - day mode',
