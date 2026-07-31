@@ -23,7 +23,7 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
       method="POST"
       data-netlify="true"
       netlify-honeypot="bot-field"
-      action={`/${lang}/?subscribed=true#notify`}
+      action={`?subscribed=true#notify`}
       class="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
     >
       <input type="hidden" name="form-name" value="notify" />
@@ -79,3 +79,16 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
     </p>
   </div>
 </section>
+
+<script is:inline>
+  // Localhost only: po submit formularza "notify" przekieruj na ?subscribed=true,
+  // żeby dało się przetestować komunikat sukcesu bez wdrożonego Netlify Forms.
+  // Na produkcji Netlify obsługuje formularz sam.
+  document.addEventListener('submit', (e) => {
+    const form = e.target;
+    if (!form || form.tagName !== 'FORM' || form.name !== 'notify') return;
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') return;
+    e.preventDefault();
+    window.location.href = window.location.pathname + '?subscribed=true#notify';
+  });
+</script>
