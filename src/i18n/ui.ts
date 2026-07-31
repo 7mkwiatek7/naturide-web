@@ -84,7 +84,7 @@ export const ui = {
     'nav.toggleTheme': 'Toggle day/night mode',
     'hero.badge': 'Coming soon',
     'hero.title': 'Naturide',
-    'hero.subtitle': 'Bike navigation and offline route planner',
+    'hero.subtitle': 'Smart bike navigation',
     'hero.description':
       'Naturide is intelligent bike navigation, made by cyclists for cyclists. It stands out with fluid, fast performance and a thoughtfully designed interface.',
     'hero.cta.notify': 'Notify me at launch',
