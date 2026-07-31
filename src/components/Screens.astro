@@ -26,14 +26,14 @@ const screens = [
 
     <div class="mt-12 grid grid-cols-2 gap-6 lg:grid-cols-4">
       {screens.map((s) => (
-        <figure class="overflow-hidden rounded-3xl border border-forest-100 bg-white p-2 shadow-sm transition hover:shadow-xl">
+        <figure class="overflow-hidden rounded-3xl border border-forest-100 bg-forest-50 p-2 shadow-sm transition hover:shadow-xl">
           <img
             src={s.src}
             alt={t(lang, s.altKey)}
-            class="aspect-[9/19.5] w-full rounded-2xl object-cover"
+            class="aspect-[9/24] w-full rounded-2xl object-contain"
             loading="lazy"
             width="540"
-            height="1170"
+            height="1440"
           />
         </figure>
       ))}
