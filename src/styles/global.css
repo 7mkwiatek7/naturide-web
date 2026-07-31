@@ -10,6 +10,9 @@
     @apply bg-sand-50 text-forest-900 antialiased;
     font-feature-settings: 'cv11', 'ss01';
   }
+  .dark body {
+    @apply bg-forest-900 text-sand-50;
+  }
 }
 
 @layer components {

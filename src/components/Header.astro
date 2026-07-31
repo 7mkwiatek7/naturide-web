@@ -40,6 +40,29 @@ const screensHref = isOnHome ? '#screens' : `${homeWithHash}#screens`;
       >
         {otherLang.toUpperCase()}
       </a>
+      <button
+        type="button"
+        onclick="window.__toggleTheme && window.__toggleTheme()"
+        aria-label={lang === 'pl' ? 'Przełącz tryb dzień/noc' : 'Toggle day/night mode'}
+        class="hidden h-9 w-9 items-center justify-center rounded-full border border-forest-200 text-forest-700 transition hover:border-forest-400 hover:bg-forest-50 sm:inline-flex dark:border-forest-700 dark:text-sand-100 dark:hover:bg-forest-800"
+      >
+        <!-- Ikonka słońca - widoczna tylko w trybie jasnym -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 block dark:hidden">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="m6.34 17.66-1.41 1.41"></path>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+        <!-- Ikonka księżyca - widoczna tylko w trybie ciemnym -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 hidden dark:block">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
       <a href="#notify" class="hidden btn-primary text-sm sm:inline-flex">{lang === 'pl' ? 'Powiadom mnie' : 'Notify me'}</a>
     </div>
   </div>
