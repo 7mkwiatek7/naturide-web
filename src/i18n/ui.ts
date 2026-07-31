@@ -88,9 +88,9 @@ export const ui = {
     'contact.facebook': 'Facebook',
     'footer.privacy': 'Polityka prywatności',
     'footer.copyright': '© {year} Naturide. Wszystkie prawa zastrzeżone.',
-    'meta.title': 'Naturide - nawigacja rowerowa i planner tras offline',
+    'meta.title': 'Naturide - inteligentna nawigacja rowerowa',
     'meta.description':
-      'Naturide to aplikacja mobilna dla rowerzystów. Nawigacja, mapy offline, planowanie tras z OpenStreetMap. Premiera wkrótce.',
+      'Naturide to inteligentna nawigacja rowerowa tworzona przez rowerzystów. Aktualne mapy wektorowe, GPX i OpenStreetMap. Premiera wkrótce.',
   },
   en: {
     'nav.features': 'Features',
@@ -172,9 +172,9 @@ export const ui = {
     'contact.facebook': 'Facebook',
     'footer.privacy': 'Privacy policy',
     'footer.copyright': '© {year} Naturide. All rights reserved.',
-    'meta.title': 'Naturide - bike navigation and offline route planner',
+    'meta.title': 'Naturide - smart bike navigation',
     'meta.description':
-      'Naturide is a mobile app for cyclists. Navigation, offline maps, route planning with OpenStreetMap. Launching soon.',
+      'Naturide is smart bike navigation, built by cyclists for cyclists. Always up-to-date vector maps, GPX import and export, and OpenStreetMap data. Launching soon.',
   },
 } as const;
 
