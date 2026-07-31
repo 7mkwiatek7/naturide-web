@@ -15,10 +15,10 @@ export const ui = {
     'nav.contact': 'Kontakt',
     'nav.toggleTheme': 'Przełącz tryb dzień/noc',
     'hero.badge': 'Już wkrótce',
-    'hero.title': 'NATURIDE',
+    'hero.title': 'Naturide',
     'hero.subtitle': 'Inteligentna nawigacja rowerowa',
     'hero.description':
-      'Naturide to inteligentna nawigacja rowerowa stworzona przez rowerzystów dla rowerzystów. Wyróżnia się płynnością i szybkością działania oraz przemyślanym interfejsem',
+      'Naturide to inteligentna nawigacja rowerowa ze szczegółowymi mapami OSM dla miłośników turystyki rowerowej. Posiada wiele ciekawych funkcji takich jak automatyczne zarządzanie ekranem czy adaptacyjny zapis śladu. Planuj trasy offline, nawiguj i ciesz się prywatnością. ',
     'hero.cta.notify': 'Powiadom mnie o premierze',
     'hero.cta.features': 'Zobacz funkcje',
     'hero.stats.offline': 'Mapy',
@@ -41,6 +41,10 @@ export const ui = {
     'features.tracking.title': 'Nagrywanie trasy',
     'features.tracking.desc':
       'Nagrywaj przejazd z adaptacyjną dokładnością GPS do 1m podczas pokonywania zakrętu. Po zakończonej wycieczce zobacz statystyki - profil wysokości, dystans, średnią prędkość, czas, czas w ruchu oraz sumę przewyższeń.',
+    'features.screen.title': 'Inteligentne zarządzanie ekranem',
+    'features.screen.desc': 'Aby maksymalnie ograniczyć zużycie baterii, aplikacja automatycznie wyłącza ekran w ustalonej odległości po zakręcie i włącza przed kolejnym zakrętem. Funkcja jest dostępna po włączeniu w ustawieniach aplikacji.  ',
+    'features.layers.title': 'Warstwy mapy',
+    'features.layers.desc': '—',
     'screens.title': 'Zobacz aplikację',
     'screens.subtitle': 'Dzień, noc, przyjazny interfejs - wszystko czego potrzebujesz w trasie i przy planowaniu trasy',
     'screens.alt1': 'Widok mapy z zaplanowaną trasą rowerową przez północną Polskę - tryb dzienny',
@@ -90,7 +94,7 @@ export const ui = {
     'footer.copyright': '© {year} Naturide. Wszystkie prawa zastrzeżone.',
     'meta.title': 'Naturide - inteligentna nawigacja rowerowa',
     'meta.description':
-      'Naturide to inteligentna nawigacja rowerowa tworzona przez rowerzystów. Aktualne mapy wektorowe, GPX i OpenStreetMap. Premiera wkrótce.',
+      'Naturide to inteligentna nawigacja rowerowa ze szczegółowymi mapami OSM dla miłośników turystyki rowerowej. Planuj trasy offline, nawiguj i ciesz się prywatnością.',
   },
   en: {
     'nav.features': 'Features',
@@ -102,7 +106,7 @@ export const ui = {
     'hero.title': 'Naturide',
     'hero.subtitle': 'Smart bike navigation',
     'hero.description':
-      'Naturide is intelligent bike navigation, made by cyclists for cyclists. It stands out with fluid, fast performance and a thoughtfully designed interface.',
+      'Naturide is smart bike navigation with detailed OSM maps, built for cycling tourism enthusiasts. Packed with thoughtful features like automatic screen management and adaptive ride recording. Plan routes offline, navigate and enjoy your privacy.',
     'hero.cta.notify': 'Notify me at launch',
     'hero.cta.features': 'See features',
     'hero.stats.offline': 'Maps',
@@ -125,6 +129,10 @@ export const ui = {
     'features.tracking.title': 'Ride tracking',
     'features.tracking.desc':
       'Record your ride with adaptive GPS accuracy up to 1 m on tight turns. Elevation profile, distance, time - all automatic.',
+    'features.screen.title': 'Intelligent screen management',
+    'features.screen.desc': 'To maximize battery life, the app automatically turns off the screen at a set distance after a turn and turns it back on before the next one. The feature is available when enabled in the app settings.',
+    'features.layers.title': 'Map layers',
+    'features.layers.desc': '—',
     'screens.title': 'See the app',
     'screens.subtitle': 'Day or night, friendly interface - everything you need on the road and while planning one',
     'screens.alt1': 'Map view with a recorded bike route across northern Poland - day mode',
@@ -174,7 +182,7 @@ export const ui = {
     'footer.copyright': '© {year} Naturide. All rights reserved.',
     'meta.title': 'Naturide - smart bike navigation',
     'meta.description':
-      'Naturide is smart bike navigation, built by cyclists for cyclists. Always up-to-date vector maps, GPX import and export, and OpenStreetMap data. Launching soon.',
+      'Naturide is smart bike navigation with detailed OSM maps, built for cycling tourism enthusiasts. Plan routes offline, navigate and enjoy your privacy.',
   },
 } as const;
 
