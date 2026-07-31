@@ -21,15 +21,15 @@ const isOnHome = currentPath === homeWithHash || currentPath === homeWithHash.re
 const screensHref = isOnHome ? '#screens' : `${homeWithHash}#screens`;
 ---
 
-<header class="sticky top-0 z-40 border-b border-forest-100 bg-sand-50/80 backdrop-blur">
+<header class="sticky top-0 z-40 border-b border-forest-100 bg-sand-50/80 backdrop-blur dark:border-forest-800 dark:bg-forest-900/80">
   <div class="container-wide flex h-16 items-center justify-between">
-    <a href={homeHref} class="flex items-center gap-2 text-forest-700 hover:text-forest-800">
+    <a href={homeHref} class="flex items-center gap-2 text-forest-700 hover:text-forest-800 dark:text-sand-100 dark:hover:text-sand-50">
       <img src="/images/logo.png" alt="Naturide" class="h-9 w-9" width="36" height="36" />
       <span class="text-lg font-bold tracking-tight">Naturide</span>
     </a>
 
     <nav class="hidden items-center gap-6 md:flex">
-      <a href={screensHref} class="text-sm font-medium text-forest-700 hover:text-forest-900">{t(lang, 'nav.screens')}</a>
+      <a href={screensHref} class="text-sm font-medium text-forest-700 hover:text-forest-900 dark:text-sand-100 dark:hover:text-sand-50">{t(lang, 'nav.screens')}</a>
     </nav>
 
     <div class="flex items-center gap-3">

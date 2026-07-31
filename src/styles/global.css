@@ -26,9 +26,13 @@
     @apply inline-flex items-center justify-center rounded-full bg-forest-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-forest-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest-600;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-full border-2 border-forest-600 bg-transparent px-6 py-3 text-base font-semibold text-forest-700 transition hover:bg-forest-50;
+    @apply inline-flex items-center justify-center rounded-full border-2 border-forest-600 bg-transparent px-6 py-3 text-base font-semibold text-forest-700 transition hover:bg-forest-50 dark:border-sand-300 dark:text-sand-100 dark:hover:bg-forest-800;
   }
   .badge {
-    @apply inline-flex items-center rounded-full bg-forest-100 px-3 py-1 text-xs font-medium text-forest-700;
+    @apply inline-flex items-center rounded-full bg-forest-100 px-3 py-1 text-xs font-medium text-forest-700 dark:bg-forest-800 dark:text-sand-100;
+  }
+  /* Elementy formularza (polityka prywatności to też używa) */
+  .prose-forest a {
+    @apply text-forest-700 underline dark:text-sand-200;
   }
 }

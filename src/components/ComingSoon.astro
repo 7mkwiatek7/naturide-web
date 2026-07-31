@@ -8,7 +8,7 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<section id="notify" class="bg-forest-700 py-16 sm:py-20 lg:py-24">
+<section id="notify" class="bg-forest-700 py-16 sm:py-20 lg:py-24 dark:bg-forest-950">
   <div class="container-narrow text-center">
     <h2 class="text-3xl font-bold tracking-tight text-sand-50 sm:text-4xl">
       {t(lang, 'comingsoon.title')}
@@ -36,7 +36,7 @@ const { lang } = Astro.props;
         name="email"
         required
         placeholder={t(lang, 'comingsoon.placeholder')}
-        class="flex-1 rounded-full border-2 border-transparent bg-white px-5 py-3 text-base text-forest-900 placeholder:text-forest-400 focus:border-sand-300 focus:outline-none focus:ring-2 focus:ring-sand-300"
+        class="flex-1 rounded-full border-2 border-transparent bg-white px-5 py-3 text-base text-forest-900 placeholder:text-forest-400 focus:border-sand-300 focus:outline-none focus:ring-2 focus:ring-sand-300 dark:bg-forest-100"
       />
       <button
         type="submit"

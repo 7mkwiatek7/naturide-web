@@ -8,18 +8,18 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<section class="relative overflow-hidden bg-gradient-to-b from-sand-50 to-forest-50">
+<section class="relative overflow-hidden bg-gradient-to-b from-sand-50 to-forest-50 dark:from-forest-900 dark:to-forest-950">
   <div class="container-wide py-16 sm:py-20 lg:py-28">
     <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <div>
         <span class="badge mb-5">{t(lang, 'hero.badge')}</span>
-        <h1 class="text-4xl font-extrabold tracking-tight text-forest-900 sm:text-5xl lg:text-6xl">
+        <h1 class="text-4xl font-extrabold tracking-tight text-forest-900 dark:text-sand-50 sm:text-5xl lg:text-6xl">
           {t(lang, 'hero.title')}
         </h1>
-        <p class="mt-3 text-xl font-semibold text-forest-700 sm:text-2xl">
+        <p class="mt-3 text-xl font-semibold text-forest-700 dark:text-sand-100 sm:text-2xl">
           {t(lang, 'hero.subtitle')}
         </p>
-        <p class="mt-5 max-w-xl text-base leading-relaxed text-forest-800/80 sm:text-lg">
+        <p class="mt-5 max-w-xl text-base leading-relaxed text-forest-800/80 dark:text-sand-200/80 sm:text-lg">
           {t(lang, 'hero.description')}
         </p>
 
@@ -29,23 +29,23 @@ const { lang } = Astro.props;
         </div>
 
         <div class="mt-10 grid grid-cols-3 gap-4 sm:max-w-md">
-          <div class="rounded-xl border border-forest-100 bg-white/60 p-3 text-center">
-            <div class="text-lg font-bold text-forest-700">{t(lang, 'hero.stats.offline')}</div>
-            <div class="text-xs text-forest-800/70">{t(lang, 'hero.stats.offlineDesc')}</div>
+          <div class="rounded-xl border border-forest-100 bg-white/60 p-3 text-center dark:border-forest-700 dark:bg-forest-800/60">
+            <div class="text-lg font-bold text-forest-700 dark:text-sand-100">{t(lang, 'hero.stats.offline')}</div>
+            <div class="text-xs text-forest-800/70 dark:text-sand-300/80">{t(lang, 'hero.stats.offlineDesc')}</div>
           </div>
-          <div class="rounded-xl border border-forest-100 bg-white/60 p-3 text-center">
-            <div class="text-lg font-bold text-forest-700">{t(lang, 'hero.stats.gpx')}</div>
-            <div class="text-xs text-forest-800/70">{t(lang, 'hero.stats.gpxDesc')}</div>
+          <div class="rounded-xl border border-forest-100 bg-white/60 p-3 text-center dark:border-forest-700 dark:bg-forest-800/60">
+            <div class="text-lg font-bold text-forest-700 dark:text-sand-100">{t(lang, 'hero.stats.gpx')}</div>
+            <div class="text-xs text-forest-800/70 dark:text-sand-300/80">{t(lang, 'hero.stats.gpxDesc')}</div>
           </div>
-          <div class="rounded-xl border border-forest-100 bg-white/60 p-3 text-center">
-            <div class="text-lg font-bold text-forest-700">{t(lang, 'hero.stats.osm')}</div>
-            <div class="text-xs text-forest-800/70">{t(lang, 'hero.stats.osmDesc')}</div>
+          <div class="rounded-xl border border-forest-100 bg-white/60 p-3 text-center dark:border-forest-700 dark:bg-forest-800/60">
+            <div class="text-lg font-bold text-forest-700 dark:text-sand-100">{t(lang, 'hero.stats.osm')}</div>
+            <div class="text-xs text-forest-800/70 dark:text-sand-300/80">{t(lang, 'hero.stats.osmDesc')}</div>
           </div>
         </div>
       </div>
 
       <div class="relative mx-auto w-full max-w-sm lg:max-w-md">
-        <div class="absolute -inset-4 -z-10 rounded-[3rem] bg-gradient-to-br from-forest-200/60 via-sand-200/40 to-forest-100/60 blur-2xl"></div>
+        <div class="absolute -inset-4 -z-10 rounded-[3rem] bg-gradient-to-br from-forest-200/60 via-sand-200/40 to-forest-100/60 blur-2xl dark:from-forest-700/50 dark:via-forest-800/40 dark:to-forest-900/60"></div>
         <img
           src="/images/logo.png"
           alt="Naturide logo"
