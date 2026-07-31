@@ -40,9 +40,9 @@ export const ui = {
       'Wyznaczaj trasy z punktami pośrednimi bez internetu.',
     'features.tracking.title': 'Nagrywanie trasy',
     'features.tracking.desc':
-      'Nagrywaj przejazd z adaptacyjną dokładnością GPS do 1m podczas pokonywania zakrętu. Profil wysokości, dystans, czas - wszystko automatycznie.',
+      'Nagrywaj przejazd z adaptacyjną dokładnością GPS do 1m podczas pokonywania zakrętu. Po zakończonej wycieczce zobacz statystyki - profil wysokości, dystans, średnią prędkość, czas, czas w ruchu oraz sumę przewyższeń.',
     'screens.title': 'Zobacz aplikację',
-    'screens.subtitle': 'Dzień, noc, przyjazny interfejs - wszystko czego potrzebujesz w trasie i przy planowaniu w fotelu',
+    'screens.subtitle': 'Dzień, noc, przyjazny interfejs - wszystko czego potrzebujesz w trasie i przy planowaniu trasy',
     'screens.alt1': 'Widok mapy z zaplanowaną trasą rowerową przez północną Polskę - tryb dzienny',
     'screens.alt2': 'Widok mapy w trybie nocnym - czytelny kontrast po zmroku',
     'screens.alt3': 'Szczegóły nawigacji z profilem wysokości, dystansem i czasem',
