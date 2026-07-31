@@ -41,7 +41,7 @@ export const ui = {
     'features.tracking.desc':
       'Nagrywaj przejazd z adaptacyjną dokładnością GPS do 1m podczas pokonywania zakrętu. Profil wysokości, dystans, czas - wszystko automatycznie.',
     'screens.title': 'Zobacz aplikację',
-    'screens.subtitle': 'Dzień, noc, planowanie - wszystko czego potrzebujesz w trasie',
+    'screens.subtitle': 'Dzień, noc, przyjany interfejs - wszystko czego potrzebujesz w trasie i przy planowaniu w fotelu',
     'screens.alt1': 'Widok mapy z zaplanowaną trasą rowerową przez północną Polskę - tryb dzienny',
     'screens.alt2': 'Widok mapy w trybie nocnym - czytelny kontrast po zmroku',
     'screens.alt3': 'Szczegóły nawigacji z profilem wysokości, dystansem i czasem',
