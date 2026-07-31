@@ -41,6 +41,7 @@ Zasady komunikacji i pracy z **Mkwi** (właściciel projektu Naturide). Dotyczy 
 - Nie modyfikuj **produkcyjnie działających rzeczy**, chyba że user wyraźnie poprosi lub sam to zaproponował i potwierdził.
 - Jak user mówi "zrób X" ale X ma skutki uboczne – wymień je przed wykonaniem.
 - **Sprawdzaj wymiary grafik przed zmianą CSS** żeby uniknąć zgadywania proporcji (użyj Node.js + `fs.readFileSync` na plikach JPG – porównaj `width` i `height` z markerów JPEG).
+- **Polska jest wersją podstawową, angielską tłumaczymy.** Wszystkie teksty widoczne dla usera przechodzą przez `t(lang, ...)` z kluczami w `src/i18n/ui.ts` (najpierw klucz PL, potem odpowiednik EN obok). Nie hardcode polskich (ani angielskich) tekstów w komponentach – wyjątek: marki/brand (nazwa "Naturide", "Facebook") i metadane techniczne (JSON-LD). Jak dodajesz nowy element UI, wpisz treść w PL i od razu dodaj tłumaczenie EN.
 
 ## Styl techniczny odpowiedzi
 

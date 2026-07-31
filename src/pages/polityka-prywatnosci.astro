@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Footer from '../components/Footer.astro';
 ---
 
 <BaseLayout lang="pl" title="Polityka prywatności - Naturide" pageType="privacy">
@@ -44,7 +43,7 @@ import Footer from '../components/Footer.astro';
 
         <section>
           <h2 class="text-xl font-semibold text-forest-900">5. Okres przechowywania</h2>
-          <p>Adres email przechowujemy do momentu premiery aplikacji lub do momentu wycofania zgody. Dane techniczne przechowujemy przez okres niezbędny do celów bezpieczeństwa.</p>
+          <p>Adres email przechowujemy do momentu premiery aplikacji lub do momentu wycofania zgody (usuwania obsługujemy w terminie do 7 dni roboczych). Dane techniczne przechowujemy przez okres niezbędny do celów bezpieczeństwa.</p>
         </section>
 
         <section>
@@ -59,7 +58,7 @@ import Footer from '../components/Footer.astro';
             <li>wniesienia sprzeciwu,</li>
             <li>wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych.</li>
           </ul>
-          <p>W celu realizacji praw skontaktuj się z nami: <a href="mailto:mkwiatek.dev@gmail.com" class="text-forest-700 underline">mkwiatek.dev@gmail.com</a>.</p>
+          <p>W celu realizacji praw skontaktuj się z nami: <a href="mailto:mkwiatek.dev@gmail.com" class="text-forest-700 underline">mkwiatek.dev@gmail.com</a> lub skorzystaj z <a href="/usun-dane/" class="text-forest-700 underline">formularza usuwania danych</a>.</p>
         </section>
 
         <section>
@@ -71,8 +70,17 @@ import Footer from '../components/Footer.astro';
           <h2 class="text-xl font-semibold text-forest-900">8. Zmiany w polityce prywatności</h2>
           <p>Zastrzegamy sobie prawo do wprowadzania zmian w niniejszej polityce. O istotnych zmianach poinformujemy na stronie.</p>
         </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-forest-900">9. Procesor danych</h2>
+          <p>
+            Formularz powiadomień o premierze obsługiwany jest przez Netlify (Netlify, Inc., USA) w ramach
+            umowy powierzenia przetwarzania danych. Netlify przechowuje dane z formularzy na swoich
+            serwerach. Aktualna lista podprocesorów Netlify jest dostępna na stronie
+            <a href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer" class="text-forest-700 underline">netlify.com</a>.
+          </p>
+        </section>
       </div>
     </div>
   </section>
-  <Footer lang="pl" />
 </BaseLayout>

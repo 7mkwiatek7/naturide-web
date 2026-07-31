@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Footer from '../../components/Footer.astro';
 ---
 
 <BaseLayout lang="en" title="Privacy policy - Naturide" pageType="privacy">
@@ -44,7 +43,7 @@ import Footer from '../../components/Footer.astro';
 
         <section>
           <h2 class="text-xl font-semibold text-forest-900">5. Retention</h2>
-          <p>We keep your email until the app launches or until you withdraw consent. Technical data is kept only as long as needed for security purposes.</p>
+          <p>We keep your email until the app launches or until you withdraw consent (removals are processed within 7 business days). Technical data is kept only as long as needed for security purposes.</p>
         </section>
 
         <section>
@@ -59,7 +58,7 @@ import Footer from '../../components/Footer.astro';
             <li>object to processing,</li>
             <li>lodge a complaint with your data protection authority.</li>
           </ul>
-          <p>To exercise your rights, contact us at <a href="mailto:mkwiatek.dev@gmail.com" class="text-forest-700 underline">mkwiatek.dev@gmail.com</a>.</p>
+          <p>To exercise your rights, contact us at <a href="mailto:mkwiatek.dev@gmail.com" class="text-forest-700 underline">mkwiatek.dev@gmail.com</a> or use the <a href="/en/remove-data/" class="text-forest-700 underline">data removal form</a>.</p>
         </section>
 
         <section>
@@ -71,8 +70,17 @@ import Footer from '../../components/Footer.astro';
           <h2 class="text-xl font-semibold text-forest-900">8. Changes</h2>
           <p>We reserve the right to update this policy. Material changes will be announced on the site.</p>
         </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-forest-900">9. Data processor</h2>
+          <p>
+            The launch notification form is processed by Netlify (Netlify, Inc., USA) under a
+            data processing agreement. Netlify stores form submissions on its servers.
+            The current list of Netlify subprocessors is available at
+            <a href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer" class="text-forest-700 underline">netlify.com</a>.
+          </p>
+        </section>
       </div>
     </div>
   </section>
-  <Footer lang="en" />
 </BaseLayout>

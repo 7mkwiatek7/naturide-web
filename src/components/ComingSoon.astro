@@ -6,6 +6,7 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-policy/';
 ---
 
 <section id="notify" class="bg-forest-700 py-16 sm:py-20 lg:py-24 dark:bg-forest-950">
@@ -46,12 +47,35 @@ const { lang } = Astro.props;
       </button>
     </form>
 
+    <label class="mx-auto mt-4 flex max-w-md items-start gap-2 text-left text-xs text-sand-100/90 sm:text-sm">
+      <input
+        type="checkbox"
+        name="consent"
+        required
+        class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-sand-300/50 bg-white/10 accent-sand-300 focus:ring-sand-300 sm:mt-1"
+      />
+      <span>
+        {t(lang, 'comingsoon.consent')}
+        {' '}
+        <a href={privacyHref} class="text-sand-50 underline hover:text-white">{t(lang, 'comingsoon.privacyPolicy')}</a>.
+      </span>
+    </label>
+
     {Astro.url.searchParams.get('subscribed') === 'true' && (
       <div role="status" class="mx-auto mt-6 max-w-md rounded-2xl border border-sand-200/30 bg-forest-600/50 p-4 text-sand-50">
         {t(lang, 'comingsoon.success')}
       </div>
     )}
 
-    <p class="mt-4 text-sm text-sand-200/80">{t(lang, 'comingsoon.privacy')}</p>
+    <p class="mt-4 text-sm text-sand-200/80">
+      {t(lang, 'comingsoon.privacy')}
+      {' · '}
+      <a
+        href={privacyHref === '/polityka-prywatnosci/' ? '/usun-dane/' : '/en/remove-data/'}
+        class="text-sand-50 underline hover:text-white"
+      >
+        {t(lang, 'comingsoon.removeHint')}
+      </a>
+    </p>
   </div>
 </section>
