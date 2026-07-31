@@ -7,11 +7,15 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-sand-50 text-forest-900 antialiased;
+    background-color: #fbf9f4;
+    color: #223a20;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'cv11', 'ss01';
   }
   .dark body {
-    @apply bg-forest-900 text-sand-50;
+    background-color: #223a20;
+    color: #fbf9f4;
   }
 }
 

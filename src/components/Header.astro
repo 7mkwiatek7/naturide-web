@@ -7,12 +7,23 @@ interface Props {
 const { lang } = Astro.props;
 const otherLang = lang === 'pl' ? 'en' : 'pl';
 const homeHref = lang === 'pl' ? '/' : '/en/';
-const switchHref =
-  lang === 'pl'
-    ? (Astro.url.pathname === '/' || Astro.url.pathname === '/polityka-prywatnosci/'
-        ? (Astro.url.pathname === '/polityka-prywatnosci/' ? '/en/privacy-policy/' : '/en/')
-        : '/en/')
-    : '/';
+
+// Mapa URL-i PL <-> EN - używana do przełącznika języka.
+const langAlternates: Record<string, { pl: string; en: string }> = {
+  '/':                       { pl: '/',                       en: '/en/' },
+  '/polityka-prywatnosci/':  { pl: '/polityka-prywatnosci/',  en: '/en/privacy-policy/' },
+  '/usun-dane/':             { pl: '/usun-dane/',             en: '/en/remove-data/' },
+  '/en/':                    { pl: '/',                       en: '/en/' },
+  '/en/privacy-policy/':     { pl: '/polityka-prywatnosci/',  en: '/en/privacy-policy/' },
+  '/en/remove-data/':        { pl: '/usun-dane/',             en: '/en/remove-data/' },
+};
+
+// Normalizacja path (dodajemy końcowy /) żeby pasował do mapy.
+const normalizedPath = Astro.url.pathname.endsWith('/') || Astro.url.pathname === ''
+  ? Astro.url.pathname
+  : Astro.url.pathname + '/';
+const langPair = langAlternates[normalizedPath];
+const switchHref = langPair ? langPair[otherLang] : (otherLang === 'pl' ? '/' : '/en/');
 
 // Linki nawigacyjne do sekcji na stronie głównej
 const homeWithHash = lang === 'pl' ? '/' : '/en/';

@@ -29,15 +29,15 @@ export const ui = {
     'hero.stats.osmDesc': 'Dane z OpenStreetMap',
     'features.title': 'Co potrafi Naturide',
     'features.subtitle': 'Funkcje, które przydadzą się na każdej trasie',
-    'features.navigation.title': 'Nawigacja',
+    'features.navigation.title': 'Nawigacja Offline',
     'features.navigation.desc':
-      'Prowadzenie po trasie bezpośrednio z planera lub pliku GPX. Po zjeździe z trasy algorytm szybko tworzy łącznik, by użytkownik mógł sprawnie wrócić na trasę.',
+      'Prowadzenie po trasie bezpośrednio z planera lub pliku GPX. Po zjeździe z trasy algorytm szybko tworzy łącznik, by użytkownik mógł sprawnie wrócić na trasę nawet gdy nie ma internetu',
     'features.offline.title': 'Mapy oparte o dane OpenStreetMap',
     'features.offline.desc':
       'Precyzyjne mapy wektorowe w trybie dziennym i nocnym dostępne jednym kliknięciem.',
-    'features.planner.title': 'Planner tras',
+    'features.planner.title': 'Planner tras Offline',
     'features.planner.desc':
-      'Wyznaczaj trasy z punktami pośrednimi, eksportuj do GPX, udostępniaj znajomym.',
+      'Wyznaczaj trasy z punktami pośrednimi bez internetu.',
     'features.tracking.title': 'Nagrywanie trasy',
     'features.tracking.desc':
       'Nagrywaj przejazd z adaptacyjną dokładnością GPS do 1m podczas pokonywania zakrętu. Profil wysokości, dystans, czas - wszystko automatycznie.',

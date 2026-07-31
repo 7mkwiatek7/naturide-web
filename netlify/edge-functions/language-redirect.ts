@@ -4,6 +4,7 @@ import type { Context } from "https://edge.netlify.com";
 const EN_EQUIVALENTS: Record<string, string> = {
   "/": "/en/",
   "/polityka-prywatnosci/": "/en/privacy-policy/",
+  "/usun-dane/": "/en/remove-data/",
 };
 
 // Wykrywanie botów/crawlerów - dla nich ZAWSZE serwujemy polską wersję,

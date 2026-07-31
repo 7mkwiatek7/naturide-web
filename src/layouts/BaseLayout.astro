@@ -22,8 +22,10 @@ const fullDescription = description ?? t(lang, 'meta.description');
 const altMap: Record<string, { pl: string; en: string; xDefault: string }> = {
   '/':                       { pl: '/',                       en: '/en/',                       xDefault: '/' },
   '/polityka-prywatnosci/':  { pl: '/polityka-prywatnosci/',  en: '/en/privacy-policy/',        xDefault: '/polityka-prywatnosci/' },
+  '/usun-dane/':             { pl: '/usun-dane/',             en: '/en/remove-data/',           xDefault: '/usun-dane/' },
   '/en/':                    { pl: '/',                       en: '/en/',                       xDefault: '/' },
   '/en/privacy-policy/':     { pl: '/polityka-prywatnosci/',  en: '/en/privacy-policy/',        xDefault: '/polityka-prywatnosci/' },
+  '/en/remove-data/':        { pl: '/usun-dane/',             en: '/en/remove-data/',           xDefault: '/usun-dane/' },
 };
 
 // Normalizujemy ścieżkę (dodajemy końcowy /) żeby pasowała do mapy.
