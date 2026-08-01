@@ -18,3 +18,19 @@ binding = "DB"
 database_name = "naturide-subscribers"
 # Poniżej wklej ID swojej bazy D1 (z dashboard Cloudflare → Workers & Pages → D1 → naturide-subscribers)
 database_id = "9d49ca22-adaf-4c03-a8f7-1101231761a6"
+
+# SEND_EMAIL binding - używane do wysyłki maili z formularza "Powiadom".
+# Cloudflare Email Service - wysyłka maili z Pages Functions.
+# Wymaga wcześniejszego onboardingu domeny naturide.app:
+#   Cloudflare Dashboard → Compute → Email Service → Sending → Get started
+# (jednorazowo - Cloudflare sam dodaje wymagane rekordy DNS SPF/DKIM)
+# Wysyłka maili z formularza - przez Web3Forms (zewnętrzna usługa).
+# To NIE jest binding Cloudflare Pages - konfigurujemy przez wrangler CLI secret.
+# Setup (jednorazowo):
+#   1. Wejdź na https://web3forms.com (darmowe konto, GitHub OAuth)
+#   2. Skopiuj swój Access Key
+#   3. W terminalu: npx wrangler pages secret put WEB3FORMS_ACCESS_KEY
+#      (wklei klucz, enter)
+# Web3Forms wysyła maila z ichniejszego serwera na mkwiatek.dev@gmail.com
+# (bez konfigurowania DNS ani domeny nadawcy).
+# Cloudflare Email Routing został zostawiony jako backup - ale tu nie jest używany.

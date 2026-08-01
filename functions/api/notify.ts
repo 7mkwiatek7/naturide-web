@@ -1,11 +1,15 @@
 // Cloudflare Pages Function - obsługa formularza "Powiadom mnie o premierze".
-// Zapisuje emaila do bazy D1. Waliduje honeypot (pole bot-field).
-// Bez Netlify - wszystko robi sam Worker.
+// Zapisuje emaila do bazy D1 i wysyła maila z powiadomieniem.
+// Maila wysyła przez Web3Forms (zewnętrzna usługa "form-to-email").
+// Bez Netlify - wszystko robi sam Pages Function.
 
 interface Env {
   // D1 database - powiązanie z bazą naturide-subscribers
-  // Setup: dashboard Cloudflare → Workers & Pages → D1 → Create database
   DB: D1Database;
+
+  // WEB3FORMS_ACCESS_KEY - secret ustawiony przez wrangler CLI
+  // (npx wrangler pages secret put WEB3FORMS_ACCESS_KEY)
+  WEB3FORMS_ACCESS_KEY: string;
 }
 
 export const onRequestPost = async (context: { request: Request; env: Env }) => {
@@ -49,6 +53,36 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
       )
       .bind(email, lang, ip, userAgent, new Date().toISOString())
       .run();
+
+    // Wyślij maila z powiadomieniem (przez Web3Forms).
+    // Web3Forms to zewnętrzna usługa "form-to-email" - wysyła maila
+    // z ichniejszego serwera na adres związany z kontem Web3Forms.
+    // Jeśli wysyłka się nie powiedzie - zapis do D1 już się udał,
+    // więc uznajemy operację za udaną i tylko logujemy błąd.
+    try {
+      const emailRes = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: context.env.WEB3FORMS_ACCESS_KEY,
+          subject: `Naturide: nowy subskrybent (${email})`,
+          from_name: 'Naturide - formularz powiadomień',
+          replyto: email,
+          message:
+            `Nowy email zapisany na powiadomienia o premierze Naturide.\n\n` +
+            `Email: ${email}\n` +
+            `Język: ${lang}\n` +
+            `Czas: ${new Date().toISOString()}\n` +
+            `IP: ${ip || '(nieznane)'}\n`,
+        }),
+      });
+      if (!emailRes.ok) {
+        console.error('notify web3forms failed', emailRes.status, await emailRes.text());
+      }
+    } catch (emailErr) {
+      // Logujemy w Cloudflare Logs - email nadal jest zapisany w D1.
+      console.error('notify email send failed', emailErr);
+    }
 
     return jsonResponse({ ok: true });
   } catch (err) {
