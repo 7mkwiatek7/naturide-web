@@ -18,77 +18,123 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
       {t(lang, 'comingsoon.desc')}
     </p>
 
-    <form
-      name="notify"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      action={`?subscribed=true#notify`}
-      class="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
-    >
-      <input type="hidden" name="form-name" value="notify" />
-      <p class="hidden">
-        <label>Nie wypełniaj: <input name="bot-field" /></label>
+    <div id="notify-form-wrapper">
+      <form
+        id="notify-form"
+        name="notify"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        class="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
+      >
+        <input type="hidden" name="form-name" value="notify" />
+        <p class="hidden">
+          <label>Nie wypełniaj: <input name="bot-field" /></label>
+        </p>
+        <label class="sr-only" for="notify-email">{t(lang, 'comingsoon.placeholder')}</label>
+        <input
+          id="notify-email"
+          type="email"
+          name="email"
+          required
+          placeholder={t(lang, 'comingsoon.placeholder')}
+          aria-describedby="notify-consent"
+          class="flex-1 rounded-full border-2 border-transparent bg-white px-5 py-3 text-base text-forest-900 placeholder:text-forest-400 focus:border-sand-300 focus:outline-none focus:ring-2 focus:ring-sand-300 dark:bg-forest-100"
+        />
+        <button
+          id="notify-submit"
+          type="submit"
+          class="rounded-full bg-sand-200 px-6 py-3 text-base font-semibold text-forest-900 transition hover:bg-sand-300 disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          {t(lang, 'comingsoon.submit')}
+        </button>
+      </form>
+
+      <label
+        id="notify-consent"
+        class="mx-auto mt-4 flex max-w-md items-start gap-2 text-left text-xs text-sand-100/90 sm:text-sm"
+      >
+        <input
+          type="checkbox"
+          name="consent"
+          required
+          class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-sand-300/50 bg-white/10 accent-sand-300 focus:ring-sand-300 sm:mt-1"
+        />
+        <span>
+          {t(lang, 'comingsoon.consent')}
+          {' '}
+          <a href={privacyHref} class="text-sand-50 underline hover:text-white">{t(lang, 'comingsoon.privacyPolicy')}</a>.
+        </span>
+      </label>
+
+      <p class="mt-4 text-sm text-sand-200/80">
+        {t(lang, 'comingsoon.privacy')}
+        {' · '}
+        <a
+          href={privacyHref === '/polityka-prywatnosci/' ? '/usun-dane/' : '/en/remove-data/'}
+          class="text-sand-50 underline hover:text-white"
+        >
+          {t(lang, 'comingsoon.removeHint')}
+        </a>
       </p>
-      <label class="sr-only" for="notify-email">{t(lang, 'comingsoon.placeholder')}</label>
-      <input
-        id="notify-email"
-        type="email"
-        name="email"
-        required
-        placeholder={t(lang, 'comingsoon.placeholder')}
-        class="flex-1 rounded-full border-2 border-transparent bg-white px-5 py-3 text-base text-forest-900 placeholder:text-forest-400 focus:border-sand-300 focus:outline-none focus:ring-2 focus:ring-sand-300 dark:bg-forest-100"
-      />
-      <button
-        type="submit"
-        class="rounded-full bg-sand-200 px-6 py-3 text-base font-semibold text-forest-900 transition hover:bg-sand-300"
-      >
-        {t(lang, 'comingsoon.submit')}
-      </button>
-    </form>
+    </div>
 
-    <label class="mx-auto mt-4 flex max-w-md items-start gap-2 text-left text-xs text-sand-100/90 sm:text-sm">
-      <input
-        type="checkbox"
-        name="consent"
-        required
-        class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-sand-300/50 bg-white/10 accent-sand-300 focus:ring-sand-300 sm:mt-1"
-      />
-      <span>
-        {t(lang, 'comingsoon.consent')}
-        {' '}
-        <a href={privacyHref} class="text-sand-50 underline hover:text-white">{t(lang, 'comingsoon.privacyPolicy')}</a>.
-      </span>
-    </label>
+    <div
+      id="notify-success"
+      role="status"
+      class="hidden mx-auto mt-6 max-w-md rounded-2xl border border-sand-200/30 bg-forest-600/50 p-4 text-sand-50"
+    >
+      {t(lang, 'comingsoon.success')}
+    </div>
 
-    {Astro.url.searchParams.get('subscribed') === 'true' && (
-      <div role="status" class="mx-auto mt-6 max-w-md rounded-2xl border border-sand-200/30 bg-forest-600/50 p-4 text-sand-50">
-        {t(lang, 'comingsoon.success')}
-      </div>
-    )}
-
-    <p class="mt-4 text-sm text-sand-200/80">
-      {t(lang, 'comingsoon.privacy')}
-      {' · '}
-      <a
-        href={privacyHref === '/polityka-prywatnosci/' ? '/usun-dane/' : '/en/remove-data/'}
-        class="text-sand-50 underline hover:text-white"
-      >
-        {t(lang, 'comingsoon.removeHint')}
-      </a>
-    </p>
+    <div
+      id="notify-error"
+      role="alert"
+      class="hidden mx-auto mt-6 max-w-md rounded-2xl border border-red-300/40 bg-red-700/40 p-4 text-sand-50"
+    >
+      {t(lang, 'comingsoon.error')}
+    </div>
   </div>
 </section>
 
 <script is:inline>
-  // Localhost only: po submit formularza "notify" przekieruj na ?subscribed=true,
-  // żeby dało się przetestować komunikat sukcesu bez wdrożonego Netlify Forms.
-  // Na produkcji Netlify obsługuje formularz sam.
-  document.addEventListener('submit', (e) => {
+  // Formularz "notify" - submit przez fetch, żeby uniknąć 404 po stronie Netlify Forms.
+  // Honeypot (bot-field) jest pomijany w fetch - Netlify Forms rozumie to jako bota i odrzuca.
+  document.addEventListener('submit', async (e) => {
     const form = e.target;
     if (!form || form.tagName !== 'FORM' || form.name !== 'notify') return;
-    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') return;
+
     e.preventDefault();
-    window.location.href = window.location.pathname + '?subscribed=true#notify';
+
+    const wrapper = document.getElementById('notify-form-wrapper');
+    const successBox = document.getElementById('notify-success');
+    const errorBox = document.getElementById('notify-error');
+    const button = document.getElementById('notify-submit');
+    const originalText = button ? button.textContent : '';
+
+    if (button) {
+      button.disabled = true;
+      button.textContent = '...';
+    }
+    if (errorBox) errorBox.classList.add('hidden');
+
+    try {
+      const data = new FormData(form);
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString(),
+      });
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+
+      if (wrapper) wrapper.style.display = 'none';
+      if (successBox) successBox.classList.remove('hidden');
+    } catch (err) {
+      if (errorBox) errorBox.classList.remove('hidden');
+      if (button) {
+        button.disabled = false;
+        button.textContent = originalText;
+      }
+    }
   });
 </script>

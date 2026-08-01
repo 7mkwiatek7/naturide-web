@@ -61,6 +61,7 @@ export const ui = {
       'Wyrażam zgodę na przetwarzanie mojego adresu email w celu powiadomienia o premierze zgodnie z',
     'comingsoon.privacyPolicy': 'polityką prywatności',
     'comingsoon.success': 'Gotowe! Damy Ci znać, gdy Naturide pojawi się w sklepach.',
+    'comingsoon.error': 'Ups, coś poszło nie tak. Spróbuj ponownie za chwilę.',
     'comingsoon.removeHint': 'Wycofaj zgodę',
     'remove.title': 'Usuń swoje dane',
     'remove.subtitle':
@@ -149,6 +150,7 @@ export const ui = {
       'I agree to the processing of my email address for launch notifications according to the',
     'comingsoon.privacyPolicy': 'privacy policy',
     'comingsoon.success': 'Done! We will let you know when Naturide lands in the stores.',
+    'comingsoon.error': 'Oops, something went wrong. Please try again in a moment.',
     'comingsoon.removeHint': 'Withdraw consent',
     'remove.title': 'Remove your data',
     'remove.subtitle':
