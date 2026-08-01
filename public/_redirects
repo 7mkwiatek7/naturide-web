@@ -1,6 +1,0 @@
-# Force HTTPS (Netlify sets this automatically for .app, but kept for clarity)
-/*    /:splat   301!   https://naturide.app/:splat
-
-# (Temporarily off - activate AFTER custom domain is connected to avoid loops.)
-# After the domain naturide.app is connected in Netlify Domain settings, uncomment
-# the rule above to force all traffic through the apex domain.

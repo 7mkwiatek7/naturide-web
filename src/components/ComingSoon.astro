@@ -18,19 +18,15 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
       {t(lang, 'comingsoon.desc')}
     </p>
 
-    <div id="notify-form-wrapper">
+    <div id="notify-form-content">
       <form
         id="notify-form"
-        name="notify"
-        method="POST"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
         class="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
       >
-        <input type="hidden" name="form-name" value="notify" />
         <p class="hidden">
-          <label>Nie wypełniaj: <input name="bot-field" /></label>
+          <label>Nie wypełniaj: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
         </p>
+        <input type="hidden" name="lang" value={lang} />
         <label class="sr-only" for="notify-email">{t(lang, 'comingsoon.placeholder')}</label>
         <input
           id="notify-email"
@@ -98,15 +94,15 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
 </section>
 
 <script is:inline>
-  // Formularz "notify" - submit przez fetch, żeby uniknąć 404 po stronie Netlify Forms.
-  // Honeypot (bot-field) jest pomijany w fetch - Netlify Forms rozumie to jako bota i odrzuca.
+  // Formularz "notify" - submit przez fetch do /api/notify (Cloudflare Pages Function).
+  // Honeypot (bot-field) - ukryte pole, boty mogą je wypełnić, Worker je odrzuca.
   document.addEventListener('submit', async (e) => {
     const form = e.target;
-    if (!form || form.tagName !== 'FORM' || form.name !== 'notify') return;
+    if (!form || form.id !== 'notify-form') return;
 
     e.preventDefault();
 
-    const wrapper = document.getElementById('notify-form-wrapper');
+    const wrapper = document.getElementById('notify-form-content');
     const successBox = document.getElementById('notify-success');
     const errorBox = document.getElementById('notify-error');
     const button = document.getElementById('notify-submit');
@@ -120,12 +116,15 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
 
     try {
       const data = new FormData(form);
-      const response = await fetch('/', {
+      const response = await fetch('/api/notify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(data).toString(),
       });
-      if (!response.ok) throw new Error('HTTP ' + response.status);
+      const result = await response.json().catch(() => null);
+      if (!response.ok || !result || !result.ok) {
+        throw new Error(result && result.error ? result.error : 'HTTP ' + response.status);
+      }
 
       if (wrapper) wrapper.style.display = 'none';
       if (successBox) successBox.classList.remove('hidden');

@@ -7,7 +7,6 @@ interface Props {
 
 const { lang } = Astro.props;
 const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-policy/';
-const success = Astro.url.searchParams.get('removed') === 'true';
 ---
 
 <section class="bg-sand-50 py-16 sm:py-20 lg:py-24 dark:bg-forest-900">
@@ -21,60 +20,102 @@ const success = Astro.url.searchParams.get('removed') === 'true';
       </p>
     </div>
 
-    {success && (
-      <div
-        role="status"
-        class="mx-auto mt-8 max-w-md rounded-2xl border border-sand-200/30 bg-forest-600/50 p-4 text-sand-50"
-      >
-        {t(lang, 'remove.success')}
-      </div>
-    )}
+    <div id="remove-success" role="status" class="hidden mx-auto mt-8 max-w-md rounded-2xl border border-sand-200/30 bg-forest-600/50 p-4 text-sand-50">
+      {t(lang, 'remove.success')}
+    </div>
 
-    <form
-      name="remove"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      action={`/${lang === 'pl' ? 'usun-dane' : 'en/remove-data'}/?removed=true`}
-      class="mx-auto mt-10 flex max-w-md flex-col gap-3"
-    >
-      <input type="hidden" name="form-name" value="remove" />
-      <p class="hidden">
-        <label>Nie wypełniaj: <input name="bot-field" /></label>
+    <div id="remove-error" role="alert" class="hidden mx-auto mt-8 max-w-md rounded-2xl border border-red-300/40 bg-red-700/40 p-4 text-sand-50">
+      {t(lang, 'comingsoon.error')}
+    </div>
+
+    <div id="remove-form-content">
+      <form
+        id="remove-form"
+        class="mx-auto mt-10 flex max-w-md flex-col gap-3"
+      >
+        <p class="hidden">
+          <label>Nie wypełniaj: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+        </p>
+        <input type="hidden" name="lang" value={lang} />
+        <label class="sr-only" for="remove-email">{t(lang, 'remove.label.email')}</label>
+        <input
+          id="remove-email"
+          type="email"
+          name="email"
+          required
+          placeholder={t(lang, 'remove.label.email')}
+          class="rounded-full border-2 border-transparent bg-white px-5 py-3 text-base text-forest-900 placeholder:text-forest-400 focus:border-sand-300 focus:outline-none focus:ring-2 focus:ring-sand-300 dark:bg-forest-100"
+        />
+        <button
+          id="remove-submit"
+          type="submit"
+          class="rounded-full bg-forest-700 px-6 py-3 text-base font-semibold text-sand-50 transition hover:bg-forest-800 dark:bg-sand-200 dark:text-forest-900 dark:hover:bg-sand-300 disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          {t(lang, 'remove.submit')}
+        </button>
+      </form>
+
+      <label class="mx-auto mt-4 flex max-w-md items-start gap-2 text-left text-xs text-forest-800/80 dark:text-sand-200/80 sm:text-sm">
+        <input
+          type="checkbox"
+          name="confirm"
+          required
+          class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-forest-300/50 bg-white/10 accent-forest-700 focus:ring-forest-700 sm:mt-1"
+        />
+        <span>
+          {t(lang, 'remove.confirm')}
+          {' '}
+          <a href={privacyHref} class="text-forest-700 underline hover:text-forest-900 dark:text-sand-100 dark:hover:text-white">{t(lang, 'remove.removePolicy')}</a>.
+        </span>
+      </label>
+
+      <p class="mx-auto mt-4 max-w-md text-center text-xs text-forest-700/80 dark:text-sand-300/80 sm:text-sm">
+        {t(lang, 'remove.privacy')}
       </p>
-      <label class="sr-only" for="remove-email">{t(lang, 'remove.label.email')}</label>
-      <input
-        id="remove-email"
-        type="email"
-        name="email"
-        required
-        placeholder={t(lang, 'remove.label.email')}
-        class="rounded-full border-2 border-transparent bg-white px-5 py-3 text-base text-forest-900 placeholder:text-forest-400 focus:border-sand-300 focus:outline-none focus:ring-2 focus:ring-sand-300 dark:bg-forest-100"
-      />
-      <button
-        type="submit"
-        class="rounded-full bg-forest-700 px-6 py-3 text-base font-semibold text-sand-50 transition hover:bg-forest-800 dark:bg-sand-200 dark:text-forest-900 dark:hover:bg-sand-300"
-      >
-        {t(lang, 'remove.submit')}
-      </button>
-    </form>
-
-    <label class="mx-auto mt-4 flex max-w-md items-start gap-2 text-left text-xs text-forest-800/80 dark:text-sand-200/80 sm:text-sm">
-      <input
-        type="checkbox"
-        name="confirm"
-        required
-        class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-forest-300/50 bg-white/10 accent-forest-700 focus:ring-forest-700 sm:mt-1"
-      />
-      <span>
-        {t(lang, 'remove.confirm')}
-        {' '}
-        <a href={privacyHref} class="text-forest-700 underline hover:text-forest-900 dark:text-sand-100 dark:hover:text-white">{t(lang, 'remove.removePolicy')}</a>.
-      </span>
-    </label>
-
-    <p class="mx-auto mt-4 max-w-md text-center text-xs text-forest-700/80 dark:text-sand-300/80 sm:text-sm">
-      {t(lang, 'remove.privacy')}
-    </p>
+    </div>
   </div>
 </section>
+
+<script is:inline>
+  // Formularz "Usuń moje dane" - submit przez fetch do /api/remove.
+  document.addEventListener('submit', async (e) => {
+    const form = e.target;
+    if (!form || form.id !== 'remove-form') return;
+
+    e.preventDefault();
+
+    const wrapper = document.getElementById('remove-form-content');
+    const successBox = document.getElementById('remove-success');
+    const errorBox = document.getElementById('remove-error');
+    const button = document.getElementById('remove-submit');
+    const originalText = button ? button.textContent : '';
+
+    if (button) {
+      button.disabled = true;
+      button.textContent = '...';
+    }
+    if (errorBox) errorBox.classList.add('hidden');
+
+    try {
+      const data = new FormData(form);
+      const response = await fetch('/api/remove', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString(),
+      });
+      const result = await response.json().catch(() => null);
+      if (!response.ok || !result || !result.ok) {
+        throw new Error(result && result.error ? result.error : 'HTTP ' + response.status);
+      }
+
+      if (wrapper) wrapper.style.display = 'none';
+      if (successBox) successBox.classList.remove('hidden');
+    } catch (err) {
+      if (errorBox) errorBox.classList.remove('hidden');
+      if (button) {
+        button.disabled = false;
+        button.textContent = originalText;
+      }
+    }
+  });
+</script>

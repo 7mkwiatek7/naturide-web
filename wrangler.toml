@@ -1,0 +1,20 @@
+# Konfiguracja Cloudflare dla projektu Naturide.
+# Ten plik łączy statyczną stronę (Astro) z Cloudflare Pages
+# oraz z bazą D1 (gdzie trzymamy adresy email z formularza).
+#
+# WAŻNE: pole `database_id` musisz wypełnić po stworzeniu bazy D1 w dashboardzie.
+# Cała instrukcja krok po kroku jest w pliku docs/cloudflare-setup.md.
+
+name = "naturide-web"
+compatibility_date = "2024-09-23"
+
+# Gdzie Pages znajdzie zbudowaną stronę (Astro domyślnie buduje do `dist/`).
+pages_build_output_dir = "./dist"
+
+# Wiązanie z bazą D1 - pozwala funkcjom pages używać context.env.DB.
+# Wartość `database_id` pobierzesz z Cloudflare dashboard po stworzeniu bazy.
+[[d1_databases]]
+binding = "DB"
+database_name = "naturide-subscribers"
+# Poniżej wklej ID swojej bazy D1 (z dashboard Cloudflare → Workers & Pages → D1 → naturide-subscribers)
+database_id = "9d49ca22-adaf-4c03-a8f7-1101231761a6"

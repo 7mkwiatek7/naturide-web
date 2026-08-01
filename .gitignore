@@ -25,3 +25,6 @@ pnpm-debug.log*
 .vscode/
 .idea/
 *.swp
+
+# Cloudflare Wrangler (cache tokenow i deploy artifacts)
+.wrangler/
