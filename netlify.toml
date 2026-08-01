@@ -33,6 +33,13 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# HTML - brak cache, żeby deploy był widoczny natychmiast
+# (Netlify Edge cache'uje HTML domyślnie na ~rok, co ukrywa zmiany formularzy itp.)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
 # Force HTTPS (HSTS) - 1 year, including subdomains
 [[headers]]
   for = "/*"
