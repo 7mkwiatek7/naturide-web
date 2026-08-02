@@ -81,6 +81,20 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
       class="hidden mx-auto mt-6 max-w-md rounded-2xl border border-sand-200/30 bg-forest-600/50 p-4 text-sand-50"
     >
       {t(lang, 'comingsoon.success')}
+      <p
+        id="notify-mail-ok"
+        class="mt-2 hidden text-sm text-sand-100/80"
+        data-message={t(lang, 'comingsoon.mailSent')}
+      >
+        {t(lang, 'comingsoon.mailSent')}
+      </p>
+      <p
+        id="notify-mail-fail"
+        class="mt-2 hidden text-sm text-amber-100/90"
+        data-message={t(lang, 'comingsoon.mailNotSent')}
+      >
+        {t(lang, 'comingsoon.mailNotSent')}
+      </p>
     </div>
 
     <div
@@ -128,6 +142,19 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
 
       if (wrapper) wrapper.style.display = 'none';
       if (successBox) successBox.classList.remove('hidden');
+
+      // Dodatkowy status wysyłki maila - tylko gdy mamy tę informację w odpowiedzi.
+      // Gdy email już był zapisany (already: true) - nie pokazujemy info o mailu
+      // (bo przy ponownym submicie nie wysyłamy ponownie powiadomienia).
+      const mailOkBox = document.getElementById('notify-mail-ok');
+      const mailFailBox = document.getElementById('notify-mail-fail');
+      if (!result.already) {
+        if (result.emailSent === true && mailOkBox) {
+          mailOkBox.classList.remove('hidden');
+        } else if (result.emailSent === false && mailFailBox) {
+          mailFailBox.classList.remove('hidden');
+        }
+      }
     } catch (err) {
       if (errorBox) errorBox.classList.remove('hidden');
       if (button) {

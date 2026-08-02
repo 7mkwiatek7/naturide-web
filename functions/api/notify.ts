@@ -58,7 +58,10 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
     // Web3Forms to zewnętrzna usługa "form-to-email" - wysyła maila
     // z ichniejszego serwera na adres związany z kontem Web3Forms.
     // Jeśli wysyłka się nie powiedzie - zapis do D1 już się udał,
-    // więc uznajemy operację za udaną i tylko logujemy błąd.
+    // więc uznajemy zapis za udany, ale w odpowiedzi zwracamy
+    // emailSent: false żeby UI mógł to pokazać i właściciel wiedział.
+    let emailSent = false;
+    let emailError: string | null = null;
     try {
       const emailRes = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -77,14 +80,19 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
         }),
       });
       if (!emailRes.ok) {
-        console.error('notify web3forms failed', emailRes.status, await emailRes.text());
+        const bodyText = await emailRes.text().catch(() => '');
+        console.error('notify web3forms failed', emailRes.status, bodyText);
+        emailError = `web3forms_${emailRes.status}`;
+      } else {
+        emailSent = true;
       }
     } catch (emailErr) {
       // Logujemy w Cloudflare Logs - email nadal jest zapisany w D1.
       console.error('notify email send failed', emailErr);
+      emailError = 'web3forms_unreachable';
     }
 
-    return jsonResponse({ ok: true });
+    return jsonResponse({ ok: true, emailSent, emailError });
   } catch (err) {
     // Logujemy błąd na konsolę Cloudflare (widoczne w dashboardzie → Logs).
     console.error('notify error', err);
