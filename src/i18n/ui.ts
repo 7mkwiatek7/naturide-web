@@ -64,7 +64,9 @@ export const ui = {
     'comingsoon.error': 'Ups, coś poszło nie tak. Spróbuj ponownie za chwilę.',
     'comingsoon.mailSent': 'Mail z potwierdzeniem został wysłany.',
     'comingsoon.mailNotSent':
-      'Email zapisany na liście, ale mail z potwierdzeniem nie został wysłany — skontaktujemy się.',
+      'Błąd wysyłania — odczekaj 1 minutę i spróbuj ponownie.',
+    'comingsoon.alreadySaved':
+      'Twoja prośba o powiadomienie o premierze jest już zapisana.',
     'comingsoon.removeHint': 'Wycofaj zgodę',
     'remove.title': 'Usuń swoje dane',
     'remove.subtitle':
@@ -156,7 +158,9 @@ export const ui = {
     'comingsoon.error': 'Oops, something went wrong. Please try again in a moment.',
     'comingsoon.mailSent': 'Confirmation email sent.',
     'comingsoon.mailNotSent':
-      'Email saved to the list, but the confirmation email was not sent — we will reach out.',
+      'Send failed — wait a minute and try again.',
+    'comingsoon.alreadySaved':
+      'Your launch notification request is already saved.',
     'comingsoon.removeHint': 'Withdraw consent',
     'remove.title': 'Remove your data',
     'remove.subtitle':

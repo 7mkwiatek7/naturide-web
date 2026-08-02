@@ -82,6 +82,13 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
     >
       {t(lang, 'comingsoon.success')}
       <p
+        id="notify-mail-already"
+        class="mt-2 hidden text-sm text-sand-100/80"
+        data-message={t(lang, 'comingsoon.alreadySaved')}
+      >
+        {t(lang, 'comingsoon.alreadySaved')}
+      </p>
+      <p
         id="notify-mail-ok"
         class="mt-2 hidden text-sm text-sand-100/80"
         data-message={t(lang, 'comingsoon.mailSent')}
@@ -143,17 +150,19 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
       if (wrapper) wrapper.style.display = 'none';
       if (successBox) successBox.classList.remove('hidden');
 
-      // Dodatkowy status wysyłki maila - tylko gdy mamy tę informację w odpowiedzi.
-      // Gdy email już był zapisany (already: true) - nie pokazujemy info o mailu
-      // (bo przy ponownym submicie nie wysyłamy ponownie powiadomienia).
+      // Dodatkowy status wysyłki maila w zależności od tego jak poszło:
+      //   - already = true  → email jest już w D1, formularz nie wysyła ponownie
+      //   - emailSent = true  → nowy wpis + Web3Forms dostarczył maila
+      //   - emailSent = false → nowy wpis, ale Web3Forms odrzucił (błąd chwilowy)
       const mailOkBox = document.getElementById('notify-mail-ok');
       const mailFailBox = document.getElementById('notify-mail-fail');
-      if (!result.already) {
-        if (result.emailSent === true && mailOkBox) {
-          mailOkBox.classList.remove('hidden');
-        } else if (result.emailSent === false && mailFailBox) {
-          mailFailBox.classList.remove('hidden');
-        }
+      const mailAlreadyBox = document.getElementById('notify-mail-already');
+      if (result.already && mailAlreadyBox) {
+        mailAlreadyBox.classList.remove('hidden');
+      } else if (result.emailSent === true && mailOkBox) {
+        mailOkBox.classList.remove('hidden');
+      } else if (result.emailSent === false && mailFailBox) {
+        mailFailBox.classList.remove('hidden');
       }
     } catch (err) {
       if (errorBox) errorBox.classList.remove('hidden');
