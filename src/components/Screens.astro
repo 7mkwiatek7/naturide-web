@@ -1,5 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import { t, type Lang } from '../i18n/ui';
+
+import screen1 from '../assets/screens/screen-1.jpg';
+import screen2 from '../assets/screens/screen-2.jpg';
+import screen3 from '../assets/screens/screen-3.jpg';
+import screen4 from '../assets/screens/screen-4.jpg';
 
 interface Props {
   lang: Lang;
@@ -8,10 +14,10 @@ interface Props {
 const { lang } = Astro.props;
 
 const screens = [
-  { src: '/images/screen-1.jpg', altKey: 'screens.alt1' as const },
-  { src: '/images/screen-2.jpg', altKey: 'screens.alt2' as const },
-  { src: '/images/screen-3.jpg', altKey: 'screens.alt3' as const },
-  { src: '/images/screen-4.jpg', altKey: 'screens.alt4' as const },
+  { src: screen1, altKey: 'screens.alt1' as const },
+  { src: screen2, altKey: 'screens.alt2' as const },
+  { src: screen3, altKey: 'screens.alt3' as const },
+  { src: screen4, altKey: 'screens.alt4' as const },
 ];
 ---
 
@@ -27,13 +33,15 @@ const screens = [
     <div class="mt-12 grid grid-cols-2 gap-6 lg:grid-cols-4">
       {screens.map((s) => (
         <figure class="overflow-hidden rounded-3xl border-2 border-slate-800 bg-slate-800 p-2 shadow-sm transition hover:shadow-xl">
-          <img
+          <Image
             src={s.src}
             alt={t(lang, s.altKey)}
+            widths={[432, 864]}
+            sizes="(max-width: 640px) 432px, 864px"
+            format="webp"
+            quality={80}
             class="aspect-[9/20] w-full rounded-2xl object-cover"
             loading="lazy"
-            width="864"
-            height="1920"
           />
         </figure>
       ))}
