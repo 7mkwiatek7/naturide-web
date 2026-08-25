@@ -1,5 +1,5 @@
-// Cloudflare Pages Function - obsługa formularza "Powiadom mnie o premierze".
-// Zapisuje emaila do bazy D1 i wysyła maila z powiadomieniem.
+// Cloudflare Pages Function - obsługa zgłoszeń do testów wewnętrznych.
+// Zapisuje emaila do bazy D1 i wysyła maila z nowym zgłoszeniem.
 // Maila wysyła przez Web3Forms (zewnętrzna usługa "form-to-email").
 // Bez Netlify - wszystko robi sam Pages Function.
 
@@ -25,11 +25,16 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
 
     const email = String(formData.get('email') || '').trim().toLowerCase();
     const lang = String(formData.get('lang') || 'pl').slice(0, 2);
+    const consent = formData.get('consent');
 
     // Prosta walidacja emaila (robi to też przeglądarka przez type="email",
     // ale sprawdzamy też po stronie serwera na wypadek obejścia).
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return jsonResponse({ ok: false, error: 'invalid_email' }, 400);
+    }
+
+    if (consent !== 'accepted') {
+      return jsonResponse({ ok: false, error: 'invalid_consent' }, 400);
     }
 
     // Sprawdź czy email już jest - jeśli tak, zwracamy sukces bez dublowania.
@@ -68,11 +73,11 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           access_key: context.env.WEB3FORMS_ACCESS_KEY,
-          subject: `Naturide: nowy subskrybent (${email})`,
-          from_name: 'Naturide - formularz powiadomień',
+          subject: `Naturide: nowe zgłoszenie do testów (${email})`,
+          from_name: 'Naturide - testy wewnętrzne',
           replyto: email,
           message:
-            `Nowy email zapisany na powiadomienia o premierze Naturide.\n\n` +
+            `Nowe zgłoszenie do testów wewnętrznych Naturide.\n\n` +
             `Email: ${email}\n` +
             `Język: ${lang}\n` +
             `Czas: ${new Date().toISOString()}\n` +
@@ -102,7 +107,7 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
 
 // GET - zwraca stronę z pustym komunikatem, gdyby ktoś wszedł tu z paska adresu.
 export const onRequestGet = async () => {
-  return new Response('Use POST to subscribe.', { status: 405 });
+  return new Response('Use POST to apply for testing.', { status: 405 });
 };
 
 function jsonResponse(body: unknown, status = 200): Response {

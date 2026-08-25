@@ -1,4 +1,4 @@
--- Schemat bazy D1 dla formularza "Powiadom mnie o premierze" w Naturide.
+-- Schemat bazy D1 dla formularza zapisów Naturide.
 -- Jedna tabela: notify_subscribers.
 --
 -- Jak uruchomić (po stworzeniu bazy w dashboardzie Cloudflare):

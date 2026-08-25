@@ -21,7 +21,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <h2 class="text-xl font-semibold text-forest-900 dark:text-sand-50">2. What data we collect</h2>
           <p>Through Naturide.app we may collect:</p>
           <ul class="list-disc pl-6 space-y-1">
-            <li>Email address - if you subscribe to the launch notification.</li>
+            <li>Email address - if you apply to take part in the internal app testing.</li>
             <li>Technical data (IP address, browser type, operating system) - for statistics and security.</li>
           </ul>
         </section>
@@ -30,7 +30,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <h2 class="text-xl font-semibold text-forest-900 dark:text-sand-50">3. Purpose of processing</h2>
           <p>We process data only to:</p>
           <ul class="list-disc pl-6 space-y-1">
-            <li>Send a notification when the Naturide app launches.</li>
+            <li>Contact you about taking part in Naturide's internal testing and share testing-related information.</li>
             <li>Reply to questions sent by email.</li>
             <li>Analyze site traffic (anonymized data).</li>
           </ul>
@@ -38,12 +38,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
         <section>
           <h2 class="text-xl font-semibold text-forest-900 dark:text-sand-50">4. Legal basis</h2>
-          <p>The legal basis is Art. 6(1)(a) GDPR (consent) for the notification subscription, and Art. 6(1)(f) GDPR (legitimate interest) for technical data needed to operate the site.</p>
+          <p>The legal basis is Art. 6(1)(a) GDPR (consent) for an internal testing application, and Art. 6(1)(f) GDPR (legitimate interest) for technical data needed to operate the site.</p>
         </section>
 
         <section>
           <h2 class="text-xl font-semibold text-forest-900 dark:text-sand-50">5. Retention</h2>
-          <p>We keep your email until the app launches or until you withdraw consent (removals are processed within 7 business days). Technical data is kept only as long as needed for security purposes.</p>
+          <p>We keep your email until internal testing ends or until you withdraw consent (removals are processed within 7 business days). Technical data is kept only as long as needed for security purposes.</p>
         </section>
 
         <section>
@@ -74,10 +74,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <section>
           <h2 class="text-xl font-semibold text-forest-900 dark:text-sand-50">9. Data processor</h2>
           <p>
-            The launch notification form is processed by Netlify (Netlify, Inc., USA) under a
-            data processing agreement. Netlify stores form submissions on its servers.
-            The current list of Netlify subprocessors is available at
-            <a href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer" class="text-forest-700 underline dark:text-sand-100">netlify.com</a>.
+            The internal testing application form is handled by Cloudflare Pages Functions, and form data is
+            stored in Cloudflare D1. Notifications about new applications are sent through Web3Forms.
+            Information about data processing by these services is available at
+            <a href="https://www.cloudflare.com/" target="_blank" rel="noopener noreferrer" class="text-forest-700 underline dark:text-sand-100">cloudflare.com</a>
+            and <a href="https://web3forms.com/" target="_blank" rel="noopener noreferrer" class="text-forest-700 underline dark:text-sand-100">web3forms.com</a>.
           </p>
         </section>
       </div>

@@ -7,109 +7,145 @@ interface Props {
 
 const { lang } = Astro.props;
 const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-policy/';
+
+const benefits = [
+  { title: 'comingsoon.benefit1.title', desc: 'comingsoon.benefit1.desc' },
+  { title: 'comingsoon.benefit2.title', desc: 'comingsoon.benefit2.desc' },
+  { title: 'comingsoon.benefit3.title', desc: 'comingsoon.benefit3.desc' },
+] as const;
 ---
 
-<section id="notify" class="bg-forest-700 py-16 sm:py-20 lg:py-24 dark:bg-forest-950">
-  <div class="container-narrow text-center">
-    <h2 class="text-3xl font-bold tracking-tight text-sand-50 sm:text-4xl">
-      {t(lang, 'comingsoon.title')}
-    </h2>
-    <p class="mx-auto mt-3 max-w-xl text-lg text-sand-100/90">
-      {t(lang, 'comingsoon.desc')}
-    </p>
+<section id="notify" class="relative overflow-hidden bg-forest-900 py-16 sm:py-20 lg:py-24 dark:bg-forest-950">
+  <div class="absolute -left-32 top-1/3 h-80 w-80 rounded-full bg-forest-500/20 blur-3xl"></div>
+  <div class="container-narrow relative">
+    <div class="overflow-hidden rounded-[2rem] border border-sand-200/20 bg-forest-800/80 shadow-2xl backdrop-blur-sm">
+      <div class="grid lg:grid-cols-[0.85fr_1.15fr]">
+        <div class="p-6 sm:p-10 lg:p-12">
+          <span class="inline-flex rounded-full bg-sand-200/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sand-200">
+            {t(lang, 'comingsoon.eyebrow')}
+          </span>
+          <h2 class="mt-5 text-3xl font-bold tracking-tight text-sand-50 sm:text-4xl">
+            {t(lang, 'comingsoon.title')}
+          </h2>
+          <p class="mt-4 text-base leading-relaxed text-sand-100/85 sm:text-lg">
+            {t(lang, 'comingsoon.desc')}
+          </p>
 
-    <div id="notify-form-content">
-      <form
-        id="notify-form"
-        class="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
-      >
-        <p class="hidden">
-          <label>Nie wypełniaj: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
-        </p>
-        <input type="hidden" name="lang" value={lang} />
-        <label class="sr-only" for="notify-email">{t(lang, 'comingsoon.placeholder')}</label>
-        <input
-          id="notify-email"
-          type="email"
-          name="email"
-          required
-          placeholder={t(lang, 'comingsoon.placeholder')}
-          aria-describedby="notify-consent"
-          class="flex-1 rounded-full border-2 border-transparent bg-white px-5 py-3 text-base text-forest-900 placeholder:text-forest-400 focus:border-sand-300 focus:outline-none focus:ring-2 focus:ring-sand-300 dark:bg-forest-100"
-        />
-        <button
-          id="notify-submit"
-          type="submit"
-          class="rounded-full bg-sand-200 px-6 py-3 text-base font-semibold text-forest-900 transition hover:bg-sand-300 disabled:cursor-not-allowed disabled:opacity-70"
-        >
-          {t(lang, 'comingsoon.submit')}
-        </button>
-      </form>
+          <ul class="mt-7 space-y-4">
+            {benefits.map((benefit) => (
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-sand-200/15 text-sand-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="h-3.5 w-3.5"><path d="m5 12 4 4L19 6"></path></svg>
+                </span>
+                <span>
+                  <strong class="block text-sm font-semibold text-sand-50">{t(lang, benefit.title)}</strong>
+                  <span class="mt-0.5 block text-sm text-sand-200/75">{t(lang, benefit.desc)}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      <label
-        id="notify-consent"
-        class="mx-auto mt-4 flex max-w-md items-start gap-2 text-left text-xs text-sand-100/90 sm:text-sm"
-      >
-        <input
-          type="checkbox"
-          name="consent"
-          required
-          class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-sand-300/50 bg-white/10 accent-sand-300 focus:ring-sand-300 sm:mt-1"
-        />
-        <span>
-          {t(lang, 'comingsoon.consent')}
-          {' '}
-          <a href={privacyHref} class="text-sand-50 underline hover:text-white">{t(lang, 'comingsoon.privacyPolicy')}</a>.
-        </span>
-      </label>
+        <div class="border-t border-sand-200/15 bg-forest-950/25 p-6 sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
+          <div id="notify-form-content">
+            <form id="notify-form" class="space-y-4">
+              <p class="hidden">
+                <label>
+                  {t(lang, 'comingsoon.honeypot')}
+                  <input name="bot-field" tabindex="-1" autocomplete="off" />
+                </label>
+              </p>
+              <input type="hidden" name="lang" value={lang} />
+              <div class="flex flex-col gap-3 sm:flex-row">
+                <label class="sr-only" for="notify-email">{t(lang, 'comingsoon.placeholder')}</label>
+                <input
+                  id="notify-email"
+                  type="email"
+                  name="email"
+                  required
+                  placeholder={t(lang, 'comingsoon.placeholder')}
+                  aria-describedby="notify-consent"
+                  class="min-w-0 flex-1 rounded-2xl border-2 border-transparent bg-white px-5 py-3 text-base text-forest-900 placeholder:text-forest-400 focus:border-sand-300 focus:outline-none focus:ring-2 focus:ring-sand-300 dark:bg-forest-100"
+                />
+                <button
+                  id="notify-submit"
+                  type="submit"
+                  data-loading-text={t(lang, 'comingsoon.loading')}
+                  class="inline-flex items-center justify-center rounded-2xl bg-sand-200 px-6 py-3 text-base font-semibold text-forest-900 transition hover:bg-sand-300 disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {t(lang, 'comingsoon.submit')}
+                </button>
+              </div>
 
-      <p class="mt-4 text-sm text-sand-200/80">
-        {t(lang, 'comingsoon.privacy')}
-        {' · '}
-        <a
-          href={privacyHref === '/polityka-prywatnosci/' ? '/usun-dane/' : '/en/remove-data/'}
-          class="text-sand-50 underline hover:text-white"
-        >
-          {t(lang, 'comingsoon.removeHint')}
-        </a>
-      </p>
-    </div>
+              <label
+                id="notify-consent"
+                class="flex items-start gap-2 text-left text-xs leading-relaxed text-sand-100/85 sm:text-sm"
+              >
+                <input
+                  type="checkbox"
+                  name="consent"
+                  value="accepted"
+                  required
+                  class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-sand-300/50 bg-white/10 accent-sand-300 focus:ring-sand-300 sm:mt-1"
+                />
+                <span>
+                  {t(lang, 'comingsoon.consent')}
+                  {' '}
+                  <a href={privacyHref} class="text-sand-50 underline hover:text-white">{t(lang, 'comingsoon.privacyPolicy')}</a>.
+                </span>
+              </label>
+            </form>
 
-    <div
-      id="notify-success"
-      role="status"
-      class="hidden mx-auto mt-6 max-w-md rounded-2xl border border-sand-200/30 bg-forest-600/50 p-4 text-sand-50"
-    >
-      {t(lang, 'comingsoon.success')}
-      <p
-        id="notify-mail-already"
-        class="mt-2 hidden text-sm text-sand-100/80"
-        data-message={t(lang, 'comingsoon.alreadySaved')}
-      >
-        {t(lang, 'comingsoon.alreadySaved')}
-      </p>
-      <p
-        id="notify-mail-ok"
-        class="mt-2 hidden text-sm text-sand-100/80"
-        data-message={t(lang, 'comingsoon.mailSent')}
-      >
-        {t(lang, 'comingsoon.mailSent')}
-      </p>
-      <p
-        id="notify-mail-fail"
-        class="mt-2 hidden text-sm text-amber-100/90"
-        data-message={t(lang, 'comingsoon.mailNotSent')}
-      >
-        {t(lang, 'comingsoon.mailNotSent')}
-      </p>
-    </div>
+            <p class="mt-5 text-xs text-sand-200/70 sm:text-sm">
+              {t(lang, 'comingsoon.privacy')}
+              {' · '}
+              <a
+                href={privacyHref === '/polityka-prywatnosci/' ? '/usun-dane/' : '/en/remove-data/'}
+                class="text-sand-50 underline hover:text-white"
+              >
+                {t(lang, 'comingsoon.removeHint')}
+              </a>
+            </p>
+          </div>
 
-    <div
-      id="notify-error"
-      role="alert"
-      class="hidden mx-auto mt-6 max-w-md rounded-2xl border border-red-300/40 bg-red-700/40 p-4 text-sand-50"
-    >
-      {t(lang, 'comingsoon.error')}
+          <div
+            id="notify-success"
+            role="status"
+            class="hidden rounded-2xl border border-sand-200/30 bg-forest-600/50 p-4 text-sand-50"
+          >
+            {t(lang, 'comingsoon.success')}
+            <p
+              id="notify-mail-already"
+              class="mt-2 hidden text-sm text-sand-100/80"
+              data-message={t(lang, 'comingsoon.alreadySaved')}
+            >
+              {t(lang, 'comingsoon.alreadySaved')}
+            </p>
+            <p
+              id="notify-mail-ok"
+              class="mt-2 hidden text-sm text-sand-100/80"
+              data-message={t(lang, 'comingsoon.mailSent')}
+            >
+              {t(lang, 'comingsoon.mailSent')}
+            </p>
+            <p
+              id="notify-mail-fail"
+              class="mt-2 hidden text-sm text-amber-100/90"
+              data-message={t(lang, 'comingsoon.mailNotSent')}
+            >
+              {t(lang, 'comingsoon.mailNotSent')}
+            </p>
+          </div>
+
+          <div
+            id="notify-error"
+            role="alert"
+            class="hidden mt-6 rounded-2xl border border-red-300/40 bg-red-700/40 p-4 text-sand-50"
+          >
+            {t(lang, 'comingsoon.error')}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -131,7 +167,7 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
 
     if (button) {
       button.disabled = true;
-      button.textContent = '...';
+      button.textContent = button.getAttribute('data-loading-text') || '';
     }
     if (errorBox) errorBox.classList.add('hidden');
 

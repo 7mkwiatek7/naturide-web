@@ -21,7 +21,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h2 class="text-xl font-semibold text-forest-900 dark:text-sand-50">2. Jakie dane zbieramy</h2>
           <p>W ramach strony Naturide.app możemy zbierać:</p>
           <ul class="list-disc pl-6 space-y-1">
-            <li>Adres email - jeśli zapiszesz się na powiadomienie o premierze aplikacji.</li>
+            <li>Adres email - jeśli zgłosisz chęć udziału w testach wewnętrznych aplikacji.</li>
             <li>Dane techniczne (adres IP, typ przeglądarki, system operacyjny) - w celach statystycznych i bezpieczeństwa.</li>
           </ul>
         </section>
@@ -30,7 +30,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h2 class="text-xl font-semibold text-forest-900 dark:text-sand-50">3. Cel przetwarzania</h2>
           <p>Dane przetwarzamy wyłącznie w celu:</p>
           <ul class="list-disc pl-6 space-y-1">
-            <li>Wysłania powiadomienia o premierze aplikacji Naturide.</li>
+            <li>Kontaktu w sprawie udziału w testach wewnętrznych Naturide i przekazywania informacji organizacyjnych dotyczących testów.</li>
             <li>Odpowiadania na pytania przesłane przez email.</li>
             <li>Analizy ruchu na stronie (dane zanonimizowane).</li>
           </ul>
@@ -38,12 +38,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <section>
           <h2 class="text-xl font-semibold text-forest-900 dark:text-sand-50">4. Podstawa prawna</h2>
-          <p>Podstawą prawną przetwarzania danych jest art. 6 ust. 1 lit. a) RODO (zgoda) - w przypadku zapisu na listę powiadomień, oraz art. 6 ust. 1 lit. f) RODO (prawnie uzasadniony interes) - w przypadku danych technicznych niezbędnych do działania strony.</p>
+          <p>Podstawą prawną przetwarzania danych jest art. 6 ust. 1 lit. a) RODO (zgoda) - w przypadku zgłoszenia do testów wewnętrznych, oraz art. 6 ust. 1 lit. f) RODO (prawnie uzasadniony interes) - w przypadku danych technicznych niezbędnych do działania strony.</p>
         </section>
 
         <section>
           <h2 class="text-xl font-semibold text-forest-900 dark:text-sand-50">5. Okres przechowywania</h2>
-          <p>Adres email przechowujemy do momentu premiery aplikacji lub do momentu wycofania zgody (usuwania obsługujemy w terminie do 7 dni roboczych). Dane techniczne przechowujemy przez okres niezbędny do celów bezpieczeństwa.</p>
+          <p>Adres email przechowujemy do zakończenia testów wewnętrznych lub do momentu wycofania zgody (usuwania obsługujemy w terminie do 7 dni roboczych). Dane techniczne przechowujemy przez okres niezbędny do celów bezpieczeństwa.</p>
         </section>
 
         <section>
@@ -74,10 +74,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <section>
           <h2 class="text-xl font-semibold text-forest-900 dark:text-sand-50">9. Procesor danych</h2>
           <p>
-            Formularz powiadomień o premierze obsługiwany jest przez Netlify (Netlify, Inc., USA) w ramach
-            umowy powierzenia przetwarzania danych. Netlify przechowuje dane z formularzy na swoich
-            serwerach. Aktualna lista podprocesorów Netlify jest dostępna na stronie
-            <a href="https://www.netlify.com/" target="_blank" rel="noopener noreferrer" class="text-forest-700 underline dark:text-sand-100">netlify.com</a>.
+            Formularz zgłoszeniowy do testów wewnętrznych jest obsługiwany przez Cloudflare Pages Functions,
+            a dane zapisujemy w bazie Cloudflare D1. Powiadomienie o nowym zgłoszeniu wysyłamy przez usługę
+            Web3Forms. Informacje o przetwarzaniu danych przez te usługi są dostępne na stronach
+            <a href="https://www.cloudflare.com/" target="_blank" rel="noopener noreferrer" class="text-forest-700 underline dark:text-sand-100">cloudflare.com</a>
+            i <a href="https://web3forms.com/" target="_blank" rel="noopener noreferrer" class="text-forest-700 underline dark:text-sand-100">web3forms.com</a>.
           </p>
         </section>
       </div>
