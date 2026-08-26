@@ -18,8 +18,8 @@ export const ui = {
     'hero.title': 'Naturide',
     'hero.subtitle': 'Inteligentna nawigacja rowerowa',
     'hero.description':
-      'Naturide to inteligentna nawigacja rowerowa ze szczegółowymi mapami OSM dla miłośników turystyki rowerowej. Posiada wiele ciekawych funkcji takich jak automatyczne zarządzanie ekranem czy adaptacyjny zapis śladu. Planuj trasy offline, nawiguj i ciesz się prywatnością. ',
-    'hero.cta.notify': 'Odkryj Naturide',
+      'Naturide to inteligentna nawigacja ze szczegółowymi mapami OSM dla miłośników turystyki pieszej i rowerowej. Posiada wiele ciekawych funkcji takich jak automatyczne zarządzanie ekranem czy adaptacyjny zapis śladu. Planuj trasy offline, nawiguj i ciesz się prywatnością. ',
+    'hero.cta.notify': 'Testuj Naturide',
     'hero.cta.features': 'Zobacz funkcje',
     'hero.stats.offline': 'Mapy',
     'hero.stats.offlineDesc': 'Aktualne mapy wektorowe',
@@ -37,7 +37,7 @@ export const ui = {
       'Precyzyjne mapy wektorowe w trybie dziennym i nocnym dostępne jednym kliknięciem.',
     'features.planner.title': 'Planner tras Offline',
     'features.planner.desc':
-      'Wyznaczaj trasy z punktami pośrednimi bez internetu.',
+      'Wyznaczaj trasy z punktami pośrednimi bez internetu. Sprawdź jaką nawierzchnię i rodzaj drogi napotkasz na kolejnych odcinkach.',
     'features.tracking.title': 'Nagrywanie trasy',
     'features.tracking.desc':
       'Nagrywaj przejazd z adaptacyjną dokładnością GPS do 1m podczas pokonywania zakrętu. Po zakończonej wycieczce zobacz statystyki - profil wysokości, dystans, średnią prędkość, czas, czas w ruchu oraz sumę przewyższeń.',
