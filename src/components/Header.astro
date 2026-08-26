@@ -34,7 +34,7 @@ const featuresHref = isOnHome ? '#features' : `${homeWithHash}#features`;
 const notifyHref = isOnHome ? '#notify' : `${homeWithHash}#notify`;
 ---
 
-<header class="sticky top-0 z-40 border-b border-forest-100 bg-sand-50/80 backdrop-blur dark:border-forest-800 dark:bg-forest-900/80">
+<header class="site-section sticky top-0 z-40 border-b border-slate-700/20 backdrop-blur dark:border-slate-200/20">
   <div class="container-wide flex h-16 items-center justify-between">
     <a href={homeHref} class="flex items-center gap-2 text-forest-700 hover:text-forest-800 dark:text-sand-100 dark:hover:text-sand-50">
       <img src="/images/logo.png" alt="Naturide" class="h-9 w-9" width="36" height="36" />
@@ -50,7 +50,7 @@ const notifyHref = isOnHome ? '#notify' : `${homeWithHash}#notify`;
       <a
         href={switchHref}
         aria-label={`Switch to ${languages[otherLang]}`}
-        class="rounded-full border border-forest-200 px-3 py-1 text-xs font-semibold text-forest-700 transition hover:border-forest-400 hover:bg-forest-50"
+        class="rounded-full border border-forest-200 px-3 py-1 text-xs font-semibold text-forest-700 transition hover:border-forest-400 hover:bg-forest-50 dark:border-sand-300/60 dark:text-sand-100 dark:hover:border-sand-200 dark:hover:bg-slate-900/30"
       >
         {otherLang.toUpperCase()}
       </a>

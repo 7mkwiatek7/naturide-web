@@ -128,10 +128,95 @@ const baseSchema = {
     </script>
   </head>
   <body class="flex min-h-screen flex-col">
+    <div class="site-background" aria-hidden="true"></div>
     <Header lang={lang} />
     <main class="flex-1">
       <slot />
     </main>
     <Footer lang={lang} />
+    <script is:inline>
+      (function () {
+        var background = document.querySelector('.site-background');
+        if (!background || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        var frame = 0;
+        var targetScroll = window.scrollY;
+        var isAnimating = false;
+
+        function updateBackground(scrollPosition) {
+          document.documentElement.style.setProperty(
+            '--parallax-offset',
+            Math.round(scrollPosition * 0.5) + 'px'
+          );
+        }
+
+        function getMaxScroll() {
+          return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        }
+
+        function animateScroll() {
+          frame = 0;
+          var currentScroll = window.scrollY;
+          var distance = targetScroll - currentScroll;
+
+          if (Math.abs(distance) <= 1) {
+            window.scrollTo({ top: targetScroll, behavior: 'instant' });
+            updateBackground(targetScroll);
+            isAnimating = false;
+            return;
+          }
+
+          var nextScroll = currentScroll + distance * 0.14;
+          window.scrollTo({ top: nextScroll, behavior: 'instant' });
+          updateBackground(nextScroll);
+          frame = window.requestAnimationFrame(animateScroll);
+        }
+
+        function stopScrollAnimation() {
+          if (frame) window.cancelAnimationFrame(frame);
+          frame = 0;
+          isAnimating = false;
+          targetScroll = window.scrollY;
+          updateBackground(window.scrollY);
+        }
+
+        function requestScrollAnimation() {
+          if (frame) return;
+          isAnimating = true;
+          frame = window.requestAnimationFrame(animateScroll);
+        }
+
+        function handleWheel(event) {
+          if (event.ctrlKey || event.deltaY === 0) return;
+
+          var delta = event.deltaY;
+          if (event.deltaMode === 1) delta *= 16;
+          if (event.deltaMode === 2) delta *= window.innerHeight;
+
+          targetScroll = Math.max(0, Math.min(getMaxScroll(), targetScroll + delta * 1.2));
+          event.preventDefault();
+          requestScrollAnimation();
+        }
+
+        function handleControlInteraction(event) {
+          var target = event.target;
+          if (target && typeof target.closest === 'function' && target.closest('a, button')) {
+            stopScrollAnimation();
+          }
+        }
+
+        function handleScroll() {
+          if (!isAnimating) {
+            targetScroll = window.scrollY;
+            updateBackground(window.scrollY);
+          }
+        }
+
+        updateBackground(window.scrollY);
+        window.addEventListener('wheel', handleWheel, { passive: false });
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        document.addEventListener('pointerdown', handleControlInteraction);
+      }());
+    </script>
   </body>
 </html>

@@ -11,13 +11,13 @@ const finalPrivacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy
 const removeDataHref = lang === 'pl' ? '/usun-dane/' : '/en/remove-data/';
 ---
 
-<footer id="contact" class="border-t border-forest-100 bg-forest-900 text-sand-100 dark:border-forest-950 dark:bg-forest-950">
+<footer id="contact" class="site-section border-t border-slate-700/20 text-slate-800 dark:border-slate-200/20 dark:text-sand-100">
   <div class="container-wide py-12">
     <div class="grid gap-10 md:grid-cols-3">
       <div>
         <div class="flex items-center gap-2">
           <img src="/images/logo.png" alt="Naturide" class="h-10 w-10" width="40" height="40" />
-          <span class="text-xl font-bold tracking-tight text-sand-50">Naturide</span>
+          <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-sand-50">Naturide</span>
         </div>
         <p class="mt-3 max-w-xs text-sm text-sand-200">
           {t(lang, 'hero.subtitle')}
@@ -25,30 +25,30 @@ const removeDataHref = lang === 'pl' ? '/usun-dane/' : '/en/remove-data/';
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-sand-300">{t(lang, 'contact.title')}</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-700 dark:text-sand-300">{t(lang, 'contact.title')}</h3>
         <ul class="mt-4 space-y-2 text-sm">
           <li>
-            <span class="block text-xs uppercase tracking-wider text-sand-400">{t(lang, 'contact.email')}</span>
-            <a href="mailto:mkwiatek.dev@gmail.com" class="text-sand-100 hover:text-white">mkwiatek.dev@gmail.com</a>
+            <span class="block text-xs uppercase tracking-wider text-slate-600 dark:text-sand-400">{t(lang, 'contact.email')}</span>
+            <a href="mailto:mkwiatek.dev@gmail.com" class="text-slate-800 hover:text-slate-950 dark:text-sand-100 dark:hover:text-white">mkwiatek.dev@gmail.com</a>
           </li>
           <li>
-            <span class="block text-xs uppercase tracking-wider text-sand-400">{t(lang, 'contact.facebook')}</span>
-            <a href="https://www.facebook.com/Naturideapp/" target="_blank" rel="noopener noreferrer" class="text-sand-100 hover:text-white">facebook.com/Naturideapp</a>
+            <span class="block text-xs uppercase tracking-wider text-slate-600 dark:text-sand-400">{t(lang, 'contact.facebook')}</span>
+            <a href="https://www.facebook.com/Naturideapp/" target="_blank" rel="noopener noreferrer" class="text-slate-800 hover:text-slate-950 dark:text-sand-100 dark:hover:text-white">facebook.com/Naturideapp</a>
           </li>
         </ul>
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-sand-300">Naturide</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-700 dark:text-sand-300">Naturide</h3>
         <ul class="mt-4 space-y-2 text-sm">
-          <li><a href={finalPrivacyHref} class="text-sand-100 hover:text-white">{t(lang, 'footer.privacy')}</a></li>
-          <li><a href={removeDataHref} class="text-sand-100 hover:text-white">{t(lang, 'footer.removeData')}</a></li>
-          <li><a href="https://www.facebook.com/Naturideapp/" target="_blank" rel="noopener noreferrer" class="text-sand-100 hover:text-white">Facebook</a></li>
+          <li><a href={finalPrivacyHref} class="text-slate-800 hover:text-slate-950 dark:text-sand-100 dark:hover:text-white">{t(lang, 'footer.privacy')}</a></li>
+          <li><a href={removeDataHref} class="text-slate-800 hover:text-slate-950 dark:text-sand-100 dark:hover:text-white">{t(lang, 'footer.removeData')}</a></li>
+          <li><a href="https://www.facebook.com/Naturideapp/" target="_blank" rel="noopener noreferrer" class="text-slate-800 hover:text-slate-950 dark:text-sand-100 dark:hover:text-white">Facebook</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="mt-10 border-t border-forest-700 pt-6 text-center text-xs text-sand-300">
+    <div class="mt-10 border-t border-slate-700/20 pt-6 text-center text-xs text-slate-600 dark:border-slate-200/20 dark:text-sand-300">
       {t(lang, 'footer.copyright').replace('{year}', String(year))}
     </div>
   </div>

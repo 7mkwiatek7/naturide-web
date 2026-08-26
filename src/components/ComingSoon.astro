@@ -15,38 +15,38 @@ const benefits = [
 ] as const;
 ---
 
-<section id="notify" class="relative overflow-hidden bg-forest-900 py-16 sm:py-20 lg:py-24 dark:bg-forest-950">
-  <div class="absolute -left-32 top-1/3 h-80 w-80 rounded-full bg-forest-500/20 blur-3xl"></div>
+<section id="notify" class="site-section relative overflow-hidden py-16 sm:py-20 lg:py-24">
+  <div class="absolute -left-32 top-1/3 h-80 w-80 rounded-full bg-neutral-500/15 blur-3xl"></div>
   <div class="container-narrow relative">
-    <div class="overflow-hidden rounded-[2rem] border border-sand-200/20 bg-forest-800/80 shadow-2xl backdrop-blur-sm">
+    <div class="overflow-hidden rounded-[2rem] border border-neutral-700/20 bg-white/35 shadow-2xl backdrop-blur-sm dark:border-neutral-200/15 dark:bg-neutral-800/65">
       <div class="grid lg:grid-cols-[0.85fr_1.15fr]">
         <div class="p-6 sm:p-10 lg:p-12">
-          <span class="inline-flex rounded-full bg-sand-200/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-sand-200">
+          <span class="inline-flex rounded-full bg-neutral-700/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:bg-neutral-200/10 dark:text-sand-200">
             {t(lang, 'comingsoon.eyebrow')}
           </span>
-          <h2 class="mt-5 text-3xl font-bold tracking-tight text-sand-50 sm:text-4xl">
+          <h2 class="mt-5 text-3xl font-bold tracking-tight text-neutral-900 dark:text-sand-50 sm:text-4xl">
             {t(lang, 'comingsoon.title')}
           </h2>
-          <p class="mt-4 text-base leading-relaxed text-sand-100/85 sm:text-lg">
+          <p class="mt-4 text-base leading-relaxed text-neutral-700/85 dark:text-sand-100/85 sm:text-lg">
             {t(lang, 'comingsoon.desc')}
           </p>
 
           <ul class="mt-7 space-y-4">
             {benefits.map((benefit) => (
               <li class="flex items-start gap-3">
-                <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-sand-200/15 text-sand-200">
+                <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-neutral-700/10 text-neutral-700 dark:bg-neutral-200/15 dark:text-sand-200">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="h-3.5 w-3.5"><path d="m5 12 4 4L19 6"></path></svg>
                 </span>
                 <span>
-                  <strong class="block text-sm font-semibold text-sand-50">{t(lang, benefit.title)}</strong>
-                  <span class="mt-0.5 block text-sm text-sand-200/75">{t(lang, benefit.desc)}</span>
+                  <strong class="block text-sm font-semibold text-neutral-900 dark:text-sand-50">{t(lang, benefit.title)}</strong>
+                  <span class="mt-0.5 block text-sm text-neutral-700/75 dark:text-sand-200/75">{t(lang, benefit.desc)}</span>
                 </span>
               </li>
             ))}
           </ul>
         </div>
 
-        <div class="border-t border-sand-200/15 bg-forest-950/25 p-6 sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
+        <div class="border-t border-neutral-700/15 bg-neutral-700/5 p-6 sm:p-10 lg:border-l lg:border-t-0 lg:p-12 dark:border-neutral-200/10 dark:bg-neutral-950/30">
           <div id="notify-form-content">
             <form id="notify-form" class="space-y-4">
               <p class="hidden">
@@ -65,7 +65,7 @@ const benefits = [
                   required
                   placeholder={t(lang, 'comingsoon.placeholder')}
                   aria-describedby="notify-consent"
-                  class="min-w-0 flex-1 rounded-2xl border-2 border-transparent bg-white px-5 py-3 text-base text-forest-900 placeholder:text-forest-400 focus:border-sand-300 focus:outline-none focus:ring-2 focus:ring-sand-300 dark:bg-forest-100"
+                  class="min-w-0 flex-1 rounded-2xl border-2 border-transparent bg-white px-5 py-3 text-base text-forest-900 placeholder:text-neutral-500 focus:border-sand-300 focus:outline-none focus:ring-2 focus:ring-sand-300 dark:bg-forest-100 dark:placeholder:text-neutral-500"
                 />
                 <button
                   id="notify-submit"
@@ -79,29 +79,29 @@ const benefits = [
 
               <label
                 id="notify-consent"
-                class="flex items-start gap-2 text-left text-xs leading-relaxed text-sand-100/85 sm:text-sm"
+                class="flex items-start gap-2 text-left text-xs leading-relaxed text-neutral-700/85 dark:text-sand-100/85 sm:text-sm"
               >
                 <input
                   type="checkbox"
                   name="consent"
                   value="accepted"
                   required
-                  class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-sand-300/50 bg-white/10 accent-sand-300 focus:ring-sand-300 sm:mt-1"
+                  class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-neutral-500/50 bg-white/40 accent-neutral-700 focus:ring-neutral-500 dark:border-sand-300/50 dark:bg-neutral-950/20 dark:accent-sand-300 dark:focus:ring-sand-300 sm:mt-1"
                 />
                 <span>
                   {t(lang, 'comingsoon.consent')}
                   {' '}
-                  <a href={privacyHref} class="text-sand-50 underline hover:text-white">{t(lang, 'comingsoon.privacyPolicy')}</a>.
+                  <a href={privacyHref} class="text-neutral-900 underline hover:text-neutral-700 dark:text-sand-100 dark:hover:text-white">{t(lang, 'comingsoon.privacyPolicy')}</a>.
                 </span>
               </label>
             </form>
 
-            <p class="mt-5 text-xs text-sand-200/70 sm:text-sm">
+            <p class="mt-5 text-xs text-neutral-700/70 dark:text-sand-200/70 sm:text-sm">
               {t(lang, 'comingsoon.privacy')}
               {' · '}
               <a
                 href={privacyHref === '/polityka-prywatnosci/' ? '/usun-dane/' : '/en/remove-data/'}
-                class="text-sand-50 underline hover:text-white"
+                class="text-neutral-900 underline hover:text-neutral-700 dark:text-sand-100 dark:hover:text-white"
               >
                 {t(lang, 'comingsoon.removeHint')}
               </a>
@@ -111,7 +111,7 @@ const benefits = [
           <div
             id="notify-success"
             role="status"
-            class="hidden rounded-2xl border border-sand-200/30 bg-forest-600/50 p-4 text-sand-50"
+            class="hidden rounded-2xl border border-neutral-700/25 bg-neutral-800/70 p-4 text-white"
           >
             {t(lang, 'comingsoon.success')}
             <p

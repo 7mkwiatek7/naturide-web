@@ -7,19 +7,74 @@
     scroll-behavior: smooth;
   }
   body {
-    background-color: #fbf9f4;
+    position: relative;
+    isolation: isolate;
+    background-color: #f5f3ee;
     color: #223a20;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'cv11', 'ss01';
   }
+  body > :not(.site-background) {
+    position: relative;
+    z-index: 1;
+  }
+  .site-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background-color: #f5f3ee;
+  }
+  .site-background::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: calc(50% + 50vh);
+    content: '';
+    background-image: url('/images/naturide-background.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    filter: saturate(0.84) brightness(0.82) contrast(0.95);
+    transform: translate3d(0, var(--parallax-offset, 0px), 0);
+  }
+  .site-background::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background: rgba(30, 30, 28, 0.14);
+  }
   .dark body {
-    background-color: #223a20;
+    background-color: #2d2f2d;
     color: #fbf9f4;
+  }
+  .dark .site-background {
+    background-color: #2d2f2d;
+  }
+  .dark .site-background::after {
+    background: rgba(30, 30, 28, 0.26);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
 @layer components {
+  .site-section {
+    background-color: rgba(245, 243, 238, 0.72);
+  }
+  .brand-name {
+    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    letter-spacing: -0.04em;
+  }
+  .dark .site-section {
+    background-color: rgba(45, 47, 45, 0.72);
+  }
   .container-narrow {
     @apply mx-auto max-w-5xl px-4 sm:px-6 lg:px-8;
   }
