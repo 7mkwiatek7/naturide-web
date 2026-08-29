@@ -13,12 +13,12 @@ const features = [
     icon: 'navigation',
   },
   {
-    key: 'offline',
-    icon: 'offline',
-  },
-  {
     key: 'planner',
     icon: 'planner',
+  },
+  {
+    key: 'loop',
+    icon: 'loop',
   },
   {
     key: 'tracking',
@@ -44,35 +44,218 @@ const features = [
       <p class="mt-3 text-lg text-forest-800/80 dark:text-sand-200/80">{t(lang, 'features.subtitle')}</p>
     </div>
 
-    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="mt-12 grid items-start gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {features.map((f) => (
-        <article class="group relative flex flex-col rounded-2xl border border-forest-100 bg-white p-6 transition hover:border-forest-300 hover:shadow-lg dark:border-forest-700/60 dark:bg-forest-900/75 dark:hover:border-forest-600">
-          <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-neutral-400/70 bg-neutral-500/20 text-neutral-800 dark:border-sand-300/70 dark:bg-neutral-500/25 dark:text-sand-100">
-            {f.icon === 'navigation' && (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
-            )}
-            {f.icon === 'offline' && (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-            )}
-            {f.icon === 'planner' && (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><circle cx="6" cy="19" r="3"></circle><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"></path><circle cx="18" cy="5" r="3"></circle></svg>
-            )}
-            {f.icon === 'tracking' && (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            )}
-            {f.icon === 'screen' && (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M 12.83 6.71 L 12.83 9.29 L 10.898 8.776 A 3 3 0 0 1 10.121 10.121 L 11.536 11.536 L 9.294 12.83 L 8.776 10.898 A 3 3 0 0 1 7.224 10.898 L 6.706 12.83 L 4.464 11.536 L 5.879 10.121 A 3 3 0 0 1 5.102 8.776 L 3.17 9.29 L 3.17 6.71 L 5.102 7.224 A 3 3 0 0 1 5.879 5.879 L 4.464 4.464 L 6.706 3.17 L 7.224 5.102 A 3 3 0 0 1 8.776 5.102 L 9.294 3.17 L 11.536 4.464 L 10.121 5.879 A 3 3 0 0 1 10.898 7.224 Z"></path><circle cx="8" cy="8" r="1.5"></circle><path d="M 19.898 16.224 L 19.898 17.776 L 18.739 17.466 A 1.8 1.8 0 0 1 18.273 18.273 L 19.121 19.121 L 17.776 19.898 L 17.466 18.739 A 1.8 1.8 0 0 1 16.534 18.739 L 16.224 19.898 L 14.879 19.121 L 15.727 18.273 A 1.8 1.8 0 0 1 15.261 17.466 L 14.102 17.776 L 14.102 16.224 L 15.261 16.534 A 1.8 1.8 0 0 1 15.727 15.727 L 14.879 14.879 L 16.224 14.102 L 16.534 15.261 A 1.8 1.8 0 0 1 17.466 15.261 L 17.776 14.102 L 19.121 14.879 L 18.273 15.727 A 1.8 1.8 0 0 1 18.739 16.534 Z"></path><circle cx="17" cy="17" r="0.7"></circle></svg>
-            )}
-            {f.icon === 'layers' && (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"></path><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"></path><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"></path></svg>
-            )}
+        <article
+          class="feature-card relative cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest-600 dark:focus-visible:outline-sand-300"
+          data-feature-card
+          role="button"
+          tabindex="0"
+          aria-expanded="false"
+        >
+          <div class="feature-card-surface relative rounded-2xl border border-forest-100 bg-white p-6 transition-[box-shadow,border-color,opacity] hover:border-forest-300 hover:shadow-lg dark:border-forest-700/60 dark:bg-forest-900/75 dark:hover:border-forest-600">
+            <div class="mb-4 flex items-start justify-between gap-4">
+              <div class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-neutral-400/70 bg-neutral-500/20 text-neutral-800 dark:border-sand-300/70 dark:bg-neutral-500/25 dark:text-sand-100">
+                {f.icon === 'navigation' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+                )}
+                {f.icon === 'planner' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><circle cx="6" cy="19" r="3"></circle><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"></path><circle cx="18" cy="5" r="3"></circle></svg>
+                )}
+                {f.icon === 'loop' && (
+                  <img src="/images/petla.svg" alt="" aria-hidden="true" class="h-8 w-8 dark:invert" />
+                )}
+                {f.icon === 'tracking' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                )}
+                {f.icon === 'screen' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="M 12.83 6.71 L 12.83 9.29 L 10.898 8.776 A 3 3 0 0 1 10.121 10.121 L 11.536 11.536 L 9.294 12.83 L 8.776 10.898 A 3 3 0 0 1 7.224 10.898 L 6.706 12.83 L 4.464 11.536 L 5.879 10.121 A 3 3 0 0 1 5.102 8.776 L 3.17 9.29 L 3.17 6.71 L 5.102 7.224 A 3 3 0 0 1 5.879 5.879 L 4.464 4.464 L 6.706 3.17 L 7.224 5.102 A 3 3 0 0 1 8.776 5.102 L 9.294 3.17 L 11.536 4.464 L 10.121 5.879 A 3 3 0 0 1 10.898 7.224 Z"></path><circle cx="8" cy="8" r="1.5"></circle><path d="M 19.898 16.224 L 19.898 17.776 L 18.739 17.466 A 1.8 1.8 0 0 1 18.273 18.273 L 19.121 19.121 L 17.776 19.898 L 17.466 18.739 A 1.8 1.8 0 0 1 16.534 18.739 L 16.224 19.898 L 14.879 19.121 L 15.727 18.273 A 1.8 1.8 0 0 1 15.261 17.466 L 14.102 17.776 L 14.102 16.224 L 15.261 16.534 A 1.8 1.8 0 0 1 15.727 15.727 L 14.879 14.879 L 16.224 14.102 L 16.534 15.261 A 1.8 1.8 0 0 1 17.466 15.261 L 17.776 14.102 L 19.121 14.879 L 18.273 15.727 A 1.8 1.8 0 0 1 18.739 16.534 Z"></path><circle cx="17" cy="17" r="0.7"></circle></svg>
+                )}
+                {f.icon === 'layers' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"></path><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"></path><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"></path></svg>
+                )}
+              </div>
+              <span class="feature-expand-icon inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-forest-300/70 text-forest-700 transition-transform dark:border-sand-300/70 dark:text-sand-100" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="m6 9 6 6 6-6"></path></svg>
+              </span>
+            </div>
+            <h3 class="text-lg font-semibold text-forest-900 dark:text-sand-100">{t(lang, `features.${f.key}.title` as any)}</h3>
+            <div class="feature-description mt-2 space-y-5 text-sm leading-relaxed text-forest-800/80 dark:text-sand-200/80" data-feature-description>
+              {t(lang, `features.${f.key}.desc` as any)
+                .split('\n\n')
+                .map((paragraph, index) => (
+                  <p
+                    class={index > 0 ? 'feature-description-extra' : undefined}
+                    style={index > 0 ? `--feature-delay: ${(index - 1) * 140}ms` : undefined}
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+            </div>
           </div>
-          <h3 class="text-lg font-semibold text-forest-900 dark:text-sand-100">{t(lang, `features.${f.key}.title` as any)}</h3>
-          <p class="mt-2 text-sm leading-relaxed text-forest-800/80 dark:text-sand-200/80">
-            {t(lang, `features.${f.key}.desc` as any)}
-          </p>
         </article>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .feature-description {
+    max-height: 4.5rem;
+    overflow: hidden;
+    transition: max-height 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .feature-card-surface {
+    transition: box-shadow 1000ms cubic-bezier(0.22, 1, 0.36, 1), border-color 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .feature-card {
+    opacity: 1;
+    transition: opacity 760ms cubic-bezier(0.22, 1, 0.36, 1) 260ms;
+  }
+
+  .feature-card[data-feature-state='open'] .feature-description {
+    max-height: var(--feature-expanded-height, 100rem);
+  }
+
+  .feature-description-extra {
+    opacity: 0;
+    transform: translateY(0.5rem);
+    transition: opacity 650ms ease, transform 650ms ease;
+  }
+
+  .feature-card[data-feature-state='open'] .feature-description-extra {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: var(--feature-delay, 0ms);
+  }
+
+  .feature-card[data-feature-state='open'] .feature-card-surface {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    width: 100%;
+    box-shadow: 0 24px 60px rgba(15, 35, 18, 0.35);
+  }
+
+  .feature-card[data-feature-state='open'] .feature-expand-icon {
+    transform: rotate(180deg);
+  }
+
+  .feature-card[data-feature-obscured='true'] {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 360ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feature-description,
+    .feature-description-extra,
+    .feature-card-surface,
+    .feature-card[data-feature-obscured='true'] {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const featureCards = Array.from(document.querySelectorAll<HTMLElement>('[data-feature-card]'));
+  let activeCard: HTMLElement | null = null;
+
+  const clearObscuredCards = () => {
+    featureCards.forEach((card) => {
+      delete card.dataset.featureObscured;
+    });
+  };
+
+  const setCollapsedHeights = () => {
+    featureCards.forEach((card) => {
+      if (card.dataset.featureState === 'open') return;
+
+      const surface = card.querySelector<HTMLElement>('.feature-card-surface');
+      const description = card.querySelector<HTMLElement>('[data-feature-description]');
+      if (!surface || !description) return;
+
+      card.style.height = 'auto';
+      description.style.setProperty('--feature-expanded-height', `${description.scrollHeight}px`);
+      card.style.height = `${surface.offsetHeight}px`;
+    });
+  };
+
+  const markObscuredCards = (card: HTMLElement) => {
+    const surface = card.querySelector<HTMLElement>('.feature-card-surface');
+    const description = card.querySelector<HTMLElement>('[data-feature-description]');
+    if (!surface || !description) return;
+
+    const cardRect = card.getBoundingClientRect();
+    const expandedBottom = cardRect.top + surface.offsetHeight - description.offsetHeight + description.scrollHeight;
+
+    featureCards.forEach((otherCard) => {
+      if (otherCard === card) return;
+
+      const otherRect = otherCard.getBoundingClientRect();
+      const overlapsHorizontally = otherRect.right > cardRect.left && otherRect.left < cardRect.right;
+      const isBelowCard = otherRect.top >= cardRect.bottom;
+
+      if (overlapsHorizontally && isBelowCard && otherRect.top < expandedBottom) {
+        otherCard.dataset.featureObscured = 'true';
+      }
+    });
+  };
+
+  const closeCard = (card: HTMLElement) => {
+    card.dataset.featureState = 'closed';
+    card.setAttribute('aria-expanded', 'false');
+    clearObscuredCards();
+    if (activeCard === card) activeCard = null;
+  };
+
+  const openCard = (card: HTMLElement) => {
+    if (activeCard && activeCard !== card) closeCard(activeCard);
+
+    clearObscuredCards();
+    card.dataset.featureState = 'open';
+    card.setAttribute('aria-expanded', 'true');
+    activeCard = card;
+    markObscuredCards(card);
+  };
+
+  const toggleCard = (card: HTMLElement) => {
+    if (card.dataset.featureState === 'open') {
+      closeCard(card);
+    } else {
+      openCard(card);
+    }
+  };
+
+  setCollapsedHeights();
+
+  featureCards.forEach((card) => {
+    card.addEventListener('click', () => toggleCard(card));
+    card.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      toggleCard(card);
+    });
+  });
+
+  document.addEventListener('pointerdown', (event) => {
+    const target = event.target;
+    if (activeCard && target instanceof Node && !activeCard.contains(target)) {
+      closeCard(activeCard);
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && activeCard) {
+      closeCard(activeCard);
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (activeCard) closeCard(activeCard);
+    requestAnimationFrame(setCollapsedHeights);
+  });
+</script>

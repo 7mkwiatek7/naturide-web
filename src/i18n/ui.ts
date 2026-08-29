@@ -32,12 +32,16 @@ export const ui = {
     'features.navigation.title': 'Nawigacja Offline',
     'features.navigation.desc':
       'Prowadzenie po trasie bezpośrednio z planera lub pliku GPX. Po zjeździe z trasy algorytm szybko tworzy łącznik, by użytkownik mógł sprawnie wrócić na trasę nawet gdy nie ma internetu',
-    'features.offline.title': 'Mapy oparte o dane OpenStreetMap',
-    'features.offline.desc':
-      'Precyzyjne mapy wektorowe w trybie dziennym i nocnym dostępne jednym kliknięciem.',
     'features.planner.title': 'Planner tras Offline',
     'features.planner.desc':
       'Wyznaczaj trasy z punktami pośrednimi bez internetu. Sprawdź jaką nawierzchnię i rodzaj drogi napotkasz na kolejnych odcinkach.',
+    'features.loop.title': 'Trasy w pętli',
+    'features.loop.desc':
+      'Trasy pętlowe — ruszaj i wracaj w to samo miejsce\n\n' +
+      'Masz ochotę pojeździć, ale nie masz pomysłu, dokąd? Wybierz przybliżony dystans od 5 do 150 km, a Naturide zaproponuje ciekawą trasę, która zaczyna się i kończy w Twoim aktualnym miejscu.\n\n' +
+      'Nie musisz zastanawiać się, którędy pojechać. Możesz pozwolić Naturide automatycznie wybrać kierunek albo samodzielnie wskazać, w którą stronę ma prowadzić pętla. Aplikacja poszuka najlepszego wariantu, starając się wykorzystać nowe odcinki drogi, ograniczyć powtarzanie trasy i uniknąć niepotrzebnego zawracania.\n\n' +
+      'Dystans jest orientacyjny — jego dokładna długość zależy od dostępnych dróg. Ty wybierasz, jak daleko i w którą stronę chcesz pojechać. Naturide zajmuje się resztą.\n\n' +
+      'Wybierz dystans. Wskaż kierunek. Odkrywaj nowe drogi.',
     'features.tracking.title': 'Nagrywanie trasy',
     'features.tracking.desc':
       'Nagrywaj przejazd z adaptacyjną dokładnością GPS do 1m podczas pokonywania zakrętu. Po zakończonej wycieczce zobacz statystyki - profil wysokości, dystans, średnią prędkość, czas, czas w ruchu oraz sumę przewyższeń.',
@@ -135,12 +139,16 @@ export const ui = {
     'features.navigation.title': 'Bike navigation',
     'features.navigation.desc':
       'Turn-by-turn guidance along planned routes and imported GPX files.',
-    'features.offline.title': 'Maps powered by OpenStreetMap',
-    'features.offline.desc':
-      'Precise vector maps in day and night mode, just one tap away.',
     'features.planner.title': 'Route planner',
     'features.planner.desc':
       'Plan routes with waypoints, export to GPX, share with friends.',
+    'features.loop.title': 'Loop routes',
+    'features.loop.desc':
+      'Loop routes — start and return to the same place\n\n' +
+      'Feel like going for a ride, but not sure where to go? Choose an approximate distance from 5 to 150 km, and Naturide will suggest an interesting route that starts and ends at your current location.\n\n' +
+      'You do not have to figure out which way to go. Let Naturide choose the direction automatically or point to the direction you want the loop to follow. The app will look for the best option, trying to use new road sections, limit route repetition, and avoid unnecessary U-turns.\n\n' +
+      'The distance is approximate — its exact length depends on the available roads. You choose how far and in which direction you want to ride. Naturide takes care of the rest.\n\n' +
+      'Choose a distance. Pick a direction. Discover new roads.',
     'features.tracking.title': 'Ride tracking',
     'features.tracking.desc':
       'Record your ride with adaptive GPS accuracy up to 1 m on tight turns. Elevation profile, distance, time - all automatic.',
