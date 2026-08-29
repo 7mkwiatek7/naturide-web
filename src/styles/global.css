@@ -69,10 +69,6 @@
   .site-section {
     background-color: rgba(245, 243, 238, 0.72);
   }
-  .brand-name {
-    font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
-    letter-spacing: -0.04em;
-  }
   .dark .site-section {
     background-color: rgba(45, 47, 45, 0.72);
   }
