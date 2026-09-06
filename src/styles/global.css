@@ -70,7 +70,7 @@
     background-color: rgba(245, 243, 238, 0.72);
   }
   .dark .site-section {
-    background-color: rgba(45, 47, 45, 0.72);
+    background-color: rgba(45, 47, 45, 0.20);
   }
   .container-narrow {
     @apply mx-auto max-w-5xl px-4 sm:px-6 lg:px-8;
