@@ -58,7 +58,7 @@ export const ui = {
     'comingsoon.eyebrow': 'Dołącz do testów wewnętrznych',
     'comingsoon.title': 'Dołącz do odkrywców Naturide',
     'comingsoon.desc':
-    'Szukamy osób, które chcą przetestować Naturide podczas prawdziwych przejazdów, sprawdzić planowanie tras i nawigację oraz podzielić się swoimi spostrzeżeniami. To dopiero początek drogi Naturide i właśnie pierwsi użytkownicy będą mieli wpływ na to, jak aplikacja będzie się rozwijać. Zostaw swój adres e-mail, a odezwiemy się ze szczegółami dotyczącymi zamkniętych testów.',
+    'Szukamy osób, które chcą przetestować Naturide podczas prawdziwych przejazdów, sprawdzić planowanie tras i nawigację oraz podzielić się swoimi spostrzeżeniami. To dopiero początek drogi Naturide i właśnie pierwsi użytkownicy będą mieli wpływ na to, jak aplikacja będzie się rozwijać. Zostaw swój adres e-mail, a odezwiemy się ze szczegółami dotyczącymi wewnętrznych testów.',
     'comingsoon.benefit1.title': 'Wersja testowa',
     'comingsoon.benefit1.desc': 'Sprawdzisz aplikację przed premierą.',
     'comingsoon.benefit2.title': 'Wpływ na rozwój',
