@@ -69,10 +69,8 @@ const baseSchema = {
       (function () {
         try {
           var stored = localStorage.getItem('theme');
-          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (stored === 'dark' || (!stored && prefersDark)) {
-            document.documentElement.classList.add('dark');
-          }
+          document.documentElement.classList.add('dark');
+          if (stored !== 'dark') localStorage.setItem('theme', 'dark');
         } catch (_) {}
       })();
       window.__toggleTheme = function () {
