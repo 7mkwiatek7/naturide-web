@@ -49,7 +49,7 @@ export const ui = {
     'features.screen.desc': 'Aby maksymalnie ograniczyć zużycie baterii, aplikacja automatycznie wyłącza ekran w ustalonej odległości po zakręcie i włącza przed kolejnym zakrętem. Funkcja jest dostępna po włączeniu w ustawieniach aplikacji.  ',
     'features.layers.title': 'Warstwy mapy',
     'features.layers.desc': '—',
-    'screens.title': 'Najlepsze trasy zaczynają się tam\nGdzie kończą się znane ścieżki',
+    'screens.title': 'Najlepsza trasa zaczyna się tam\nGdzie kończą się znane ścieżki',
     'screens.subtitle': 'Dzień, noc, przyjazny interfejs - wszystko czego potrzebujesz w podróży',
     'screens.alt1': 'Widok mapy z zaplanowaną trasą rowerową przez północną Polskę - tryb dzienny',
     'screens.alt2': 'Widok mapy w trybie nocnym - czytelny kontrast po zmroku',
