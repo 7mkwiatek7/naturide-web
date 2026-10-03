@@ -60,6 +60,20 @@ npm run dev
 - **Dodawanie zdjęć** - wrzuć swoje screeny aplikacji do `public/images/` pod nazwami `screen-1.jpg`, `screen-2.jpg`, `screen-3.jpg`, `screen-4.jpg`. Logo do `public/images/logo.png`.
 - **Edycja tekstów** - wszystkie teksty PL/EN są w pliku `src/i18n/ui.ts`. Otwórz go w dowolnym edytorze tekstu (polecam [VS Code](https://code.visualstudio.com/) - darmowy).
 
+## Lokalny szkic nowego wyglądu
+
+Po uruchomieniu `npm run dev` otwórz `http://localhost:4321/szkic/`.
+Wersja angielska jest pod `http://localhost:4321/szkic/en/`.
+Jeśli serwer poda inny port, użyj go zamiast `4321`.
+
+Szkic jest niezależny od strony głównej. Plik `src/pages/szkic/[...lang].astro`
+udostępnia go tylko w trybie lokalnym; `npm run build` nie tworzy tych stron
+w katalogu `dist`. Formularz pokazuje wyłącznie lokalny komunikat, bez wysyłania
+i zapisywania danych. Teksty obu języków są w `src/i18n/ui.ts` pod kluczami `concept.*`.
+Ekrany aplikacji w szkicu są w `src/assets/screens/concept-navigation.png`
+i `src/assets/screens/concept-route-profile.png`; kliknięcie ich w szkicu otwiera
+pełny rozmiar w nowej karcie. Te pliki nie trafiają do katalogu `dist`.
+
 ## Zatrzymywanie serwera
 
 W oknie PowerShell naciśnij **Ctrl + C** - serwer się zatrzyma.
