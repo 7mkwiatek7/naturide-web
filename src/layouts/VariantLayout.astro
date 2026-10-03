@@ -4,6 +4,8 @@ import { t, type Lang, type UIKey } from '../i18n/ui';
 import photo from '../../public/images/naturide-background.jpg';
 import heroPhoto from '../assets/hero/naturide-stats.png';
 import plannerPhoto from '../assets/planner/naturide-stats-night.png';
+import navigationScreen from '../assets/screens/concept-navigation.png';
+import routeProfileScreen from '../assets/screens/concept-route-profile.png';
 
 interface Props { lang: Lang; variant?: boolean }
 const { lang, variant = false } = Astro.props;
@@ -90,8 +92,8 @@ const detailKeys = variant
             <figcaption>{text('photo.caption')}</figcaption>
           </figure>
           <figure class="hero-phone">
-            <a class="phone" href="/src/assets/screens/concept-navigation.png" target="_blank" rel="noopener noreferrer" aria-label={text('screen.open')}>
-              <img src="/src/assets/screens/concept-navigation.png" alt={text('screen.alt')} width="648" height="1439" loading="eager" decoding="async" />
+            <a class="phone" href={navigationScreen.src} target="_blank" rel="noopener noreferrer" aria-label={text('screen.open')}>
+              <Image src={navigationScreen} alt={text('screen.alt')} widths={[320, 648]} sizes="196px" format="webp" quality={85} loading="eager" />
             </a>
             <figcaption>{text('screen.caption')}</figcaption>
           </figure>
@@ -153,8 +155,8 @@ const detailKeys = variant
             <div class="contour contour-one" aria-hidden="true"></div>
             <div class="contour contour-two" aria-hidden="true"></div>
             <div class="contour contour-three" aria-hidden="true"></div>
-            <a class="phone navigation-phone" href="/src/assets/screens/concept-route-profile.png" target="_blank" rel="noopener noreferrer" aria-label={text('detail.screenOpen')}>
-              <img src="/src/assets/screens/concept-route-profile.png" alt={text('detail.screenAlt')} width="652" height="1432" loading="eager" decoding="async" />
+            <a class="phone navigation-phone" href={routeProfileScreen.src} target="_blank" rel="noopener noreferrer" aria-label={text('detail.screenOpen')}>
+              <Image src={routeProfileScreen} alt={text('detail.screenAlt')} widths={[480, 652]} sizes="270px" format="webp" quality={85} loading="lazy" decoding="async" />
             </a>
             <figcaption>{text('detail.note')}</figcaption>
           </figure>
