@@ -188,8 +188,8 @@ const benefits = [
 
       // Dodatkowy status wysyłki maila w zależności od tego jak poszło:
       //   - already = true  → email jest już w D1, formularz nie wysyła ponownie
-      //   - emailSent = true  → nowy wpis + Web3Forms dostarczył maila
-      //   - emailSent = false → nowy wpis, ale Web3Forms odrzucił (błąd chwilowy)
+      //   - emailSent = true  → nowy wpis + Resend zaakceptował powiadomienie
+      //   - emailSent = false → nowy wpis, ale Resend nie przyjął powiadomienia
       const mailOkBox = document.getElementById('notify-mail-ok');
       const mailFailBox = document.getElementById('notify-mail-fail');
       const mailAlreadyBox = document.getElementById('notify-mail-already');

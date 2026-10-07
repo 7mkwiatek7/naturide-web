@@ -4,17 +4,14 @@
 //
 // Użycie: wejdź w przeglądarkę na https://naturide.app/api/debug
 // Wynik to JSON z:
-//   - czy jest ustawiony secret WEB3FORMS_ACCESS_KEY (tak/nie + długość + 4 pierwsze znaki)
+//   - czy ustawiono secret API Resend (bez ujawniania jego wartości)
 //   - czy Cloudflare widzi binding DB (i ile jest rekordów)
 //   - IP, UA, Accept-Language (do debugowania middleware'a języka)
-// Endpoint nie wysyła testowego żądania do Web3Forms, żeby nie zużywać limitu API.
-//
-// Ten endpoint nie ujawnia pełnego klucza (tylko prefix), więc można go
-// bezpiecznie udostępnić właścicielowi do sprawdzenia diagnostyki.
+// Endpoint nie wysyła testowego e-maila i nie ujawnia żadnych secretów.
 
 interface Env {
   DB: D1Database;
-  WEB3FORMS_ACCESS_KEY?: string;
+  RESEND_API_KEY?: string;
 }
 
 interface PagesContext {
@@ -24,9 +21,7 @@ interface PagesContext {
 
 export const onRequestGet = async (context: PagesContext): Promise<Response> => {
   const url = new URL(context.request.url);
-
-  const rawKey = context.env.WEB3FORMS_ACCESS_KEY;
-  const keySet = typeof rawKey === 'string' && rawKey.length > 0;
+  const resendApiKeyConfigured = Boolean(context.env.RESEND_API_KEY?.trim());
 
   // Czy DB jest zbindowany i odpowiada.
   let dbInfo: { status: string; count?: number; error?: string } = {
@@ -45,11 +40,6 @@ export const onRequestGet = async (context: PagesContext): Promise<Response> => 
     dbInfo = { status: 'error', error: String((e as Error).message ?? e) };
   }
 
-  const web3Check = {
-    performed: false,
-    hint: 'Test API został wyłączony, żeby nie generować dodatkowych żądań do Web3Forms.',
-  };
-
   const data = {
     timestamp: new Date().toISOString(),
     url: url.toString(),
@@ -60,21 +50,19 @@ export const onRequestGet = async (context: PagesContext): Promise<Response> => 
       acceptLanguage: context.request.headers.get('accept-language')?.slice(0, 80) ?? '(none)',
     },
 
-    web3forms: {
-      keyConfigured: keySet,
-      keyLength: keySet ? rawKey!.length : 0,
-      keyPrefix: keySet ? rawKey!.slice(0, 4) + '...' : '(none)',
-      apiCheck: web3Check,
-      hint: keySet
-        ? 'Klucz jest ustawiony. Ten endpoint nie testuje połączenia z Web3Forms; szczegóły rzeczywistych wysyłek sprawdź w Cloudflare Logs.'
-        : 'Brak klucza WEB3FORMS_ACCESS_KEY. Dodaj go w terminalu komendą: npx wrangler pages secret put WEB3FORMS_ACCESS_KEY',
+    resend: {
+      apiKeyConfigured: resendApiKeyConfigured,
+      hint:
+        resendApiKeyConfigured
+          ? 'Klucz jest ustawiony. Ten endpoint nie wysyła testowego e-maila.'
+          : 'Dodaj secret RESEND_API_KEY w ustawieniach projektu Cloudflare Pages.',
     },
 
     database: dbInfo,
 
     bindings: {
       hasDB: !!context.env.DB,
-      hasKey: keySet,
+      hasResendApiKey: resendApiKeyConfigured,
     },
   };
 

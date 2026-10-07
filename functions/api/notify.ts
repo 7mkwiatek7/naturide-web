@@ -4,10 +4,12 @@
 
 interface Env {
   DB: D1Database;
-  WEB3FORMS_ACCESS_KEY: string;
+  RESEND_API_KEY?: string;
 }
 
 type NotificationStatus = 'unknown' | 'pending' | 'sent' | 'failed';
+const NOTIFICATION_RECIPIENT = 'mkwiatek.dev@gmail.com';
+const NOTIFICATION_SENDER = 'testy@naturide.app';
 
 interface Subscriber {
   id: number;
@@ -22,6 +24,10 @@ interface Subscriber {
 interface NotificationResult {
   emailSent: boolean;
   emailError: string | null;
+}
+
+interface ResendEmailApiResponse {
+  id: string;
 }
 
 const RETRY_COOLDOWN_MS = 5 * 60 * 1000;
@@ -200,16 +206,25 @@ async function sendNotification(
   env: Env,
   subscriber: Pick<Subscriber, 'email' | 'lang' | 'ip_address' | 'created_at'>
 ): Promise<NotificationResult> {
+  const apiKey = env.RESEND_API_KEY?.trim();
+  if (!apiKey) {
+    console.error('notify Resend API key is not configured');
+    return { emailSent: false, emailError: 'resend_configuration_missing' };
+  }
+
   try {
-    const response = await fetch('https://api.web3forms.com/submit', {
+    const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
-        access_key: env.WEB3FORMS_ACCESS_KEY,
+        from: `Naturide Testy <${NOTIFICATION_SENDER}>`,
+        to: [NOTIFICATION_RECIPIENT],
+        reply_to: subscriber.email,
         subject: `Naturide: nowe zgłoszenie do testów (${subscriber.email})`,
-        from_name: 'Naturide - testy wewnętrzne',
-        replyto: subscriber.email,
-        message:
+        text:
           `Nowe zgłoszenie do testów wewnętrznych Naturide.\n\n` +
           `Email: ${subscriber.email}\n` +
           `Język: ${subscriber.lang}\n` +
@@ -218,24 +233,42 @@ async function sendNotification(
       }),
     });
     const responseBody: unknown = await response.json().catch(() => null);
-    const accepted =
-      response.ok &&
-      typeof responseBody === 'object' &&
-      responseBody !== null &&
-      'success' in responseBody &&
-      responseBody.success === true;
 
-    if (!accepted) {
-      const emailError = response.ok ? 'web3forms_rejected' : `web3forms_${response.status}`;
-      console.error('notify web3forms failed', response.status, responseBody);
-      return { emailSent: false, emailError };
+    if (!response.ok) {
+      console.error('notify Resend failed', response.status, resendErrorName(responseBody));
+      return { emailSent: false, emailError: `resend_http_${response.status}` };
+    }
+
+    if (!isResendEmailApiResponse(responseBody)) {
+      console.error(
+        'notify Resend returned an invalid response',
+        resendErrorName(responseBody)
+      );
+      return { emailSent: false, emailError: 'resend_rejected' };
     }
 
     return { emailSent: true, emailError: null };
   } catch (emailErr) {
-    console.error('notify email send failed', emailErr);
-    return { emailSent: false, emailError: 'web3forms_unreachable' };
+    console.error('notify Resend request failed', emailErr);
+    return { emailSent: false, emailError: 'resend_unreachable' };
   }
+}
+
+function isResendEmailApiResponse(value: unknown): value is ResendEmailApiResponse {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'id' in value &&
+    typeof value.id === 'string' &&
+    value.id.length > 0
+  );
+}
+
+function resendErrorName(value: unknown): string | null {
+  if (typeof value !== 'object' || value === null || !('name' in value) || typeof value.name !== 'string') {
+    return null;
+  }
+  return value.name;
 }
 
 export const onRequestGet = async () => {
