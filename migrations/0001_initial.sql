@@ -3,9 +3,12 @@
 --
 -- Jak uruchomić (po stworzeniu bazy w dashboardzie Cloudflare):
 --   wrangler d1 execute naturide-subscribers --file=migrations/0001_initial.sql --remote
+-- Before deploying notification retries, also apply this migration once:
+--   npx wrangler d1 execute naturide-subscribers --file=migrations/0002_notification_status.sql --remote
 --
 -- Lokalnie (wrangler dev):
 --   wrangler d1 execute naturide-subscribers --file=migrations/0001_initial.sql
+--   wrangler d1 execute naturide-subscribers --file=migrations/0002_notification_status.sql
 
 CREATE TABLE IF NOT EXISTS notify_subscribers (
   -- Unikalny identyfikator (unikatowy dla każdego zapisu).

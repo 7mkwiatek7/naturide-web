@@ -6,8 +6,8 @@
 // Wynik to JSON z:
 //   - czy jest ustawiony secret WEB3FORMS_ACCESS_KEY (tak/nie + długość + 4 pierwsze znaki)
 //   - czy Cloudflare widzi binding DB (i ile jest rekordów)
-//   - czy Web3Forms w ogóle odpowiada na request (czyli domena jest osiągalna)
 //   - IP, UA, Accept-Language (do debugowania middleware'a języka)
+// Endpoint nie wysyła testowego żądania do Web3Forms, żeby nie zużywać limitu API.
 //
 // Ten endpoint nie ujawnia pełnego klucza (tylko prefix), więc można go
 // bezpiecznie udostępnić właścicielowi do sprawdzenia diagnostyki.
@@ -45,31 +45,10 @@ export const onRequestGet = async (context: PagesContext): Promise<Response> => 
     dbInfo = { status: 'error', error: String((e as Error).message ?? e) };
   }
 
-  // Czy domena api.web3forms.com w ogóle działa - test z pustym (fałszywym) kluczem.
-  // Web3Forms odpowiada błędem 4xx na zły klucz - ale to potwierdza że jesteśmy w stanie
-  // do niego dostać. Gdyby fetch rzucił wyjątek (np. DNS / firewall), zobaczymy to.
-  let web3Reach: { reachable: boolean; status?: number; body?: string; error?: string } = {
-    reachable: false,
+  const web3Check = {
+    performed: false,
+    hint: 'Test API został wyłączony, żeby nie generować dodatkowych żądań do Web3Forms.',
   };
-  try {
-    const res = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        access_key: 'diagnostic-test-key',
-        subject: 'diagnostic',
-        message: 'diagnostic - not a real submission',
-      }),
-    });
-    const text = await res.text();
-    web3Reach = {
-      reachable: true,
-      status: res.status,
-      body: text.slice(0, 250),
-    };
-  } catch (e) {
-    web3Reach = { reachable: false, error: String((e as Error).message ?? e) };
-  }
 
   const data = {
     timestamp: new Date().toISOString(),
@@ -85,9 +64,9 @@ export const onRequestGet = async (context: PagesContext): Promise<Response> => 
       keyConfigured: keySet,
       keyLength: keySet ? rawKey!.length : 0,
       keyPrefix: keySet ? rawKey!.slice(0, 4) + '...' : '(none)',
-      apiReachable: web3Reach,
+      apiCheck: web3Check,
       hint: keySet
-        ? 'Klucz wygląda na ustawiony. Sprawdź na web3forms.com czy adres "To Email" jest ustawiony i czy konto nie jest zablokowane.'
+        ? 'Klucz jest ustawiony. Ten endpoint nie testuje połączenia z Web3Forms; szczegóły rzeczywistych wysyłek sprawdź w Cloudflare Logs.'
         : 'Brak klucza WEB3FORMS_ACCESS_KEY. Dodaj go w terminalu komendą: npx wrangler pages secret put WEB3FORMS_ACCESS_KEY',
     },
 

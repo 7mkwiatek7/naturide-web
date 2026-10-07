@@ -334,6 +334,9 @@ export const ui = {
       'Zgłoszenie zapisano, ale powiadomienie dla zespołu nie zostało wysłane.',
     'comingsoon.alreadySaved':
       'Twoje zgłoszenie do testów jest już zapisane.',
+    'comingsoon.retry': 'Ponów powiadomienie',
+    'comingsoon.retryWait': 'Przed kolejną próbą odczekaj kilka minut.',
+    'comingsoon.retryError': 'Nie udało się ponowić powiadomienia. Spróbuj ponownie za chwilę.',
     'comingsoon.removeHint': 'Wycofaj zgodę',
     'remove.title': 'Usuń swoje dane',
     'remove.subtitle':
@@ -443,6 +446,9 @@ export const ui = {
       'Your application was saved, but the team notification could not be sent.',
     'comingsoon.alreadySaved':
       'Your application for testing is already saved.',
+    'comingsoon.retry': 'Retry notification',
+    'comingsoon.retryWait': 'Please wait a few minutes before trying again.',
+    'comingsoon.retryError': 'Could not retry the notification. Please try again later.',
     'comingsoon.removeHint': 'Withdraw consent',
     'remove.title': 'Remove your data',
     'remove.subtitle':

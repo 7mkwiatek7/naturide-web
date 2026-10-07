@@ -246,6 +246,17 @@ const detailKeys = variant
             <p id="notify-mail-already" hidden>{t(lang, 'comingsoon.alreadySaved')}</p>
             <p id="notify-mail-ok" hidden>{t(lang, 'comingsoon.mailSent')}</p>
             <p id="notify-mail-fail" hidden>{t(lang, 'comingsoon.mailNotSent')}</p>
+            <p id="notify-retry-wait" class="retry-wait" role="status" hidden>{t(lang, 'comingsoon.retryWait')}</p>
+            <p id="notify-retry-error" class="form-error" role="alert" hidden>{t(lang, 'comingsoon.retryError')}</p>
+            <button
+              id="notify-retry"
+              class="button"
+              type="button"
+              data-loading-text={t(lang, 'comingsoon.loading')}
+              hidden
+            >
+              {t(lang, 'comingsoon.retry')}
+            </button>
           </div>
         )}
       </section>
@@ -297,48 +308,101 @@ const detailKeys = variant
   const liveMailAlready = document.querySelector<HTMLParagraphElement>('#notify-mail-already');
   const liveMailOk = document.querySelector<HTMLParagraphElement>('#notify-mail-ok');
   const liveMailFail = document.querySelector<HTMLParagraphElement>('#notify-mail-fail');
+  const liveRetry = document.querySelector<HTMLButtonElement>('#notify-retry');
+  const liveRetryWait = document.querySelector<HTMLParagraphElement>('#notify-retry-wait');
+  const liveRetryError = document.querySelector<HTMLParagraphElement>('#notify-retry-error');
 
-  if (liveForm && liveSubmit && liveFormContent && liveSuccess && liveError && liveMailAlready && liveMailOk && liveMailFail) {
-    liveForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
+  interface NotifyResponse {
+    ok: true;
+    already?: boolean;
+    emailSent?: boolean;
+    canRetry?: boolean;
+    retryAfterSeconds?: number;
+  }
 
-      const originalText = liveSubmit.textContent;
-      liveSubmit.disabled = true;
-      liveSubmit.textContent = liveSubmit.getAttribute('data-loading-text') || '';
+  function isNotifyResponse(value: unknown): value is NotifyResponse {
+    if (typeof value !== 'object' || value === null || !('ok' in value) || value.ok !== true) return false;
+    if ('already' in value && typeof value.already !== 'boolean') return false;
+    if ('emailSent' in value && typeof value.emailSent !== 'boolean') return false;
+    if ('canRetry' in value && typeof value.canRetry !== 'boolean') return false;
+    if ('retryAfterSeconds' in value && typeof value.retryAfterSeconds !== 'number') return false;
+    return true;
+  }
+
+  if (
+    liveForm &&
+    liveSubmit &&
+    liveFormContent &&
+    liveSuccess &&
+    liveError &&
+    liveMailAlready &&
+    liveMailOk &&
+    liveMailFail &&
+    liveRetry &&
+    liveRetryWait &&
+    liveRetryError
+  ) {
+    const sendApplication = async (retry: boolean) => {
+      const button = retry ? liveRetry : liveSubmit;
+      const originalText = button.textContent;
+      button.disabled = true;
+      button.textContent = button.getAttribute('data-loading-text') || '';
       liveError.hidden = true;
+      liveRetryError.hidden = true;
+      liveRetryWait.hidden = true;
 
       try {
         const body = new URLSearchParams();
         new FormData(liveForm).forEach((value, key) => {
           if (typeof value === 'string') body.append(key, value);
         });
+        if (retry) body.set('retry', '1');
         const response = await fetch('/api/notify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body,
         });
-        const result = await response.json().catch(() => null);
-        if (!response.ok || !result || result.ok !== true) {
+        const payload: unknown = await response.json().catch(() => null);
+        if (!response.ok || !isNotifyResponse(payload)) {
           throw new Error('notify_failed');
         }
 
         liveFormContent.hidden = true;
         liveSuccess.hidden = false;
         liveSuccess.focus();
+        liveMailAlready.hidden = payload.already !== true || retry;
+        liveMailOk.hidden = payload.emailSent !== true || (payload.already === true && !retry);
+        liveMailFail.hidden = payload.emailSent !== false;
 
-        if (result.already) {
-          liveMailAlready.hidden = false;
-        } else if (result.emailSent === true) {
-          liveMailOk.hidden = false;
-        } else if (result.emailSent === false) {
-          liveMailFail.hidden = false;
+        const canRetry = payload.canRetry === true;
+        const retryAfterSeconds = canRetry ? Math.max(0, payload.retryAfterSeconds || 0) : 0;
+        liveRetry.hidden = !canRetry;
+        liveRetry.disabled = retryAfterSeconds > 0;
+        liveRetryWait.hidden = retryAfterSeconds === 0;
+        if (retryAfterSeconds > 0) {
+          window.setTimeout(() => {
+            liveRetry.disabled = false;
+            liveRetryWait.hidden = true;
+          }, retryAfterSeconds * 1000);
         }
       } catch {
-        liveError.hidden = false;
-        liveSubmit.disabled = false;
-        liveSubmit.textContent = originalText;
+        if (retry) {
+          liveRetryError.hidden = false;
+          liveRetry.disabled = false;
+        } else {
+          liveError.hidden = false;
+          liveSubmit.disabled = false;
+        }
+      } finally {
+        button.textContent = originalText;
       }
+    };
+
+    liveForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void sendApplication(false);
     });
+    liveRetry.addEventListener('click', () => void sendApplication(true));
     liveSubmit.disabled = false;
   }
 
@@ -396,6 +460,7 @@ const detailKeys = variant
   nav > a:not(.button):hover { text-decoration: underline; text-underline-offset: 5px; }
   .language { display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; }
   .button { display: inline-flex; align-items: center; justify-content: center; gap: 24px; min-height: 53px; border: 1px solid #264c38; padding: 15px 24px; border-radius: 7px; background: #264c38; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .18s; white-space: nowrap; }
+  .button[hidden] { display: none; }
   .button:hover { background: #163725; }
   .button:disabled { opacity: .6; cursor: not-allowed; }
   .button span { font-size: 19px; line-height: 1; }
@@ -487,6 +552,8 @@ const detailKeys = variant
   .form-note a { text-decoration: underline; text-underline-offset: 2px; }
   .form-feedback { font-size: 14px; line-height: 1.7; margin-top: 15px; padding: 12px; background: #e9eddf; border-radius: 6px; }
   .form-feedback p + p { margin-top: 8px; }
+  .form-feedback > .button { margin-top: 10px; }
+  .retry-wait { color: #773e32; }
   .form-error { background: #f8e8e3; color: #773e32; }
   .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
   .full-footer { margin-top: 0; background: #203f31; color: #f7f7ef; }
