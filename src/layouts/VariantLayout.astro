@@ -181,19 +181,73 @@ const detailKeys = variant
           <p class="join-desc">{text('join.desc')}</p>
           {variant && <p class="join-desc">{text('join.desc2')}</p>}
         </div>
-        <form id="preview-form">
-          <label for="preview-email">{text('join.email')}</label>
-          <div class="email-row">
-            <input id="preview-email" type="email" autocomplete="off" placeholder={text('join.placeholder')} required aria-describedby="form-note" />
-            <button class="button" type="submit" disabled>{text('cta')} <span aria-hidden="true">↗</span></button>
+        <div id={variant ? 'notify-form-content' : undefined}>
+          <form id={variant ? 'notify-form' : 'preview-form'}>
+            {variant && (
+              <>
+                <div class="honeypot" aria-hidden="true">
+                  <label>
+                    {t(lang, 'comingsoon.honeypot')}
+                    <input name="bot-field" tabindex="-1" autocomplete="off" />
+                  </label>
+                </div>
+                <input type="hidden" name="lang" value={lang} />
+              </>
+            )}
+            <label for={variant ? 'notify-email' : 'preview-email'}>{text('join.email')}</label>
+            <div class="email-row">
+              <input
+                id={variant ? 'notify-email' : 'preview-email'}
+                type="email"
+                name={variant ? 'email' : undefined}
+                autocomplete={variant ? 'email' : 'off'}
+                placeholder={text('join.placeholder')}
+                required
+                aria-describedby={variant ? 'notify-consent notify-note' : 'form-note'}
+              />
+              <button
+                class="button"
+                type="submit"
+                data-loading-text={variant ? t(lang, 'comingsoon.loading') : undefined}
+                disabled
+              >
+                {text('cta')} <span aria-hidden="true">↗</span>
+              </button>
+            </div>
+            <label class="consent" id={variant ? 'notify-consent' : undefined}>
+              <input
+                type="checkbox"
+                name={variant ? 'consent' : undefined}
+                value={variant ? 'accepted' : undefined}
+                required
+              />
+              <span>{text('join.consent')} <a href={privacyUrl}>{t(lang, 'comingsoon.privacyPolicy')}</a>.</span>
+            </label>
+            <p class="form-note" id={variant ? 'notify-note' : 'form-note'}>
+              {text('join.note')}
+              {variant && (
+                <>
+                  {' · '}
+                  <a href={removeDataUrl}>{t(lang, 'comingsoon.removeHint')}</a>
+                </>
+              )}
+            </p>
+            {variant && (
+              <p id="notify-error" class="form-feedback form-error" role="alert" hidden>
+                {t(lang, 'comingsoon.error')}
+              </p>
+            )}
+            {!variant && <p class="form-feedback" role="status" hidden>{text('join.feedback')}</p>}
+          </form>
+        </div>
+        {variant && (
+          <div id="notify-success" class="form-feedback" role="status" tabindex="-1" hidden>
+            <p>{t(lang, 'comingsoon.success')}</p>
+            <p id="notify-mail-already" hidden>{t(lang, 'comingsoon.alreadySaved')}</p>
+            <p id="notify-mail-ok" hidden>{t(lang, 'comingsoon.mailSent')}</p>
+            <p id="notify-mail-fail" hidden>{t(lang, 'comingsoon.mailNotSent')}</p>
           </div>
-          <label class="consent">
-            <input type="checkbox" required />
-            <span>{text('join.consent')} <a href={privacyUrl}>{t(lang, 'comingsoon.privacyPolicy')}</a>.</span>
-          </label>
-          <p class="form-note" id="form-note">{text('join.note')}</p>
-          <p class="form-feedback" role="status" hidden>{text('join.feedback')}</p>
-        </form>
+        )}
       </section>
     </main>
     <footer id="contact" class="full-footer">
@@ -235,6 +289,59 @@ const detailKeys = variant
 </html>
 
 <script>
+  const liveForm = document.querySelector<HTMLFormElement>('#notify-form');
+  const liveSubmit = liveForm?.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const liveFormContent = document.querySelector<HTMLDivElement>('#notify-form-content');
+  const liveSuccess = document.querySelector<HTMLDivElement>('#notify-success');
+  const liveError = document.querySelector<HTMLParagraphElement>('#notify-error');
+  const liveMailAlready = document.querySelector<HTMLParagraphElement>('#notify-mail-already');
+  const liveMailOk = document.querySelector<HTMLParagraphElement>('#notify-mail-ok');
+  const liveMailFail = document.querySelector<HTMLParagraphElement>('#notify-mail-fail');
+
+  if (liveForm && liveSubmit && liveFormContent && liveSuccess && liveError && liveMailAlready && liveMailOk && liveMailFail) {
+    liveForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const originalText = liveSubmit.textContent;
+      liveSubmit.disabled = true;
+      liveSubmit.textContent = liveSubmit.getAttribute('data-loading-text') || '';
+      liveError.hidden = true;
+
+      try {
+        const body = new URLSearchParams();
+        new FormData(liveForm).forEach((value, key) => {
+          if (typeof value === 'string') body.append(key, value);
+        });
+        const response = await fetch('/api/notify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body,
+        });
+        const result = await response.json().catch(() => null);
+        if (!response.ok || !result || result.ok !== true) {
+          throw new Error('notify_failed');
+        }
+
+        liveFormContent.hidden = true;
+        liveSuccess.hidden = false;
+        liveSuccess.focus();
+
+        if (result.already) {
+          liveMailAlready.hidden = false;
+        } else if (result.emailSent === true) {
+          liveMailOk.hidden = false;
+        } else if (result.emailSent === false) {
+          liveMailFail.hidden = false;
+        }
+      } catch {
+        liveError.hidden = false;
+        liveSubmit.disabled = false;
+        liveSubmit.textContent = originalText;
+      }
+    });
+    liveSubmit.disabled = false;
+  }
+
   const form = document.querySelector<HTMLFormElement>('#preview-form');
   const submit = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
   const feedback = form?.querySelector<HTMLParagraphElement>('[role="status"]');
@@ -377,7 +484,11 @@ const detailKeys = variant
   .consent input { margin-top: 4px; accent-color: #264c38; flex-shrink: 0; }
   .consent a { text-decoration: underline; text-underline-offset: 2px; }
   .form-note { font-size: 13px; line-height: 1.7; margin-top: 14px; color: #5d655b; }
+  .form-note a { text-decoration: underline; text-underline-offset: 2px; }
   .form-feedback { font-size: 14px; line-height: 1.7; margin-top: 15px; padding: 12px; background: #e9eddf; border-radius: 6px; }
+  .form-feedback p + p { margin-top: 8px; }
+  .form-error { background: #f8e8e3; color: #773e32; }
+  .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
   .full-footer { margin-top: 0; background: #203f31; color: #f7f7ef; }
   .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 64px; padding-block: 56px 48px; }
   .full-footer .brand { color: #f7f7ef; font-size: 24px; }
