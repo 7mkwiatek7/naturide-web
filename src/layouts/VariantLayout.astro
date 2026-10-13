@@ -74,6 +74,17 @@ const detailKeys = variant
       </dialog>
     )}
 
+    <dialog id="screen-dialog" class="screen-dialog" aria-label={text('screen.open')}>
+      <div class="screen-dialog-card">
+        <button id="screen-dialog-close" class="screen-dialog-close" type="button" aria-label={text('screen.close')}>
+          <span aria-hidden="true">×</span>
+        </button>
+        <div class="screen-dialog-phone">
+          <Image src={navigationScreen} alt={text('screen.alt')} widths={[432, 864]} sizes="min(76vw, 360px)" format="webp" quality={85} loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </dialog>
+
     <main id="main">
       <section class="wrap hero" aria-labelledby="hero-heading">
         <div class="hero-copy">
@@ -92,12 +103,10 @@ const detailKeys = variant
             <figcaption>{text('photo.caption')}</figcaption>
           </figure>
           <figure class="hero-phone">
-            <a class="phone" href={navigationScreen.src} target="_blank" rel="noopener noreferrer" aria-label={text('screen.open')}>
+            <a class="phone navigation-screen-trigger" href={navigationScreen.src} aria-haspopup="dialog" aria-label={text('screen.open')}>
               <Image src={navigationScreen} alt={text('screen.alt')} widths={[320, 648]} sizes="196px" format="webp" quality={85} loading="eager" />
             </a>
-            <figcaption>{text('screen.caption')}</figcaption>
           </figure>
-          <span class="photo-index" aria-hidden="true">01 / NATURIDE</span>
         </div>
       </section>
 
@@ -134,15 +143,18 @@ const detailKeys = variant
         <div class="benefit-list">
           {benefits.map((benefit) => (
             <article>
-              <span class="number">{benefit.number}</span>
               <div>
                 <div class="benefit-heading">
-                  {variant && benefit.number === '03' && <svg class="benefit-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="9" width="24" height="14" rx="3"/><path d="M29 13v6M7 13v6m4-6v6m4-6v6"/></svg>}
                   <h3>{text(benefit.title)}</h3>
                 </div>
                 <p>{text(benefit.desc)}</p>
                 {benefit.number === '02' && <small>{text('loop.note')}</small>}
-                {variant && benefit.number === '03' && <small>{text('screen.note')}</small>}
+                {variant && benefit.number === '03' && (
+                  <div class="benefit-note">
+                    <svg class="benefit-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="9" width="24" height="14" rx="3"/><path d="M29 13v6M7 13v6m4-6v6m4-6v6"/></svg>
+                    <small>{text('screen.note')}</small>
+                  </div>
+                )}
               </div>
             </article>
           ))}
@@ -169,7 +181,18 @@ const detailKeys = variant
                 <li><span aria-hidden="true">↗</span>{text(key)}</li>
               ))}
             </ul>
-            <a class="text-link" href="#join">{text('cta')} <span aria-hidden="true">→</span></a>
+            <div class="app-actions">
+              <a class="text-link" href="#join">{text('cta')} <span aria-hidden="true">→</span></a>
+              <a class="play-badge" href="#join" aria-label={`${text('cta')} — Google Play`}>
+                <svg class="play-logo" viewBox="0 0 35 40" aria-hidden="true">
+                  <path fill="#00a9f4" d="M1.7 1.2C.6 1.8 0 2.9 0 4.2v31.6c0 1.3.6 2.4 1.7 3L20.4 20 1.7 1.2Z"/>
+                  <path fill="#ffce00" d="m20.4 20 6.2-6.2L4.1 1.9c-.9-.5-1.7-.8-2.4-.7L20.4 20Z"/>
+                  <path fill="#ff3a44" d="m20.4 20 6.2 6.2-22.5 11.9c-.9.5-1.7.8-2.4.7L20.4 20Z"/>
+                  <path fill="#00d639" d="m26.6 13.8 7.9 4.5c2.4 1.4 2.4 3.9 0 5.3l-7.9 4.5-6.2-6.2 6.2-6.2Z"/>
+                </svg>
+                <span>Google Play</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -498,6 +521,22 @@ const detailKeys = variant
     submit.disabled = false;
   }
 
+  const screenTrigger = document.querySelector<HTMLAnchorElement>('.navigation-screen-trigger');
+  const screenDialog = document.querySelector<HTMLDialogElement>('#screen-dialog');
+  const screenClose = document.querySelector<HTMLButtonElement>('#screen-dialog-close');
+  if (screenTrigger && screenDialog && screenClose) {
+    screenTrigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      screenDialog.showModal();
+      screenClose.focus();
+    });
+    screenClose.addEventListener('click', () => screenDialog.close());
+    screenDialog.addEventListener('click', (event) => {
+      if (event.target === screenDialog) screenDialog.close();
+    });
+    screenDialog.addEventListener('close', () => screenTrigger.focus());
+  }
+
   const plannerTrigger = document.querySelector<HTMLButtonElement>('#planner-trigger');
   const plannerDialog = document.querySelector<HTMLDialogElement>('#planner-dialog');
   const plannerClose = document.querySelector<HTMLButtonElement>('#planner-close');
@@ -556,6 +595,17 @@ const detailKeys = variant
   .planner-cta { color: #203d30; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
   .planner-close { position: absolute; top: 15px; right: 15px; z-index: 1; display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid rgb(32 61 48 / .14); border-radius: 50%; background: rgb(247 247 239 / .9); color: #203d30; font-size: 26px; line-height: 1; cursor: pointer; }
   .planner-close:hover { background: #fff; }
+  .screen-dialog { width: min(520px, calc(100% - 32px)); max-width: none; padding: 0; border: 0; border-radius: 28px; background: transparent; overflow: visible; }
+  .screen-dialog::backdrop { background: rgb(13 30 20 / .72); backdrop-filter: blur(4px); }
+  .screen-dialog-card { position: relative; display: grid; place-items: center; padding: 22px; }
+  .screen-dialog-phone { display: inline-flex; max-width: calc(100vw - 64px); max-height: calc(100vh - 64px); border: 1px solid #687069; border-radius: 30px; padding: 8px; background: #202724; box-shadow: 0 24px 70px rgb(13 30 20 / .42); animation: screen-dialog-phone-in 320ms cubic-bezier(.22, 1, .36, 1) both; }
+  .screen-dialog-phone img { display: block; width: auto; height: auto; max-width: calc(100vw - 80px); max-height: calc(100vh - 112px); border-radius: 24px; object-fit: contain; }
+  .screen-dialog-close { position: absolute; top: 0; right: 0; z-index: 1; display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid rgb(247 247 239 / .35); border-radius: 50%; background: #203d30; color: #f7f7ef; font-size: 26px; line-height: 1; cursor: pointer; }
+  .screen-dialog-close:hover { background: #163725; }
+  @keyframes screen-dialog-phone-in {
+    from { opacity: 0; transform: rotate(-7deg) scale(.72); }
+    to { opacity: 1; transform: rotate(0) scale(1); }
+  }
   .hero { display: grid; grid-template-columns: 1.08fr 1fr; align-items: center; gap: 54px; padding-top: 25px; padding-bottom: 80px; }
   .hero-copy { padding-bottom: 20px; }
   .eyebrow { display: flex; align-items: center; gap: 10px; color: #5d7054; font-size: 12px; font-weight: 650; letter-spacing: 1.5px; text-transform: uppercase; line-height: 1.8; }
@@ -577,11 +627,10 @@ const detailKeys = variant
   .landscape-new img { object-fit: contain; object-position: center; filter: drop-shadow(0 0 5px rgb(32 61 48 / .55)); }
   .landscape-new::after { display: none; }
   .landscape figcaption { position: absolute; top: 40px; right: 24px; max-width: 170px; z-index: 1; color: #fff; font-size: 14px; line-height: 1.6; text-align: right; text-shadow: 0 1px 6px #15251b; }
-  .hero-phone { position: absolute; left: -36px; bottom: -31px; width: 196px; transform: rotate(-7deg); }
+  .hero-phone { position: absolute; left: -36px; bottom: -31px; width: 196px; transform: rotate(-7deg); transition: transform 220ms ease-out; }
+  .hero-phone:hover, .hero-phone:focus-within { transform: rotate(-7deg) scale(1.05); }
   .phone { display: block; background: #202724; border: 1px solid #687069; padding: 6px; border-radius: 24px; box-shadow: 5px 19px 38px rgb(13 30 20 / .22); cursor: zoom-in; }
   .phone img { width: 100%; border-radius: 18px; }
-  .hero-phone figcaption { text-align: center; font-size: 12px; line-height: 1.5; color: #5d655b; margin-top: 10px; }
-  .photo-index { position: absolute; right: 0; bottom: -27px; font-size: 9px; letter-spacing: 2px; color: #6d7865; }
   .promise-strip { display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid #dadfd2; padding-block: 29px; }
   .promise-strip > div { display: grid; grid-template-columns: 31px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 17px; align-content: start; border-left: 1px solid #dadfd2; }
   .promise-strip > div:first-child { border-left: 0; }
@@ -590,15 +639,17 @@ const detailKeys = variant
   .promise-strip p { grid-column: 2; grid-row: 2; margin-top: 7px; font-size: 15px; line-height: 1.5; color: #5d655b; }
   .benefits { display: grid; grid-template-columns: 1fr 1.1fr; gap: 100px; padding-block: 95px; }
   h2 { white-space: pre-line; font-size: clamp(32px, 3.3vw, 46px); line-height: 1.16; letter-spacing: -.045em; font-weight: 620; margin-top: 18px; }
-  h2.benefits-title-long { white-space: pre; font-size: clamp(27px, 2.2vw, 34px); }
+  h2.benefits-title-long { white-space: pre; font-size: clamp(29px, 2.3vw, 36px); line-height: 1.3; letter-spacing: normal; font-weight: 650; }
   .benefits-intro > p:not(.eyebrow) { font-size: 17px; color: #5d655b; line-height: 1.75; margin-top: 23px; max-width: 375px; }
   .route-drawing { width: 280px; max-width: 100%; margin-top: 20px; }
   .benefit-list article { display: flex; gap: 22px; border-bottom: 1px solid #dadfd2; padding-block: 25px; }
   .benefit-list article:first-child { padding-top: 0; }
   .benefit-list article:last-child { border-bottom: 0; padding-bottom: 0; }
-  .number { color: #5d7054; font-size: 13px; font-weight: 600; padding-top: 5px; }
   .benefit-heading { display: flex; align-items: flex-start; gap: 12px; }
   .benefit-icon { width: 31px; height: 31px; margin-top: 1px; color: #6d805a; flex-shrink: 0; }
+  .benefit-note { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+  .benefit-note .benefit-icon { margin-top: 0; }
+  .benefit-note small { margin-top: 0; }
   h3 { font-size: 22px; font-weight: 600; letter-spacing: -.5px; }
   .benefit-list p { font-size: 16px; color: #5d655b; line-height: 1.75; margin-top: 10px; }
   .benefit-list small { display: block; font-size: 13px; color: #5d655b; margin-top: 8px; }
@@ -616,6 +667,10 @@ const detailKeys = variant
   .app-copy ul { list-style: none; padding: 0; margin: 28px 0 32px; }
   .app-copy li { display: flex; gap: 13px; padding-block: 14px; border-bottom: 1px solid #45604b; font-size: 15px; line-height: 1.5; color: #e7edde; }
   .app-copy li span { color: #c2d5a0; }
+  .app-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; }
+  .play-badge { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; border: 1px solid #c2d5a0; border-radius: 7px; padding: 7px 12px; color: #f7f7ef; font-size: 14px; font-weight: 650; transition: background .18s, border-color .18s; }
+  .play-badge:hover { border-color: #d8e4b5; background: rgb(216 228 181 / .12); }
+  .play-logo { width: 22px; height: 25px; flex-shrink: 0; }
   .join { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 75px; padding-block: 95px; }
   .join h2 { font-size: clamp(30px, 3vw, 40px); }
   .join-desc { margin-top: 20px; color: #5d655b; font-size: 16px; line-height: 1.75; max-width: 440px; }
@@ -692,14 +747,13 @@ const detailKeys = variant
     .landscape-new img { object-position: center; }
     .landscape figcaption { top: 27px; right: 21px; font-size: 12px; }
     .hero-phone { width: 160px; left: -15px; bottom: -25px; }
-    .hero-phone figcaption { font-size: 11px; }
     .promise-strip { grid-template-columns: 1fr; padding-block: 6px; }
     .promise-strip > div, .promise-strip > div:first-child, .promise-strip > div:last-child { border-left: 0; padding: 15px 6px; column-gap: 20px; }
     .promise-strip > div + div { border-top: 1px solid #e2e6da; }
     .promise-strip p { margin-top: 3px; }
     .benefits { grid-template-columns: 1fr; gap: 34px; padding-block: 57px; }
     h2 { font-size: 36px; }
-    h2.benefits-title-long { white-space: pre-line; font-size: clamp(19px, 5.5vw, 30px); }
+    h2.benefits-title-long { white-space: pre-line; font-size: clamp(21px, 5.8vw, 32px); }
     .benefits-intro > p:not(.eyebrow) { margin-top: 17px; max-width: 480px; }
     .route-drawing { display: none; }
     .benefit-list article { gap: 17px; }
@@ -727,6 +781,6 @@ const detailKeys = variant
   }
   @media (prefers-reduced-motion: reduce) {
     :global(html) { scroll-behavior: auto; }
-    .button { transition: none; }
+    .button, .hero-phone { transition: none; }
   }
 </style>
