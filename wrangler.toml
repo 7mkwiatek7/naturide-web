@@ -23,5 +23,6 @@ database_id = "9d49ca22-adaf-4c03-a8f7-1101231761a6"
 # Ustaw w Cloudflare Pages → Settings → Variables and Secrets:
 #   RESEND_API_KEY - zaszyfrowany secret z uprawnieniem Sending access,
 #   ograniczony do domeny naturide.app.
+#   DEBUG_TOKEN - zaszyfrowany token wymagany przez /api/debug.
 # Domena naturide.app musi być zweryfikowana w Resend.
 # Szczegóły: docs/resend-email.md.

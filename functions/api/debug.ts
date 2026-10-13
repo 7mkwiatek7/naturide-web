@@ -1,17 +1,12 @@
 // Cloudflare Pages Function - tymczasowy endpoint diagnostyczny.
-// Sprawdza czy środowisko (env) i baza D1 są prawidłowo skonfigurowane
-// bezpośrednio w Cloudflare Pages - bez udawania że formularz zadziałał.
+// Sprawdza konfigurację środowiska i bazy D1 bez wysyłania wiadomości.
 //
-// Użycie: wejdź w przeglądarkę na https://naturide.app/api/debug
-// Wynik to JSON z:
-//   - czy ustawiono secret API Resend (bez ujawniania jego wartości)
-//   - czy Cloudflare widzi binding DB (i ile jest rekordów)
-//   - IP, UA, Accept-Language (do debugowania middleware'a języka)
-// Endpoint nie wysyła testowego e-maila i nie ujawnia żadnych secretów.
+// Dostęp wymaga sekretu DEBUG_TOKEN w nagłówku autoryzacji.
 
 interface Env {
   DB: D1Database;
   RESEND_API_KEY?: string;
+  DEBUG_TOKEN?: string;
 }
 
 interface PagesContext {
@@ -20,6 +15,16 @@ interface PagesContext {
 }
 
 export const onRequestGet = async (context: PagesContext): Promise<Response> => {
+  if (!isAuthorized(context.request, context.env.DEBUG_TOKEN)) {
+    return new Response('Unauthorized', {
+      status: 401,
+      headers: {
+        'Cache-Control': 'no-store',
+        'WWW-Authenticate': 'Bearer',
+      },
+    });
+  }
+
   const url = new URL(context.request.url);
   const resendApiKeyConfigured = Boolean(context.env.RESEND_API_KEY?.trim());
 
@@ -69,9 +74,19 @@ export const onRequestGet = async (context: PagesContext): Promise<Response> => 
   return new Response(JSON.stringify(data, null, 2), {
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
-      'Access-Control-Allow-Origin': '*',
       // Bez cache - chcemy widzieć aktualny stan po każdym odświeżeniu.
       'Cache-Control': 'no-store',
     },
   });
 };
+
+function isAuthorized(request: Request, expectedToken: string | undefined): boolean {
+  const token = expectedToken?.trim();
+  if (!token) return false;
+
+  const authorization = request.headers.get('Authorization') || '';
+  const prefix = 'Bearer ';
+  if (!authorization.startsWith(prefix)) return false;
+
+  return authorization.slice(prefix.length).trim() === token;
+}

@@ -12,6 +12,7 @@ Formularz zapisuje adres testera w bazie D1, a powiadomienie o nowym zgłoszeniu
    - Po dodaniu wróć do Resend i poczekaj, aż domena otrzyma status **Verified**.
 4. W Resend przejdź do **API Keys → Create API Key**. Ustaw uprawnienie **Sending access** i ogranicz klucz do `naturide.app`. Skopiuj go od razu — później nie będzie można go ponownie wyświetlić.
 5. W Cloudflare otwórz **Workers & Pages → naturide-web → Settings → Variables and Secrets**. W środowisku **Production** dodaj zaszyfrowany secret `RESEND_API_KEY` z wartością skopiowaną z Resend.
+6. W tym samym miejscu dodaj zaszyfrowany secret `DEBUG_TOKEN` z długą, losową wartością. Służy wyłącznie do zabezpieczenia tymczasowego endpointu diagnostycznego.
 
 Klucza API nie wklejaj do kodu, zwykłych zmiennych ani rozmowy.
 
@@ -21,6 +22,15 @@ Aktualny plan Resend Free obejmuje do 3 000 e-maili miesięcznie i maksymalnie 1
 
 ## Wdrożenie i sprawdzenie
 
-Po dodaniu sekretu wdroż kod z repozytorium. `https://naturide.app/api/debug` pokaże jedynie, czy `RESEND_API_KEY` jest skonfigurowany; nie wysyła testowej wiadomości. Następnie wyślij jedno próbne zgłoszenie i sprawdź skrzynkę oraz folder spam.
+Po dodaniu sekretów wdroż kod z repozytorium. Endpoint diagnostyczny nie jest dostępny bez tokena. Sprawdzisz go lokalnie w PowerShellu, zastępując `TWOJ_TOKEN` wartością ustawioną w Cloudflare:
+
+```powershell
+$token = Read-Host 'DEBUG_TOKEN'
+curl.exe -H ("Authorization" + ": " + "Bearer " + $token) https://naturide.app/api/debug
+```
+
+Endpoint pokazuje jedynie, czy `RESEND_API_KEY` jest skonfigurowany, czy działa binding D1 i ile jest rekordów; nie wysyła testowej wiadomości. Tokena nie umieszczaj w adresie URL, repozytorium ani rozmowie.
+
+Następnie wyślij jedno próbne zgłoszenie i sprawdź skrzynkę oraz folder spam.
 
 Usuń stare sekrety `WEB3FORMS_ACCESS_KEY`, `CLOUDFLARE_ACCOUNT_ID` i `CLOUDFLARE_EMAIL_API_TOKEN` z ustawień Pages dopiero po potwierdzeniu, że powiadomienie dotarło przez Resend.
