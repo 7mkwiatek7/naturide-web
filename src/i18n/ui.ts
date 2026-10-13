@@ -327,8 +327,22 @@ export const ui = {
     'comingsoon.consent':
       'Wyrażam zgodę na przetwarzanie mojego adresu email w celu kontaktu w sprawie testów wewnętrznych zgodnie z',
     'comingsoon.privacyPolicy': 'polityką prywatności',
-    'comingsoon.success': 'Gotowe! Odezwiemy się ze szczegółami testów Naturide.',
+    'comingsoon.success': 'Zgłoszenie zostało zapisane.',
     'comingsoon.error': 'Ups, coś poszło nie tak. Spróbuj ponownie za chwilę.',
+    'comingsoon.confirmationSent':
+      'Wysłaliśmy wiadomość z linkiem potwierdzającym. Kliknij go, aby potwierdzić adres.',
+    'comingsoon.confirmationWait':
+      'Wiadomość potwierdzająca została już wysłana. Sprawdź skrzynkę lub spróbuj ponownie za kilka minut.',
+    'comingsoon.confirmationNotSent':
+      'Nie udało się wysłać wiadomości potwierdzającej. Spróbuj ponownie za chwilę.',
+    'comingsoon.alreadyConfirmed': 'Ten adres został już potwierdzony.',
+    'comingsoon.notificationSent': 'Zgłoszenie zostało przekazane do zespołu.',
+    'comingsoon.notificationNotSent':
+      'Adres potwierdzono, ale nie udało się powiadomić zespołu.',
+    'comingsoon.confirmationSuccess':
+      'Adres został potwierdzony. Dziękujemy za zgłoszenie do testów.',
+    'comingsoon.confirmationInvalid':
+      'Link potwierdzający jest nieprawidłowy lub wygasł. Wyślij formularz ponownie.',
     'comingsoon.mailSent': 'Zgłoszenie zostało przekazane do zespołu.',
     'comingsoon.mailNotSent':
       'Zgłoszenie zapisano, ale powiadomienie dla zespołu nie zostało wysłane.',
@@ -338,6 +352,20 @@ export const ui = {
     'comingsoon.retryWait': 'Przed kolejną próbą odczekaj kilka minut.',
     'comingsoon.retryError': 'Nie udało się ponowić powiadomienia. Spróbuj ponownie za chwilę.',
     'comingsoon.removeHint': 'Wycofaj zgodę',
+    'email.confirmation.subject': 'Naturide: potwierdź zgłoszenie do testów',
+    'email.confirmation.greeting': 'Dziękujemy za zgłoszenie do testów Naturide.',
+    'email.confirmation.instructions':
+      'Kliknij poniższy link, aby potwierdzić swój adres e-mail:',
+    'email.confirmation.expires': 'Link będzie ważny przez 24 godziny.',
+    'email.confirmation.ignore':
+      'Jeśli to nie Ty wysłałeś zgłoszenie, zignoruj tę wiadomość.',
+    'email.confirmation.pageTitle': 'Potwierdź zgłoszenie do testów',
+    'email.confirmation.pageDescription':
+      'Kliknij przycisk, aby potwierdzić swój adres e-mail i zakończyć zgłoszenie.',
+    'email.confirmation.pageButton': 'Potwierdź adres e-mail',
+    'email.confirmation.invalidTitle': 'Link jest nieprawidłowy',
+    'email.confirmation.invalidDescription':
+      'Link potwierdzający wygasł albo został już wykorzystany. Wyślij formularz ponownie.',
     'remove.title': 'Usuń swoje dane',
     'remove.subtitle':
       'Jeśli chcesz wycofać zgodę i usunąć swój adres email z listy osób zainteresowanych testami, wypełnij formularz poniżej.',
@@ -439,8 +467,22 @@ export const ui = {
     'comingsoon.consent':
       'I agree to the processing of my email address so you can contact me about internal testing, according to the',
     'comingsoon.privacyPolicy': 'privacy policy',
-    'comingsoon.success': 'Done! We will contact you with details about Naturide testing.',
+    'comingsoon.success': 'Your request has been saved.',
     'comingsoon.error': 'Oops, something went wrong. Please try again in a moment.',
+    'comingsoon.confirmationSent':
+      'We sent a confirmation message. Click its link to confirm your address.',
+    'comingsoon.confirmationWait':
+      'The confirmation message was already sent. Check your inbox or try again in a few minutes.',
+    'comingsoon.confirmationNotSent':
+      'We could not send the confirmation message. Please try again in a moment.',
+    'comingsoon.alreadyConfirmed': 'This address has already been confirmed.',
+    'comingsoon.notificationSent': 'Your application was sent to the team.',
+    'comingsoon.notificationNotSent':
+      'Your address was confirmed, but the team could not be notified.',
+    'comingsoon.confirmationSuccess':
+      'Your address has been confirmed. Thank you for joining the test.',
+    'comingsoon.confirmationInvalid':
+      'The confirmation link is invalid or expired. Please submit the form again.',
     'comingsoon.mailSent': 'Your application has been sent to the team.',
     'comingsoon.mailNotSent':
       'Your application was saved, but the team notification could not be sent.',
@@ -450,6 +492,20 @@ export const ui = {
     'comingsoon.retryWait': 'Please wait a few minutes before trying again.',
     'comingsoon.retryError': 'Could not retry the notification. Please try again later.',
     'comingsoon.removeHint': 'Withdraw consent',
+    'email.confirmation.subject': 'Naturide: confirm your testing request',
+    'email.confirmation.greeting': 'Thank you for joining the Naturide test.',
+    'email.confirmation.instructions':
+      'Use the link below to confirm your email address:',
+    'email.confirmation.expires': 'This link is valid for 24 hours.',
+    'email.confirmation.ignore':
+      'If you did not submit this request, you can ignore this message.',
+    'email.confirmation.pageTitle': 'Confirm your testing request',
+    'email.confirmation.pageDescription':
+      'Click the button to confirm your email address and complete the request.',
+    'email.confirmation.pageButton': 'Confirm email address',
+    'email.confirmation.invalidTitle': 'The link is invalid',
+    'email.confirmation.invalidDescription':
+      'The confirmation link has expired or was already used. Please submit the form again.',
     'remove.title': 'Remove your data',
     'remove.subtitle':
       'If you want to withdraw your consent and remove your email from the internal testing list, fill in the form below.',

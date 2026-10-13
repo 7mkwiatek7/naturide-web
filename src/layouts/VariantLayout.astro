@@ -243,9 +243,12 @@ const detailKeys = variant
         {variant && (
           <div id="notify-success" class="form-feedback" role="status" tabindex="-1" hidden>
             <p>{t(lang, 'comingsoon.success')}</p>
-            <p id="notify-mail-already" hidden>{t(lang, 'comingsoon.alreadySaved')}</p>
-            <p id="notify-mail-ok" hidden>{t(lang, 'comingsoon.mailSent')}</p>
-            <p id="notify-mail-fail" hidden>{t(lang, 'comingsoon.mailNotSent')}</p>
+            <p id="notify-confirmation-sent" hidden>{t(lang, 'comingsoon.confirmationSent')}</p>
+            <p id="notify-confirmation-wait" hidden>{t(lang, 'comingsoon.confirmationWait')}</p>
+            <p id="notify-confirmation-fail" hidden>{t(lang, 'comingsoon.confirmationNotSent')}</p>
+            <p id="notify-confirmed" hidden>{t(lang, 'comingsoon.alreadyConfirmed')}</p>
+            <p id="notify-notification-ok" hidden>{t(lang, 'comingsoon.notificationSent')}</p>
+            <p id="notify-notification-fail" hidden>{t(lang, 'comingsoon.notificationNotSent')}</p>
             <p id="notify-retry-wait" class="retry-wait" role="status" hidden>{t(lang, 'comingsoon.retryWait')}</p>
             <p id="notify-retry-error" class="form-error" role="alert" hidden>{t(lang, 'comingsoon.retryError')}</p>
             <button
@@ -258,6 +261,18 @@ const detailKeys = variant
               {t(lang, 'comingsoon.retry')}
             </button>
           </div>
+        )}
+        {variant && (
+          <>
+            <div id="notify-confirmation-result" class="form-feedback" role="status" tabindex="-1" hidden>
+              <p>{t(lang, 'comingsoon.confirmationSuccess')}</p>
+              <p id="notify-confirmation-result-notification-ok" hidden>{t(lang, 'comingsoon.notificationSent')}</p>
+              <p id="notify-confirmation-result-notification-fail" hidden>{t(lang, 'comingsoon.notificationNotSent')}</p>
+            </div>
+            <p id="notify-confirmation-invalid" class="form-feedback form-error" role="alert" hidden>
+              {t(lang, 'comingsoon.confirmationInvalid')}
+            </p>
+          </>
         )}
       </section>
     </main>
@@ -305,16 +320,30 @@ const detailKeys = variant
   const liveFormContent = document.querySelector<HTMLDivElement>('#notify-form-content');
   const liveSuccess = document.querySelector<HTMLDivElement>('#notify-success');
   const liveError = document.querySelector<HTMLParagraphElement>('#notify-error');
-  const liveMailAlready = document.querySelector<HTMLParagraphElement>('#notify-mail-already');
-  const liveMailOk = document.querySelector<HTMLParagraphElement>('#notify-mail-ok');
-  const liveMailFail = document.querySelector<HTMLParagraphElement>('#notify-mail-fail');
+  const liveConfirmationSent = document.querySelector<HTMLParagraphElement>('#notify-confirmation-sent');
+  const liveConfirmationWait = document.querySelector<HTMLParagraphElement>('#notify-confirmation-wait');
+  const liveConfirmationFail = document.querySelector<HTMLParagraphElement>('#notify-confirmation-fail');
+  const liveConfirmed = document.querySelector<HTMLParagraphElement>('#notify-confirmed');
+  const liveNotificationOk = document.querySelector<HTMLParagraphElement>('#notify-notification-ok');
+  const liveNotificationFail = document.querySelector<HTMLParagraphElement>('#notify-notification-fail');
   const liveRetry = document.querySelector<HTMLButtonElement>('#notify-retry');
   const liveRetryWait = document.querySelector<HTMLParagraphElement>('#notify-retry-wait');
   const liveRetryError = document.querySelector<HTMLParagraphElement>('#notify-retry-error');
+  const liveConfirmationResult = document.querySelector<HTMLDivElement>('#notify-confirmation-result');
+  const liveConfirmationResultNotificationOk = document.querySelector<HTMLParagraphElement>(
+    '#notify-confirmation-result-notification-ok'
+  );
+  const liveConfirmationResultNotificationFail = document.querySelector<HTMLParagraphElement>(
+    '#notify-confirmation-result-notification-fail'
+  );
+  const liveConfirmationInvalid = document.querySelector<HTMLParagraphElement>('#notify-confirmation-invalid');
 
   interface NotifyResponse {
     ok: true;
     already?: boolean;
+    confirmationPending?: boolean;
+    confirmationSent?: boolean;
+    confirmed?: boolean;
     emailSent?: boolean;
     canRetry?: boolean;
     retryAfterSeconds?: number;
@@ -323,6 +352,9 @@ const detailKeys = variant
   function isNotifyResponse(value: unknown): value is NotifyResponse {
     if (typeof value !== 'object' || value === null || !('ok' in value) || value.ok !== true) return false;
     if ('already' in value && typeof value.already !== 'boolean') return false;
+    if ('confirmationPending' in value && typeof value.confirmationPending !== 'boolean') return false;
+    if ('confirmationSent' in value && typeof value.confirmationSent !== 'boolean') return false;
+    if ('confirmed' in value && typeof value.confirmed !== 'boolean') return false;
     if ('emailSent' in value && typeof value.emailSent !== 'boolean') return false;
     if ('canRetry' in value && typeof value.canRetry !== 'boolean') return false;
     if ('retryAfterSeconds' in value && typeof value.retryAfterSeconds !== 'number') return false;
@@ -335,13 +367,25 @@ const detailKeys = variant
     liveFormContent &&
     liveSuccess &&
     liveError &&
-    liveMailAlready &&
-    liveMailOk &&
-    liveMailFail &&
+    liveConfirmationSent &&
+    liveConfirmationWait &&
+    liveConfirmationFail &&
+    liveConfirmed &&
+    liveNotificationOk &&
+    liveNotificationFail &&
     liveRetry &&
     liveRetryWait &&
     liveRetryError
   ) {
+    const hideResponseDetails = () => {
+      liveConfirmationSent.hidden = true;
+      liveConfirmationWait.hidden = true;
+      liveConfirmationFail.hidden = true;
+      liveConfirmed.hidden = true;
+      liveNotificationOk.hidden = true;
+      liveNotificationFail.hidden = true;
+    };
+
     const sendApplication = async (retry: boolean) => {
       const button = retry ? liveRetry : liveSubmit;
       const originalText = button.textContent;
@@ -350,6 +394,7 @@ const detailKeys = variant
       liveError.hidden = true;
       liveRetryError.hidden = true;
       liveRetryWait.hidden = true;
+      hideResponseDetails();
 
       try {
         const body = new URLSearchParams();
@@ -370,9 +415,20 @@ const detailKeys = variant
         liveFormContent.hidden = true;
         liveSuccess.hidden = false;
         liveSuccess.focus();
-        liveMailAlready.hidden = payload.already !== true || retry;
-        liveMailOk.hidden = payload.emailSent !== true || (payload.already === true && !retry);
-        liveMailFail.hidden = payload.emailSent !== false;
+
+        if (payload.confirmationPending) {
+          if (payload.confirmationSent === true) {
+            liveConfirmationSent.hidden = false;
+          } else if (payload.already === true) {
+            liveConfirmationWait.hidden = false;
+          } else {
+            liveConfirmationFail.hidden = false;
+          }
+        } else if (payload.confirmed) {
+          liveConfirmed.hidden = false;
+          liveNotificationOk.hidden = payload.emailSent !== true;
+          liveNotificationFail.hidden = payload.emailSent !== false;
+        }
 
         const canRetry = payload.canRetry === true;
         const retryAfterSeconds = canRetry ? Math.max(0, payload.retryAfterSeconds || 0) : 0;
@@ -404,6 +460,29 @@ const detailKeys = variant
     });
     liveRetry.addEventListener('click', () => void sendApplication(true));
     liveSubmit.disabled = false;
+  }
+
+  const confirmationParams = new URLSearchParams(window.location.search);
+  const confirmationResult = confirmationParams.get('confirmation');
+  if (confirmationResult && liveFormContent && liveSuccess) {
+    if (confirmationResult === 'success' && liveConfirmationResult) {
+      liveFormContent.hidden = true;
+      liveSuccess.hidden = true;
+      liveConfirmationResult.hidden = false;
+      liveConfirmationResult.focus();
+      if (liveConfirmationResultNotificationOk) {
+        liveConfirmationResultNotificationOk.hidden =
+          confirmationParams.get('notification') !== 'sent';
+      }
+      if (liveConfirmationResultNotificationFail) {
+        liveConfirmationResultNotificationFail.hidden =
+          confirmationParams.get('notification') !== 'failed';
+      }
+    } else if (confirmationResult === 'invalid' && liveConfirmationInvalid) {
+      liveConfirmationInvalid.hidden = false;
+    }
+
+    window.history.replaceState({}, document.title, `${window.location.pathname}#join`);
   }
 
   const form = document.querySelector<HTMLFormElement>('#preview-form');

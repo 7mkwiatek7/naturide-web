@@ -5,10 +5,13 @@
 --   wrangler d1 execute naturide-subscribers --file=migrations/0001_initial.sql --remote
 -- Before deploying notification retries, also apply this migration once:
 --   npx wrangler d1 execute naturide-subscribers --file=migrations/0002_notification_status.sql --remote
+-- Before deploying double opt-in, also apply:
+--   npx wrangler d1 execute naturide-subscribers --file=migrations/0003_double_opt_in.sql --remote
 --
 -- Lokalnie (wrangler dev):
 --   wrangler d1 execute naturide-subscribers --file=migrations/0001_initial.sql
 --   wrangler d1 execute naturide-subscribers --file=migrations/0002_notification_status.sql
+--   wrangler d1 execute naturide-subscribers --file=migrations/0003_double_opt_in.sql
 
 CREATE TABLE IF NOT EXISTS notify_subscribers (
   -- Unikalny identyfikator (unikatowy dla każdego zapisu).

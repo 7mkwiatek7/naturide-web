@@ -114,28 +114,22 @@ const benefits = [
             class="hidden rounded-2xl border border-neutral-700/25 bg-neutral-800/70 p-4 text-white"
           >
             {t(lang, 'comingsoon.success')}
-            <p
-              id="notify-mail-already"
-              class="mt-2 hidden text-sm text-sand-100/80"
-              data-message={t(lang, 'comingsoon.alreadySaved')}
-            >
-              {t(lang, 'comingsoon.alreadySaved')}
-            </p>
-            <p
-              id="notify-mail-ok"
-              class="mt-2 hidden text-sm text-sand-100/80"
-              data-message={t(lang, 'comingsoon.mailSent')}
-            >
-              {t(lang, 'comingsoon.mailSent')}
-            </p>
-            <p
-              id="notify-mail-fail"
-              class="mt-2 hidden text-sm text-amber-100/90"
-              data-message={t(lang, 'comingsoon.mailNotSent')}
-            >
-              {t(lang, 'comingsoon.mailNotSent')}
-            </p>
+            <p id="notify-confirmation-sent" class="mt-2 hidden text-sm text-sand-100/80">{t(lang, 'comingsoon.confirmationSent')}</p>
+            <p id="notify-confirmation-wait" class="mt-2 hidden text-sm text-sand-100/80">{t(lang, 'comingsoon.confirmationWait')}</p>
+            <p id="notify-confirmation-fail" class="mt-2 hidden text-sm text-amber-100/90">{t(lang, 'comingsoon.confirmationNotSent')}</p>
+            <p id="notify-confirmed" class="mt-2 hidden text-sm text-sand-100/80">{t(lang, 'comingsoon.alreadyConfirmed')}</p>
+            <p id="notify-notification-ok" class="mt-2 hidden text-sm text-sand-100/80">{t(lang, 'comingsoon.notificationSent')}</p>
+            <p id="notify-notification-fail" class="mt-2 hidden text-sm text-amber-100/90">{t(lang, 'comingsoon.notificationNotSent')}</p>
           </div>
+
+          <div id="notify-confirmation-result" class="rounded-2xl border border-neutral-700/25 bg-neutral-800/70 p-4 text-white" role="status" tabindex="-1" hidden>
+            <p>{t(lang, 'comingsoon.confirmationSuccess')}</p>
+            <p id="notify-confirmation-result-notification-ok" class="mt-2 text-sm text-sand-100/80" hidden>{t(lang, 'comingsoon.notificationSent')}</p>
+            <p id="notify-confirmation-result-notification-fail" class="mt-2 text-sm text-amber-100/90" hidden>{t(lang, 'comingsoon.notificationNotSent')}</p>
+          </div>
+          <p id="notify-confirmation-invalid" class="mt-6 rounded-2xl border border-red-300/40 bg-red-700/40 p-4 text-sand-50" role="alert" hidden>
+            {t(lang, 'comingsoon.confirmationInvalid')}
+          </p>
 
           <div
             id="notify-error"
@@ -151,8 +145,6 @@ const benefits = [
 </section>
 
 <script is:inline>
-  // Formularz "notify" - submit przez fetch do /api/notify (Cloudflare Pages Function).
-  // Honeypot (bot-field) - ukryte pole, boty mogą je wypełnić, Worker je odrzuca.
   document.addEventListener('submit', async (e) => {
     const form = e.target;
     if (!form || form.id !== 'notify-form') return;
@@ -164,12 +156,21 @@ const benefits = [
     const errorBox = document.getElementById('notify-error');
     const button = document.getElementById('notify-submit');
     const originalText = button ? button.textContent : '';
+    const details = [
+      'notify-confirmation-sent',
+      'notify-confirmation-wait',
+      'notify-confirmation-fail',
+      'notify-confirmed',
+      'notify-notification-ok',
+      'notify-notification-fail',
+    ];
 
     if (button) {
       button.disabled = true;
       button.textContent = button.getAttribute('data-loading-text') || '';
     }
     if (errorBox) errorBox.classList.add('hidden');
+    details.forEach((id) => document.getElementById(id)?.classList.add('hidden'));
 
     try {
       const data = new FormData(form);
@@ -186,19 +187,20 @@ const benefits = [
       if (wrapper) wrapper.style.display = 'none';
       if (successBox) successBox.classList.remove('hidden');
 
-      // Dodatkowy status wysyłki maila w zależności od tego jak poszło:
-      //   - already = true  → email jest już w D1, formularz nie wysyła ponownie
-      //   - emailSent = true  → nowy wpis + Resend zaakceptował powiadomienie
-      //   - emailSent = false → nowy wpis, ale Resend nie przyjął powiadomienia
-      const mailOkBox = document.getElementById('notify-mail-ok');
-      const mailFailBox = document.getElementById('notify-mail-fail');
-      const mailAlreadyBox = document.getElementById('notify-mail-already');
-      if (result.already && mailAlreadyBox) {
-        mailAlreadyBox.classList.remove('hidden');
-      } else if (result.emailSent === true && mailOkBox) {
-        mailOkBox.classList.remove('hidden');
-      } else if (result.emailSent === false && mailFailBox) {
-        mailFailBox.classList.remove('hidden');
+      if (result.confirmationPending) {
+        const messageId = result.confirmationSent
+          ? 'notify-confirmation-sent'
+          : result.already
+            ? 'notify-confirmation-wait'
+            : 'notify-confirmation-fail';
+        document.getElementById(messageId)?.classList.remove('hidden');
+      } else if (result.confirmed) {
+        document.getElementById('notify-confirmed')?.classList.remove('hidden');
+        if (result.emailSent === true) {
+          document.getElementById('notify-notification-ok')?.classList.remove('hidden');
+        } else if (result.emailSent === false) {
+          document.getElementById('notify-notification-fail')?.classList.remove('hidden');
+        }
       }
     } catch (err) {
       if (errorBox) errorBox.classList.remove('hidden');
@@ -208,4 +210,20 @@ const benefits = [
       }
     }
   });
+
+  const confirmationParams = new URLSearchParams(window.location.search);
+  const confirmationResult = confirmationParams.get('confirmation');
+  if (confirmationResult === 'success') {
+    document.getElementById('notify-form-content')?.setAttribute('hidden', '');
+    document.getElementById('notify-success')?.setAttribute('hidden', '');
+    document.getElementById('notify-confirmation-result')?.removeAttribute('hidden');
+    const notification = confirmationParams.get('notification');
+    document.getElementById('notify-confirmation-result-notification-ok')?.toggleAttribute('hidden', notification !== 'sent');
+    document.getElementById('notify-confirmation-result-notification-fail')?.toggleAttribute('hidden', notification !== 'failed');
+  } else if (confirmationResult === 'invalid') {
+    document.getElementById('notify-confirmation-invalid')?.removeAttribute('hidden');
+  }
+  if (confirmationResult) {
+    window.history.replaceState({}, document.title, `${window.location.pathname}#notify`);
+  }
 </script>
