@@ -147,7 +147,7 @@ export function sendOwnerNotification(
   subscriber: Pick<Subscriber, 'email' | 'lang' | 'ip_address' | 'created_at'>
 ): Promise<EmailResult> {
   return sendResendEmail(env, {
-    to: subscriber.email,
+    to: NOTIFICATION_RECIPIENT,
     replyTo: subscriber.email,
     subject: `Naturide: nowe zgłoszenie do testów (${subscriber.email})`,
     text:
