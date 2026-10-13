@@ -167,7 +167,7 @@ const variant = {
     'variant.offline.desc': 'Planer tras i nawigacja działają offline, więc brak internetu nie przeszkodzi w kontynuowaniu wycieczki. Już niebawem, w jednej z najbliższych aktualizacji - mapy Offline!',
     'variant.loop.title': 'Wycieczka po okolicy',
     'variant.loop.desc': 'Czasem wiesz dokładnie, dokąd chcesz jechać, a czasem wiesz tylko ile masz czasu.\nWybierz długość trasy i kierunek, a Naturide przygotuje trasę w pętli przez okolicę, której być może jeszcze nie znasz.',
-    'variant.loop.note': 'Długość pętli może się nieznacznie różnić w zależności od dostępnych dróg i ścieżek.',
+    'variant.loop.note': '',
     'variant.screen.title': 'Podziwiaj okolicę, nie ekran nawigacji ;P',
     'variant.screen.desc': 'Podczas nawigacji Naturide może automatycznie sterować ekranem, włączając go przed zakrętem i gasząc, kiedy wskazówka przestaje być potrzebna. Funkcja działa bardzo precyzyjnie i jest niezawodna.',
     'variant.screen.note': 'Oszczędność baterii nawet 40%.',
