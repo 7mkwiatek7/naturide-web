@@ -525,14 +525,41 @@ const detailKeys = variant
   const screenDialog = document.querySelector<HTMLDialogElement>('#screen-dialog');
   const screenClose = document.querySelector<HTMLButtonElement>('#screen-dialog-close');
   if (screenTrigger && screenDialog && screenClose) {
+    let screenHistoryEntry = false;
+
+    const closeScreenDialog = () => {
+      if (!screenDialog.open) return;
+      screenDialog.close();
+      if (screenHistoryEntry) {
+        screenHistoryEntry = false;
+        window.history.back();
+      }
+    };
+
     screenTrigger.addEventListener('click', (event) => {
       event.preventDefault();
+      if (screenDialog.open) return;
+      window.history.pushState(
+        { ...(window.history.state || {}), screenDialog: true },
+        '',
+        window.location.href
+      );
+      screenHistoryEntry = true;
       screenDialog.showModal();
       screenClose.focus();
     });
-    screenClose.addEventListener('click', () => screenDialog.close());
+    screenClose.addEventListener('click', closeScreenDialog);
     screenDialog.addEventListener('click', (event) => {
-      if (event.target === screenDialog) screenDialog.close();
+      if (event.target === screenDialog) closeScreenDialog();
+    });
+    screenDialog.addEventListener('cancel', (event) => {
+      event.preventDefault();
+      closeScreenDialog();
+    });
+    window.addEventListener('popstate', () => {
+      if (!screenHistoryEntry) return;
+      screenHistoryEntry = false;
+      if (screenDialog.open) screenDialog.close();
     });
     screenDialog.addEventListener('close', () => screenTrigger.focus());
   }
