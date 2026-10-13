@@ -1,0 +1,308 @@
+---
+import { languages, t, type Lang } from '../i18n/ui';
+import '../styles/global.css';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const otherLang = lang === 'pl' ? 'en' : 'pl';
+const homeHref = lang === 'pl' ? '/' : '/en/';
+const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-policy/';
+const removeDataHref = lang === 'pl' ? '/usun-dane/' : '/en/remove-data/';
+const switchHref = lang === 'pl' ? '/en/' : '/';
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang={lang === 'pl' ? 'pl-PL' : 'en-US'}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={t(lang, 'meta.description')} />
+    <title>{t(lang, 'remove.title')} - Naturide</title>
+    <link rel="canonical" href={`https://naturide.app${lang === 'pl' ? '/usun-dane/' : '/en/remove-data/'}`} />
+    <link rel="alternate" hreflang="pl" href="https://naturide.app/usun-dane/" />
+    <link rel="alternate" hreflang="en" href="https://naturide.app/en/remove-data/" />
+    <link rel="icon" href="/images/logo.png" />
+  </head>
+  <body class="simple-page">
+    <a class="simple-skip" href="#main">{t(lang, 'variant.skip')}</a>
+
+    <header class="simple-header">
+      <a href={homeHref} class="simple-brand" aria-label="Naturide">
+        <img src="/images/logo.png" alt="" width="38" height="38" />
+        <span>Naturide</span>
+      </a>
+
+      <nav class="simple-nav" aria-label={t(lang, 'variant.nav.app')}>
+        <a href={`${homeHref}#why`}>{t(lang, 'variant.nav.why')}</a>
+        <a href={`${homeHref}#app`}>{t(lang, 'variant.nav.app')}</a>
+        <a href={switchHref} class="simple-language" aria-label={languages[otherLang]}>{otherLang.toUpperCase()}</a>
+        <a class="simple-cta" href={`${homeHref}#join`}>
+          {t(lang, 'variant.cta')} <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="main" class="simple-main">
+      <slot />
+    </main>
+
+    <footer class="simple-footer">
+      <div class="simple-footer-grid">
+        <div>
+          <a href={homeHref} class="simple-brand simple-footer-brand" aria-label="Naturide">
+            <img src="/images/logo.png" alt="" width="40" height="40" />
+            <span>Naturide</span>
+          </a>
+          <p>{t(lang, 'variant.footer')}</p>
+        </div>
+
+        <div>
+          <h2>{t(lang, 'contact.title')}</h2>
+          <ul>
+            <li>
+              <span>{t(lang, 'contact.email')}</span>
+              <a href="mailto:mkwiatek.dev@gmail.com">mkwiatek.dev@gmail.com</a>
+            </li>
+            <li>
+              <span>{t(lang, 'contact.facebook')}</span>
+              <a href="https://www.facebook.com/Naturideapp/" target="_blank" rel="noopener noreferrer">Facebook</a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Naturide</h2>
+          <ul>
+            <li><a href={privacyHref}>{t(lang, 'footer.privacy')}</a></li>
+            <li><a href={removeDataHref}>{t(lang, 'footer.removeData')}</a></li>
+            <li><a href="https://www.facebook.com/Naturideapp/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="simple-footer-bottom">{t(lang, 'footer.copyright').replace('{year}', String(year))}</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  :global(html) {
+    scroll-behavior: smooth;
+    background: #f7f7ef;
+  }
+
+  :global(body.simple-page) {
+    min-height: 100vh;
+    margin: 0;
+    color: #203d30;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :global(body.simple-page a) {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  :global(body.simple-page a:focus-visible) {
+    outline: 3px solid #84964b;
+    outline-offset: 5px;
+  }
+
+  .simple-skip {
+    position: absolute;
+    top: -100px;
+    left: 20px;
+    z-index: 10;
+    padding: 12px;
+    background: #fff;
+  }
+
+  .simple-skip:focus {
+    top: 10px;
+  }
+
+  .simple-header {
+    display: flex;
+    width: min(1180px, calc(100% - 96px));
+    min-height: 96px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    margin-inline: auto;
+  }
+
+  .simple-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: #203d30;
+    font-size: 28px;
+    font-weight: 750;
+    letter-spacing: -1.3px;
+  }
+
+  .simple-brand img {
+    border-radius: 11px;
+  }
+
+  .simple-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    color: #203d30;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .simple-nav a:not(.simple-cta):hover {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+
+  .simple-language {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  }
+
+  .simple-cta {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid #264c38;
+    border-radius: 7px;
+    padding: 10px 18px;
+    background: #264c38;
+    color: #fff !important;
+  }
+
+  .simple-cta:hover {
+    background: #163725;
+  }
+
+  .simple-main {
+    min-height: 560px;
+  }
+
+  .simple-footer {
+    background: #203f31;
+    color: #f7f7ef;
+  }
+
+  .simple-footer-grid {
+    display: grid;
+    width: min(1180px, calc(100% - 96px));
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 64px;
+    margin-inline: auto;
+    padding-block: 56px 48px;
+  }
+
+  .simple-footer-brand {
+    color: #f7f7ef;
+    font-size: 24px;
+  }
+
+  .simple-footer p {
+    max-width: 310px;
+    margin-top: 18px;
+    color: #d8e3d2;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .simple-footer h2 {
+    margin: 0;
+    color: #c2d5a0;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  .simple-footer ul {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+  }
+
+  .simple-footer li + li {
+    margin-top: 16px;
+  }
+
+  .simple-footer li span {
+    display: block;
+    color: #c2d5a0;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .simple-footer li a {
+    display: inline-block;
+    margin-top: 4px;
+    color: #f7f7ef;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .simple-footer li a:hover {
+    color: #d8e4b5;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .simple-footer-bottom {
+    width: min(1180px, calc(100% - 96px));
+    max-width: none !important;
+    margin: 0 auto !important;
+    border-top: 1px solid rgb(216 227 210 / 24%);
+    padding-block: 20px 26px;
+    text-align: center;
+  }
+
+  @media (max-width: 760px) {
+    .simple-header,
+    .simple-footer-grid,
+    .simple-footer-bottom {
+      width: calc(100% - 40px);
+    }
+
+    .simple-header {
+      min-height: 78px;
+    }
+
+    .simple-brand {
+      font-size: 24px;
+    }
+
+    .simple-brand img {
+      width: 32px;
+      height: 32px;
+    }
+
+    .simple-nav {
+      gap: 0;
+    }
+
+    .simple-nav a:not(.simple-cta):not(.simple-language) {
+      display: none;
+    }
+
+    .simple-cta {
+      display: none;
+    }
+
+    .simple-footer-grid {
+      grid-template-columns: 1fr;
+      gap: 34px;
+      padding-block: 42px 36px;
+    }
+  }
+</style>

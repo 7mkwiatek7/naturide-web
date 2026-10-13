@@ -46,6 +46,20 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
           placeholder={t(lang, 'remove.label.email')}
           class="rounded-full border-2 border-transparent bg-white px-5 py-3 text-base text-forest-900 placeholder:text-forest-400 focus:border-sand-300 focus:outline-none focus:ring-2 focus:ring-sand-300 dark:bg-forest-100"
         />
+        <label class="mx-auto mt-1 flex max-w-md items-start gap-2 text-left text-xs text-forest-800/80 dark:text-sand-200/80 sm:text-sm">
+          <input
+            type="checkbox"
+            name="confirm"
+            value="accepted"
+            required
+            class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-forest-300/50 bg-white/10 accent-forest-700 focus:ring-forest-700 sm:mt-1"
+          />
+          <span>
+            {t(lang, 'remove.confirm')}
+            {' '}
+            <a href={privacyHref} class="text-forest-700 underline hover:text-forest-900 dark:text-sand-100 dark:hover:text-white">{t(lang, 'remove.removePolicy')}</a>.
+          </span>
+        </label>
         <button
           id="remove-submit"
           type="submit"
@@ -54,20 +68,6 @@ const privacyHref = lang === 'pl' ? '/polityka-prywatnosci/' : '/en/privacy-poli
           {t(lang, 'remove.submit')}
         </button>
       </form>
-
-      <label class="mx-auto mt-4 flex max-w-md items-start gap-2 text-left text-xs text-forest-800/80 dark:text-sand-200/80 sm:text-sm">
-        <input
-          type="checkbox"
-          name="confirm"
-          required
-          class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-forest-300/50 bg-white/10 accent-forest-700 focus:ring-forest-700 sm:mt-1"
-        />
-        <span>
-          {t(lang, 'remove.confirm')}
-          {' '}
-          <a href={privacyHref} class="text-forest-700 underline hover:text-forest-900 dark:text-sand-100 dark:hover:text-white">{t(lang, 'remove.removePolicy')}</a>.
-        </span>
-      </label>
 
       <p class="mx-auto mt-4 max-w-md text-center text-xs text-forest-700/80 dark:text-sand-300/80 sm:text-sm">
         {t(lang, 'remove.privacy')}

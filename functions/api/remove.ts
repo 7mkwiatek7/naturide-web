@@ -16,9 +16,14 @@ export const onRequestPost = async (context: { request: Request; env: Env }) => 
     }
 
     const email = String(formData.get('email') || '').trim().toLowerCase();
+    const confirmation = formData.get('confirm');
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return jsonResponse({ ok: false, error: 'invalid_email' }, 400);
+    }
+
+    if (confirmation !== 'accepted' && confirmation !== 'on') {
+      return jsonResponse({ ok: false, error: 'invalid_confirmation' }, 400);
     }
 
     // Usuń z bazy. Jeśli nie ma - zwracamy sukces bez błędu
