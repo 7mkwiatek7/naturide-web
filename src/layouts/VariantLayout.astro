@@ -131,8 +131,9 @@ const detailKeys = variant
 
       <section class="wrap benefits" id="why" aria-labelledby="benefits-heading">
         <div class="benefits-intro">
-          <p class="eyebrow">{text('benefits.eyebrow')}</p>
+          {!variant && <p class="eyebrow">{text('benefits.eyebrow')}</p>}
           <h2 id="benefits-heading" class={variant ? 'benefits-title-long' : undefined}>{text('benefits.title')}</h2>
+          {variant && <p class="eyebrow benefits-eyebrow">{text('benefits.eyebrow')}</p>}
           <p>{text('benefits.desc')}</p>
           <svg class="route-drawing" viewBox="0 0 320 150" fill="none" aria-hidden="true">
             <path d="M1 111C51 87 36 29 104 40s28 86 104 72 35-82 108-96M8 139C89 105 28 3 119 17s14 114 112 120 29-82 88-83" stroke="#dce2d6"/>
@@ -666,7 +667,8 @@ const detailKeys = variant
   .promise-strip p { grid-column: 2; grid-row: 2; margin-top: 7px; font-size: 15px; line-height: 1.5; color: #5d655b; }
   .benefits { display: grid; grid-template-columns: 1fr 1.1fr; gap: 100px; padding-block: 95px; }
   h2 { white-space: pre-line; font-size: clamp(32px, 3.3vw, 46px); line-height: 1.16; letter-spacing: -.045em; font-weight: 620; margin-top: 18px; }
-  h2.benefits-title-long { white-space: pre; font-size: clamp(29px, 2.3vw, 36px); line-height: 1.3; letter-spacing: normal; font-weight: 650; }
+  h2.benefits-title-long { white-space: pre-wrap; font-size: clamp(37.7px, 2.99vw, 46.8px); line-height: 1.3; letter-spacing: normal; font-weight: 650; margin-top: 0; margin-bottom: calc(1.3em + 18px); }
+  .benefits-eyebrow { margin-top: 0; }
   .benefits-intro > p:not(.eyebrow) { font-size: 17px; color: #5d655b; line-height: 1.75; margin-top: 23px; max-width: 375px; }
   .route-drawing { width: 280px; max-width: 100%; margin-top: 20px; }
   .benefit-list article { display: flex; gap: 22px; border-bottom: 1px solid #dadfd2; padding-block: 25px; }
@@ -780,7 +782,7 @@ const detailKeys = variant
     .promise-strip p { margin-top: 3px; }
     .benefits { grid-template-columns: 1fr; gap: 34px; padding-block: 57px; }
     h2 { font-size: 36px; }
-    h2.benefits-title-long { white-space: pre-line; font-size: clamp(21px, 5.8vw, 32px); }
+    h2.benefits-title-long { white-space: pre-line; font-size: clamp(27.3px, 7.54vw, 41.6px); }
     .benefits-intro > p:not(.eyebrow) { margin-top: 17px; max-width: 480px; }
     .route-drawing { display: none; }
     .benefit-list article { gap: 17px; }

@@ -161,7 +161,7 @@ const variant = {
     'variant.strip.screen': 'Prywatność',
     'variant.strip.screen.desc': 'Twoje aktywności pozostają na urządzeniu. Możesz je udostępnić kiedy i komu chcesz.',
     'variant.benefits.eyebrow': 'WYKORZYSTAJ WSZYSTKIE MOŻLIWOŚCI',
-    'variant.benefits.title': '   Najlepsza trasa\n            zaczyna się tam\n     Gdzie kończą się\n                   znane ścieżki',
+    'variant.benefits.title': 'Najlepsza trasa\n         zaczyna się tam\n   Gdzie kończą się\n             znane ścieżki',
     'variant.benefits.desc': 'Podczas planowania trasy przeglądaj zdjęcia szlaków. Wybieraj drogi porównując ich nawierzchnię. Dodawaj punkty pośrednie jednym dotknięciem.',
     'variant.offline.title': 'Bez zasięgu',
     'variant.offline.desc': 'Planer tras i nawigacja działają offline, więc brak internetu nie przeszkodzi w kontynuowaniu wycieczki. Już niebawem, w jednej z najbliższych aktualizacji - mapy Offline!',
