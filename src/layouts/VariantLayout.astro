@@ -132,13 +132,19 @@ const detailKeys = variant
       <section class="wrap benefits" id="why" aria-labelledby="benefits-heading">
         <div class="benefits-intro">
           {!variant && <p class="eyebrow">{text('benefits.eyebrow')}</p>}
-          <h2 id="benefits-heading" class={variant ? 'benefits-title-long' : undefined}>{text('benefits.title')}</h2>
+          <h2 id="benefits-heading" class={variant ? 'benefits-title-long' : undefined}>
+            {variant
+              ? text('benefits.title').split('\n').map((line, index) => (
+                  <span class={index === 1 ? 'benefits-title-accent' : undefined}>{line}</span>
+                ))
+              : text('benefits.title')}
+          </h2>
           {variant && <p class="eyebrow benefits-eyebrow">{text('benefits.eyebrow')}</p>}
           <p>{text('benefits.desc')}</p>
           <svg class="route-drawing" viewBox="0 0 320 150" fill="none" aria-hidden="true">
             <path d="M1 111C51 87 36 29 104 40s28 86 104 72 35-82 108-96M8 139C89 105 28 3 119 17s14 114 112 120 29-82 88-83" stroke="#dce2d6"/>
             <path d="M28 114c70 0 16-67 82-53s29 69 91 39 45-61 83-51" stroke="#71856a" stroke-width="2" stroke-dasharray="5 6"/>
-            <circle cx="28" cy="114" r="7" fill="#234e3b"/><circle cx="284" cy="49" r="7" fill="#f7f7ef" stroke="#234e3b" stroke-width="3"/>
+            <circle cx="28" cy="114" r="7" fill="#234e3b"/><circle cx="284" cy="49" r="7" fill="#f5f0e6" stroke="#234e3b" stroke-width="3"/>
           </svg>
         </div>
         <div class="benefit-list">
@@ -580,7 +586,7 @@ const detailKeys = variant
 </script>
 
 <style>
-  :global(html) { scroll-behavior: smooth; scroll-padding-top: 28px; background: #f7f7ef; }
+  :global(html) { scroll-behavior: smooth; scroll-padding-top: 28px; background: #f5f0e6; }
   :global(body) { margin: 0; color: #203d30; font-family: 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
   :global(astro-dev-toolbar) { display: none; }
   :global(*) { box-sizing: border-box; }
@@ -611,10 +617,10 @@ const detailKeys = variant
   .button:disabled { opacity: .6; cursor: not-allowed; }
   .button span { font-size: 19px; line-height: 1; }
   .button-small { min-height: 44px; padding: 10px 18px; font-size: 13px; gap: 19px; }
-  .planner-dialog { width: min(1060px, calc(100% - 32px)); max-width: none; padding: 0; border: 0; border-radius: 16px; background: #f7f7ef; color: #203d30; box-shadow: 0 24px 80px rgb(13 30 20 / .3); }
+  .planner-dialog { width: min(1060px, calc(100% - 32px)); max-width: none; padding: 0; border: 0; border-radius: 16px; background: #f5f0e6; color: #203d30; box-shadow: 0 24px 80px rgb(13 30 20 / .3); }
   .planner-dialog::backdrop { background: rgb(13 30 20 / .58); backdrop-filter: blur(3px); }
   .planner-card { position: relative; display: grid; grid-template-columns: 1.1fr 1fr; overflow: hidden; }
-  .planner-visual { display: flex; min-height: 420px; align-items: center; justify-content: center; overflow: hidden; padding: 28px 28px 28px 40px; background: #f7f7ef; }
+  .planner-visual { display: flex; min-height: 420px; align-items: center; justify-content: center; overflow: hidden; padding: 28px 28px 28px 40px; background: #f5f0e6; }
   .planner-visual img { width: 100%; height: auto; max-height: none; object-fit: contain; object-position: center; filter: drop-shadow(0 0 8px rgb(32 61 48 / .99)); }
   .planner-copy { display: flex; flex-direction: column; justify-content: center; padding: 48px 44px; }
   .planner-copy h2 { padding-right: 18px; }
@@ -667,7 +673,9 @@ const detailKeys = variant
   .promise-strip p { grid-column: 2; grid-row: 2; margin-top: 7px; font-size: 15px; line-height: 1.5; color: #5d655b; }
   .benefits { display: grid; grid-template-columns: 1fr 1.1fr; gap: 100px; padding-block: 95px; }
   h2 { white-space: pre-line; font-size: clamp(32px, 3.3vw, 46px); line-height: 1.16; letter-spacing: -.045em; font-weight: 620; margin-top: 18px; }
-  h2.benefits-title-long { white-space: pre-wrap; font-size: clamp(37.7px, 2.99vw, 46.8px); line-height: 1.3; letter-spacing: normal; font-weight: 650; margin-top: 0; margin-bottom: calc(1.3em + 18px); }
+  h2.benefits-title-long { white-space: normal; font-size: clamp(51.6px, 4.56vw, 69.6px); line-height: 1.08; letter-spacing: -.062em; font-weight: 650; margin-top: 0; margin-bottom: calc(1.08em + 18px); }
+  h2.benefits-title-long > span { display: block; }
+  .benefits-title-accent { color: #738361; }
   .benefits-eyebrow { margin-top: 0; }
   .benefits-intro > p:not(.eyebrow) { font-size: 17px; color: #5d655b; line-height: 1.75; margin-top: 23px; max-width: 375px; }
   .route-drawing { width: 280px; max-width: 100%; margin-top: 20px; }
@@ -782,7 +790,7 @@ const detailKeys = variant
     .promise-strip p { margin-top: 3px; }
     .benefits { grid-template-columns: 1fr; gap: 34px; padding-block: 57px; }
     h2 { font-size: 36px; }
-    h2.benefits-title-long { white-space: pre-line; font-size: clamp(27.3px, 7.54vw, 41.6px); }
+    h2.benefits-title-long { font-size: clamp(46.8px, 8.4vw, 69.6px); }
     .benefits-intro > p:not(.eyebrow) { margin-top: 17px; max-width: 480px; }
     .route-drawing { display: none; }
     .benefit-list article { gap: 17px; }
