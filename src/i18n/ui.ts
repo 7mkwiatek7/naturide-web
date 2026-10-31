@@ -164,7 +164,7 @@ const variant = {
     'variant.benefits.title': 'Od pomysłu\nDo udanej wyprawy',
     'variant.benefits.desc': 'Podczas planowania trasy przeglądaj zdjęcia szlaków. Wybieraj drogi porównując ich nawierzchnię. Dodawaj punkty pośrednie jednym dotknięciem.',
     'variant.offline.title': 'Galeria zdjęć',
-    'variant.offline.desc': 'Twórz własną biblitekę zdjęć zintegowaną z zapisanymi trasami. Dodawaj publiczne zdjęcia nawierzchni dróg by ułatwić innym planowanie tras. ',
+    'variant.offline.desc': 'Twórz własną biblitekę zdjęć zintegrowaną z zapisanymi trasami. Dodawaj publiczne zdjęcia nawierzchni dróg by ułatwić innym planowanie tras. ',
     'variant.loop.title': 'Wycieczka po okolicy',
     'variant.loop.desc': 'Wybierz długość trasy i kierunek, a Naturide przygotuje trasę w pętli przez miejsca i drogi, których być może jeszcze nie znasz.',
     'variant.loop.note': '',
